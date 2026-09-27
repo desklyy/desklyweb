@@ -65,8 +65,8 @@
         });
       },
       {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
+        threshold: 0.05,
+        rootMargin: '0px 0px -20px 0px'
       }
     );
 
@@ -120,4 +120,70 @@
     }
   });
 
+  // ==========================================================================
+  // ACORDEÓN EXCLUSIVO PARA FAQ (Cierra los demás al abrir uno)
+  // ==========================================================================
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(function (item) {
+    item.addEventListener('toggle', function () {
+      if (this.open) {
+        faqItems.forEach(function (otherItem) {
+          if (otherItem !== item) {
+            otherItem.removeAttribute('open');
+          }
+        });
+      }
+    });
+  });
+
+  // ==========================================================================
+  // MODALES LEGALES (Aviso Legal, Privacidad, Cookies)
+  // ==========================================================================
+  const legalBtns = document.querySelectorAll('.legal-btn');
+  const modalOverlays = document.querySelectorAll('.modal-overlay');
+
+  function closeModal(modal) {
+    if (modal) {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  legalBtns.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetModalId = this.getAttribute('data-modal');
+      const targetModal = document.getElementById(targetModalId);
+      if (targetModal) {
+        targetModal.classList.add('active');
+        targetModal.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  modalOverlays.forEach(function (overlay) {
+    const closeBtn = overlay.querySelector('.modal-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        closeModal(overlay);
+      });
+    }
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        closeModal(overlay);
+      }
+    });
+  });
+
+  window.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      modalOverlays.forEach(function (modal) {
+        closeModal(modal);
+      });
+    }
+  });
+
 })();
+
+

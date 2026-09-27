@@ -1,0 +1,8 @@
+# robots.txt para Deskly - https://www.desklyy.es/
+
+User-agent: *
+Allow: /
+Allow: /assets/
+
+# Sitemap oficial
+Sitemap: https://www.desklyy.es/sitemap.xml

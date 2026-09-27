@@ -519,8 +519,30 @@ img {
 
 
 /* ==========================================================================
+   SCROLL REVEAL (Efecto cinemático de aparición progresiva al hacer scroll)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(38px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
    SECCIONES Y LAYOUT DE CONTRASTE (DARK & LIGHT)
-   Cada tramo ajustado a viewport de pantalla completa (100vh)
    ========================================================================== */
 .section {
   min-height: 100vh;
@@ -1352,3 +1374,224 @@ img {
     padding: 28px;
   }
 }
+
+/* ==========================================================================
+   SECCIÓN FAQ (PREGUNTAS FRECUENTES)
+   ========================================================================== */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.faq-item {
+  background: rgba(13, 22, 38, 0.6);
+  border: 1px solid var(--line-dark);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: all 0.3s var(--ease);
+  backdrop-filter: blur(12px);
+}
+
+.faq-item:hover {
+  border-color: rgba(77, 155, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.faq-item[open] {
+  border-color: rgba(29, 104, 254, 0.4);
+  background: rgba(17, 27, 48, 0.8);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ice);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-icon {
+  color: var(--blue-light);
+  transition: transform 0.3s var(--ease);
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  margin-top: 14px;
+  color: var(--ice-dim);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  border-top: 1px solid rgba(232, 236, 245, 0.08);
+  padding-top: 14px;
+}
+
+/* Ajuste de espaciado y transición entre Equipo, FAQ y Contacto */
+#equipo {
+  min-height: auto;
+  display: block;
+  padding-top: 100px;
+  padding-bottom: 140px;
+}
+
+#faq {
+  min-height: auto;
+  padding-top: 90px;
+  padding-bottom: 35px;
+}
+
+.section-contact {
+  min-height: auto;
+  padding-top: 35px;
+  padding-bottom: 80px;
+}
+
+/* Footer Legal Links */
+.footer-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(232, 236, 245, 0.06);
+  padding-top: 20px;
+}
+
+.footer-copy {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+  width: auto;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legal-btn {
+  background: transparent;
+  border: none;
+  color: var(--steel);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s var(--ease);
+}
+
+.legal-btn:hover {
+  color: var(--blue-light);
+  text-decoration: underline;
+}
+
+.legal-sep {
+  color: rgba(232, 236, 245, 0.2);
+  font-size: 11px;
+}
+
+/* Modales Legales RGPD */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 9, 15, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-container {
+  background: var(--navy-900);
+  border: 1px solid rgba(77, 155, 255, 0.28);
+  border-radius: 20px;
+  max-width: 620px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  color: var(--ice);
+  transform: translateY(20px);
+  transition: transform 0.3s var(--ease);
+}
+
+.modal-overlay.active .modal-container {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: transparent;
+  border: none;
+  color: var(--steel);
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s var(--ease);
+}
+
+.modal-close:hover {
+  color: #FFFFFF;
+}
+
+.modal-title {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(232, 236, 245, 0.1);
+}
+
+.modal-body p {
+  font-size: 14px;
+  color: var(--ice-dim);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.modal-body code {
+  color: var(--blue-light);
+  background: rgba(29, 104, 254, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+
+
+
+

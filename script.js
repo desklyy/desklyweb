@@ -6,7 +6,7 @@
   // ==========================================================================
   const glow = document.getElementById('cursor-glow');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
+
   let targetX = window.innerWidth / 2;
   let targetY = window.innerHeight / 2;
   let currentX = targetX;
@@ -50,8 +50,36 @@
   }
 
   // ==========================================================================
-  // SCROLL REVEAL (Efecto de deslizamiento y aparición de secciones)
+  // SCROLL REVEAL Y CONTADORES ANIMADOS
   // ==========================================================================
+  function animateCounter(el) {
+    if (el.dataset.animated) return;
+    el.dataset.animated = 'true';
+
+    const target = parseInt(el.getAttribute('data-target'), 10);
+    const prefix = el.getAttribute('data-prefix') || '';
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1200;
+    const startTime = performance.now();
+
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(easeProgress * target);
+
+      el.textContent = `${prefix}${current}${suffix}`;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = `${prefix}${target}${suffix}`;
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
   const revealEls = document.querySelectorAll('.reveal');
 
   if ('IntersectionObserver' in window) {
@@ -60,6 +88,14 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+
+            // Animación de números de métricas
+            const counters = entry.target.querySelectorAll('.metric-val[data-target]');
+            counters.forEach(animateCounter);
+            if (entry.target.matches('.metric-val[data-target]')) {
+              animateCounter(entry.target);
+            }
+
             observer.unobserve(entry.target);
           }
         });
@@ -76,6 +112,8 @@
   } else {
     revealEls.forEach(function (el) {
       el.classList.add('visible');
+      const counters = el.querySelectorAll('.metric-val[data-target]');
+      counters.forEach(animateCounter);
     });
   }
 
@@ -91,13 +129,13 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
-      
+
       const targetElem = document.querySelector(targetId);
       if (targetElem) {
         e.preventDefault();
         const elementPosition = targetElem.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-        
+
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
@@ -107,16 +145,65 @@
   });
 
   // ==========================================================================
+  // MENÚ HAMBURGUESA DESPLEGABLE MÓVIL
+  // ==========================================================================
+  const burgerToggle = document.getElementById('burger-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const headerInner = document.querySelector('.header-inner');
+
+  if (burgerToggle && navMenu) {
+    burgerToggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const isExpanded = burgerToggle.getAttribute('aria-expanded') === 'true';
+      const newState = !isExpanded;
+
+      burgerToggle.setAttribute('aria-expanded', newState ? 'true' : 'false');
+      burgerToggle.classList.toggle('active', newState);
+      navMenu.classList.toggle('active', newState);
+      if (headerInner) {
+        headerInner.classList.toggle('menu-open', newState);
+      }
+    });
+
+    // Cerrar automáticamente el menú al pulsar sobre cualquier enlace
+    navMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        burgerToggle.setAttribute('aria-expanded', 'false');
+        burgerToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        if (headerInner) headerInner.classList.remove('menu-open');
+      });
+    });
+
+    // Cerrar menú al hacer clic fuera del área del menú
+    document.addEventListener('click', function (e) {
+      if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !burgerToggle.contains(e.target)) {
+        burgerToggle.setAttribute('aria-expanded', 'false');
+        burgerToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        if (headerInner) headerInner.classList.remove('menu-open');
+      }
+    });
+
+    // Cerrar menú con tecla ESC
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        burgerToggle.setAttribute('aria-expanded', 'false');
+        burgerToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        if (headerInner) headerInner.classList.remove('menu-open');
+      }
+    });
+  }
+
+  // ==========================================================================
   // CAMBIO DINÁMICO DE CABECERA AL HACER SCROLL
   // ==========================================================================
   const header = document.querySelector('.header');
   window.addEventListener('scroll', function () {
-    if (window.scrollY > 40) {
-      header.style.background = 'rgba(7, 9, 15, 0.92)';
-      header.style.borderBottomColor = 'rgba(232, 236, 245, 0.14)';
-    } else {
-      header.style.background = 'rgba(7, 9, 15, 0.75)';
-      header.style.borderBottomColor = 'rgba(232, 236, 245, 0.08)';
+    if (header) {
+      header.classList.toggle('scrolled', window.scrollY > 40);
     }
   });
 

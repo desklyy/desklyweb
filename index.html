@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deskly — Cerebro de IA 100% Privado para Empresas | Conecta tu ERP, CRM y Datos</title>
+  <meta name="description" content="Deskly conecta todas las herramientas de tu empresa (ERP, CRM, bases de datos y manuales) en un cerebro de IA 100% privado y seguro. Encuentra datos en menos de 2 segundos y ejecuta tareas mediante software de chat corporativo o terminal de voz.">
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  
+  <!-- Tipografía Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Resplandor dinámico de cursor -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Barra de navegación fija con efecto glassmorphism -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#top" class="brand-link" aria-label="Deskly Inicio">
+        <img src="assets/logo.jpg" alt="Logo de Deskly" class="header-logo-img">
+        <span class="brand-text">Desk<span class="accent">ly</span></span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Navegación principal">
+        <a href="#problema" class="nav-link">Seguridad</a>
+        <a href="#solucion" class="nav-link">Software & Voz</a>
+        <a href="#como-funciona" class="nav-link">Arquitectura</a>
+        <a href="#personalizacion" class="nav-link">A Medida</a>
+        <a href="#diferencial" class="nav-link">Por qué Deskly</a>
+        <a href="#equipo" class="nav-link">Equipo</a>
+        <a href="#contacto" class="btn btn-sm btn-primary">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- PRIMER TRAMO: SOLO TÍTULO IMPACTANTE (PANTALLA COMPLETA) -->
+    <section class="hero hero-intro" id="hero-portada">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-content">
+        <div class="eyebrow reveal">
+          <span class="pulse-dot"></span>
+          Cerebro Operativo para Empresas
+        </div>
+
+        <h1 class="hero-title hero-title-giant reveal">
+          Desk<span class="accent">ly</span>
+        </h1>
+
+        <p class="hero-tagline reveal">
+          Todas las herramientas de tu empresa conectadas. Cualquier dato en <span class="accent">menos de 2 segundos</span>.
+        </p>
+
+        <a href="#intro-cta" class="scroll-hint reveal" aria-label="Deslizar hacia abajo">
+          <span class="scroll-text">Desliza para continuar</span>
+          <div class="scroll-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- SEGUNDO TRAMO: AL DESLIZAR, APARECE PROPUESTA Y SOLICITAR DEMO -->
+    <section class="section section-dark hero-action-section" id="intro-cta">
+      <div class="container container-narrow text-center">
+        <p class="section-tag reveal">Unificación & Velocidad Operativa</p>
+        <h2 class="hero-action-headline reveal">
+          Conecta todas tus herramientas y encuentra cualquier dato en <span class="accent">menos de 2 segundos</span>
+        </h2>
+
+        <p class="hero-sub reveal">
+          Deskly unifica tu <strong>ERP, CRM, manuales, bases de datos y archivos</strong> en un único cerebro inteligente accesible por chat o mediante nuestro terminal físico de voz. Respuestas instantáneas y ejecución de tareas sin perder tiempo cambiando de aplicación.
+        </p>
+
+        <div class="hero-actions reveal">
+          <a href="#contacto" class="btn btn-primary">
+            <span>Solicitar demo</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#solucion" class="btn btn-outline">Ver cómo funciona</a>
+        </div>
+      </div>
+
+      <div class="ticker-wrapper reveal" aria-label="Herramientas empresariales integradas">
+        <div class="ticker-viewport">
+          <div class="ticker-track">
+            
+            <!-- Set 1 (15 programas oficiales) -->
+            <div class="ticker-item" title="SAP">
+              <img src="assets/integrations/sap.png" alt="SAP" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Salesforce">
+              <img src="assets/integrations/salesforce.png" alt="Salesforce" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Microsoft Dynamics 365">
+              <img src="assets/integrations/dynamics.png" alt="Microsoft Dynamics 365" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Odoo">
+              <img src="assets/integrations/odoo.png" alt="Odoo" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="HubSpot">
+              <img src="assets/integrations/hubspot.png" alt="HubSpot" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Oracle NetSuite">
+              <img src="assets/integrations/netsuite.png" alt="Oracle NetSuite" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Microsoft">
+              <img src="assets/integrations/microsoft.png" alt="Microsoft" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Google Workspace">
+              <img src="assets/integrations/google.png" alt="Google Workspace" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Holded">
+              <img src="assets/integrations/holded.png" alt="Holded" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Microsoft Outlook">
+              <img src="assets/integrations/outlook.png" alt="Microsoft Outlook" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Sage">
+              <img src="assets/integrations/sage.png" alt="Sage" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Zendesk">
+              <img src="assets/integrations/zendesk.png" alt="Zendesk" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Zoho CRM">
+              <img src="assets/integrations/zoho.png" alt="Zoho CRM" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Factusol">
+              <img src="assets/integrations/factusol.png" alt="Factusol" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Slack">
+              <img src="assets/integrations/slack.png" alt="Slack" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="PostgreSQL">
+              <img src="assets/integrations/postgresql.png" alt="PostgreSQL" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Gmail">
+              <img src="assets/integrations/gmail.png" alt="Gmail" class="ticker-logo">
+            </div>
+
+            <!-- Set 2 duplicado para animación continua sin salto -->
+            <div class="ticker-item" title="SAP">
+              <img src="assets/integrations/sap.png" alt="SAP" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Salesforce">
+              <img src="assets/integrations/salesforce.png" alt="Salesforce" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Microsoft Dynamics 365">
+              <img src="assets/integrations/dynamics.png" alt="Microsoft Dynamics 365" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Odoo">
+              <img src="assets/integrations/odoo.png" alt="Odoo" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="HubSpot">
+              <img src="assets/integrations/hubspot.png" alt="HubSpot" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Oracle NetSuite">
+              <img src="assets/integrations/netsuite.png" alt="Oracle NetSuite" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Microsoft">
+              <img src="assets/integrations/microsoft.png" alt="Microsoft" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Google Workspace">
+              <img src="assets/integrations/google.png" alt="Google Workspace" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Holded">
+              <img src="assets/integrations/holded.png" alt="Holded" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Microsoft Outlook">
+              <img src="assets/integrations/outlook.png" alt="Microsoft Outlook" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Sage">
+              <img src="assets/integrations/sage.png" alt="Sage" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Zendesk">
+              <img src="assets/integrations/zendesk.png" alt="Zendesk" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Zoho CRM">
+              <img src="assets/integrations/zoho.png" alt="Zoho CRM" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Factusol">
+              <img src="assets/integrations/factusol.png" alt="Factusol" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Slack">
+              <img src="assets/integrations/slack.png" alt="Slack" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="PostgreSQL">
+              <img src="assets/integrations/postgresql.png" alt="PostgreSQL" class="ticker-logo">
+            </div>
+            <div class="ticker-item" title="Gmail">
+              <img src="assets/integrations/gmail.png" alt="Gmail" class="ticker-logo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN PROBLEMA: PRIVACIDAD Y SOBERANÍA -->
+    <section class="section section-dark" id="problema">
+      <div class="container">
+        <p class="section-tag reveal">Seguridad & Soberanía del Dato</p>
+        <h2 class="section-title reveal">
+          Toda la IA comercial hoy es <span class="accent">pública y ajena</span>
+        </h2>
+
+        <div class="privacy-box reveal">
+          <div class="privacy-icon-wrapper">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="privacy-body">
+            <p>
+              ChatGPT / OpenAI, Microsoft Copilot o Google Gemini envían tus preguntas, tarifas, inventarios y documentos confidenciales a nubes públicas de terceros. Las empresas corren riesgos de filtración, espionaje corporativo y cambios impredecibles de precios o términos.
+            </p>
+            <p class="privacy-highlight">
+              <strong>En Deskly, la IA es 100% tuya:</strong> los modelos, el conocimiento y las integraciones corren en servidores privados (on-premise o nube dedicada exclusiva). Ningún dato sale de tu control.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN PRODUCTO / SOLUCIÓN: SOFTWARE DE CHAT + ALTAVOZ OPCIONAL -->
+    <section class="section section-light" id="solucion">
+      <div class="container">
+        <p class="section-tag dark reveal">Doble Modalidad de Acceso</p>
+        <h2 class="section-title dark reveal">
+          Un cerebro operativo con <span class="accent">dos formas</span> de interactuar
+        </h2>
+        <p class="section-subtitle dark reveal">
+          Toda empresa cuenta con la aplicación de chat corporativo garantizada, y puede sumar terminales físicos de voz en los puestos de trabajo que lo requieran.
+        </p>
+
+        <!-- Pestañas interactivas para alternar o mostrar ambos -->
+        <div class="solution-grid">
+          
+          <!-- TARJETA 1: SOFTWARE DE CHAT CORPORATIVO -->
+          <div class="product-card reveal">
+            <div class="card-badge primary">Plataforma Digital</div>
+            <div class="card-image-wrap">
+              <img src="assets/chat_ui.jpg" alt="Interfaz de chat corporativo Deskly conectado a ERP" class="card-img" loading="lazy">
+            </div>
+            <div class="card-content">
+              <h3>Software de Chat Corporativo</h3>
+              <p class="card-desc">
+                Aplicación web y desktop accesible desde cualquier ordenador de la empresa. Conecta todos tus programas en una única ventana de chat para consultar clientes, facturas, inventarios y manuales al segundo.
+              </p>
+              <ul class="card-features">
+                <li><span class="check">✓</span> Encuentra cualquier dato o albarán en menos de 2 segundos</li>
+                <li><span class="check">✓</span> Unifica ERP, CRM, almacén y procedimientos (RAG)</li>
+                <li><span class="check">✓</span> Lectura y ejecución de tareas directas sobre el sistema</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- TARJETA 2: TERMINAL FÍSICO CONVERSACIONAL -->
+          <div class="product-card reveal">
+            <div class="card-badge secondary">Terminal de Voz</div>
+            <div class="card-image-wrap">
+              <img src="assets/speaker.jpg" alt="Terminal inteligente de sobremesa Deskly para oficina y taller" class="card-img card-img-speaker" loading="lazy">
+            </div>
+            <div class="card-content">
+              <h3>Terminal Físico Conversacional</h3>
+              <p class="card-desc">
+                Dispositivo de sobremesa para salas de reuniones, despachos o puestos con manos ocupadas. Permite consultar cualquier dato de la empresa hablando en voz alta, dictar notas rápidas o grabar y resumir reuniones.
+              </p>
+              <ul class="card-features">
+                <li><span class="check">✓</span> Consulta datos en tiempo real con la voz en 2 segundos</li>
+                <li><span class="check">✓</span> Micrófonos inteligentes con cancelación de ruido</li>
+                <li><span class="check">✓</span> Grabación, transcripción y resumen privado de reuniones</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN CÓMO FUNCIONA / ARQUITECTURA -->
+    <section class="section section-dark" id="como-funciona">
+      <div class="container">
+        <p class="section-tag reveal">Arquitectura & Conectividad</p>
+        <h2 class="section-title reveal">
+          Todas tus herramientas conectadas: respuestas en <span class="accent">menos de 2 segundos</span>
+        </h2>
+
+        <div class="how-grid">
+          
+          <div class="how-item reveal">
+            <span class="how-num">01</span>
+            <h4>Conexión a Todas tus Herramientas</h4>
+            <p>
+              Se conecta de forma directa a SAP, Odoo, Navision, Holded, tu CRM, SGA, bases de datos SQL y discos internos. Cero migraciones y sin cambiar de proveedor.
+            </p>
+          </div>
+
+          <div class="how-item reveal">
+            <span class="how-num">02</span>
+            <h4>Búsqueda Ultrarrápida (&lt; 2s)</h4>
+            <p>
+              El motor RAG procesa al instante miles de fichas técnicas, normativas, manuales e inventarios para darte el dato exacto al segundo, eliminando llamadas y búsquedas manuales.
+            </p>
+          </div>
+
+          <div class="how-item reveal">
+            <span class="how-num">03</span>
+            <h4>Ejecución Real y 100% Privada</h4>
+            <p>
+              No solo lee: genera albaranes, crea incidencias y actualiza pedidos en tu ERP en tiempo real, garantizando que tus datos nunca viajen a OpenAI, Microsoft ni a la nube pública.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Diagrama visual explicativo -->
+        <div class="architecture-diagram reveal">
+          <div class="diagram-step">
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <div class="step-title">Punto de Acceso</div>
+            <div class="step-sub">Chat en PC o Terminal de Voz</div>
+          </div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-step main-brain">
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                <rect x="9" y="9" width="6" height="6"></rect>
+                <line x1="9" y1="1" x2="9" y2="4"></line>
+                <line x1="15" y1="1" x2="15" y2="4"></line>
+                <line x1="9" y1="20" x2="9" y2="23"></line>
+                <line x1="15" y1="20" x2="15" y2="23"></line>
+                <line x1="20" y1="9" x2="23" y2="9"></line>
+                <line x1="20" y1="14" x2="23" y2="14"></line>
+                <line x1="1" y1="9" x2="4" y2="9"></line>
+                <line x1="1" y1="14" x2="4" y2="14"></line>
+              </svg>
+            </div>
+            <div class="step-title">Servidor Privado Deskly</div>
+            <div class="step-sub">Modelo Propio + Motor RAG</div>
+          </div>
+          <div class="diagram-arrow">➔</div>
+          <div class="diagram-step">
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </div>
+            <div class="step-title">Herramientas del Cliente</div>
+            <div class="step-sub">ERP, CRM, SGA, Bases de Datos</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN PERSONALIZACIÓN & SERVICIO A MEDIDA -->
+    <section class="section section-light" id="personalizacion">
+      <div class="container">
+        <p class="section-tag dark reveal">Servicio & Adaptación Integral</p>
+        <h2 class="section-title dark reveal">
+          Más que un producto: <span class="accent">personalización al 100%</span>
+        </h2>
+        <p class="section-subtitle dark reveal">
+          No te entregamos un software cerrado para que te las apañes. Analizamos e implantamos Deskly en el corazón de tu operativa, entendiendo tu negocio desde el puesto más alto del organigrama hasta el último operario, conectando y mejorando todo.
+        </p>
+
+        <div class="custom-grid">
+          
+          <div class="custom-card reveal">
+            <div class="custom-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="6" height="6" rx="1.5"></rect>
+                <rect x="16" y="3" width="6" height="6" rx="1.5"></rect>
+                <rect x="9" y="15" width="6" height="6" rx="1.5"></rect>
+                <path d="M5 9v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"></path>
+                <path d="M12 14v1"></path>
+              </svg>
+            </div>
+            <h4>Entendimiento total del organigrama</h4>
+            <p>
+              Diseñamos la solución tanto para la <strong>Dirección General</strong> (visión estratégica, control, seguridad absoluta) como para el <strong>personal operativo en planta o mostrador</strong> (agilidad sin pantallas, respuestas en segundos y cero fricción).
+            </p>
+          </div>
+
+          <div class="custom-card reveal">
+            <div class="custom-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 21v-7"></path>
+                <path d="M4 10V3"></path>
+                <path d="M12 21v-9"></path>
+                <path d="M12 8V3"></path>
+                <path d="M20 21v-5"></path>
+                <path d="M20 12V3"></path>
+                <circle cx="4" cy="14" r="2"></circle>
+                <circle cx="12" cy="8" r="2"></circle>
+                <circle cx="20" cy="16" r="2"></circle>
+              </svg>
+            </div>
+            <h4>Adaptado a tu jerga y operativa</h4>
+            <p>
+              No tienes que cambiar cómo trabaja tu equipo. Entrenamos el motor RAG con vuestra documentación interna, manuales de calidad, códigos de referencia y protocolos propios para que Deskly hable el mismo idioma que tu empresa.
+            </p>
+          </div>
+
+          <div class="custom-card reveal">
+            <div class="custom-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </div>
+            <h4>Conexión que derriba silos</h4>
+            <p>
+              Conectamos departamentos tradicionalmente desconectados (ventas, almacén, compras, producción). Cualquier empleado tiene acceso inmediato a la información que necesita para avanzar, multiplicando la eficiencia de toda la organización.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="custom-banner reveal">
+          <div class="banner-badge">Acompañamiento Extremo</div>
+          <div class="banner-content">
+            <h3>Nosotros nos encargamos de toda la ingeniería de implantación</h3>
+            <p>Configuramos los conectores con tu ERP/CRM, preparamos la infraestructura local o privada y dejamos Deskly funcionando a medida para tu empresa.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN COMPARATIVA: POR QUÉ DESKLY -->
+    <section class="section section-dark" id="diferencial">
+      <div class="container">
+        <p class="section-tag reveal">Comparativa</p>
+        <h2 class="section-title reveal">
+          Esto no es <span class="accent">un asistente de voz más</span>
+        </h2>
+
+        <div class="diff-grid">
+          
+          <div class="diff-card reveal">
+            <div class="diff-header">
+              <span class="diff-tag">Soberanía Total</span>
+              <span class="diff-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              </span>
+            </div>
+            <h4>100% Privado y Propio</h4>
+            <p>
+              OpenAI, Microsoft y Google guardan tus datos en sus nubes. En Deskly, el modelo es tuyo, corre en tu perímetro y garantiza confidencialidad absoluta.
+            </p>
+          </div>
+
+          <div class="diff-card reveal">
+            <div class="diff-header">
+              <span class="diff-tag">Capacidad Dual</span>
+              <span class="diff-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </span>
+            </div>
+            <h4>Búsqueda + Ejecución Real</h4>
+            <p>
+              No responde curiosidades de internet: consulta y actualiza directamente tu ERP, CRM y bases de datos vivas de la empresa.
+            </p>
+          </div>
+
+          <div class="diff-card reveal">
+            <div class="diff-header">
+              <span class="diff-tag">Flexibilidad Total</span>
+              <span class="diff-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </span>
+            </div>
+            <h4>Chat Digital + Terminal de Voz</h4>
+            <p>
+              Usa el chat en pantalla para oficina y gestión, o interactúa con el terminal de sobremesa cuando necesites manos libres o grabar reuniones.
+            </p>
+          </div>
+
+          <div class="diff-card reveal">
+            <div class="diff-header">
+              <span class="diff-tag">Orientado a PYMEs</span>
+              <span class="diff-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+              </span>
+            </div>
+            <h4>Pensado y Tarificado para Ti</h4>
+            <p>
+              Alternativa moderna y ágil frente a monstruos industriales complejos (Zebra, Vocollect) inaccesibles para pequeñas y medianas empresas.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN EQUIPO -->
+    <section class="section section-light" id="equipo">
+      <div class="container container-narrow">
+        <p class="section-tag dark reveal">Equipo & Origen</p>
+        <h2 class="section-title dark reveal">Quiénes somos</h2>
+
+        <div class="origin-layout reveal">
+          <p class="origin-text">
+            Deskly es una startup fundada en Sevilla. Somos un equipo apasionado construyendo la nueva generación de IA operativa, privada y eficiente para empresas reales.
+          </p>
+          <div class="origin-stats">
+            <div class="origin-stat">
+              <span class="origin-value">Sevilla</span>
+              <span class="origin-label">Sede</span>
+            </div>
+            <div class="origin-stat">
+              <span class="origin-value">2026</span>
+              <span class="origin-label">Fundada</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="team-label reveal">Equipo Fundador</h3>
+        <div class="team-grid reveal">
+          <div class="team-card">
+            <div class="avatar">AB</div>
+            <h4>Alberto Bulnes Espinosa</h4>
+            <span class="team-role">Co-Founder</span>
+            <a href="https://www.linkedin.com/in/alberto-bulnes-espinosa-724609292" target="_blank" rel="noopener noreferrer" class="btn-linkedin" aria-label="LinkedIn de Alberto Bulnes Espinosa">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.54a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+
+          <div class="team-card">
+            <div class="avatar">CR</div>
+            <h4>Carlos Rubio Muriel</h4>
+            <span class="team-role">Co-Founder</span>
+            <a href="https://www.linkedin.com/in/carlos-rubio-muriel-a23a10283" target="_blank" rel="noopener noreferrer" class="btn-linkedin" aria-label="LinkedIn de Carlos Rubio Muriel">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.54a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+
+          <div class="team-card">
+            <div class="avatar">NH</div>
+            <h4>Noé Hidalgo Fernández</h4>
+            <span class="team-role">Co-Founder</span>
+            <a href="https://www.linkedin.com/in/no%C3%A9-hidalgo-fern%C3%A1ndez-67bb43231" target="_blank" rel="noopener noreferrer" class="btn-linkedin" aria-label="LinkedIn de Noé Hidalgo Fernández">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.54a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO -->
+    <section class="section section-dark section-contact" id="contacto">
+      <div class="container container-narrow text-center">
+        <p class="section-tag reveal">Contacto Directo</p>
+        <h2 class="section-title reveal">
+          ¿Hablamos sobre tu <span class="accent">caso de uso</span>?
+        </h2>
+        <p class="contact-sub reveal">
+          Analizamos tus herramientas actuales (ERP, CRM, operarios) y vemos cómo Deskly puede automatizar consultas y tareas en tu empresa con privacidad total.
+        </p>
+
+        <div class="contact-cta-wrapper reveal">
+          <a href="mailto:deskly@outlook.es" class="btn btn-primary contact-email">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>deskly@outlook.es</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.jpg" alt="Deskly Logo" class="footer-logo-img">
+        <span class="footer-brand-name">Desk<span class="accent">ly</span></span>
+      </div>
+
+      <nav class="footer-links" aria-label="Navegación pie de página">
+        <a href="#problema">Seguridad</a>
+        <a href="#solucion">Software & Voz</a>
+        <a href="#como-funciona">Arquitectura</a>
+        <a href="#diferencial">Por qué Deskly</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <p class="footer-copy">© 2026 Deskly. Todos los derechos reservados. Sevilla, España.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="./script.js"></script>
+</body>
+</html>

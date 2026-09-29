@@ -271,6 +271,158 @@
     }
   });
 
+  // ==========================================================================
+  // DEMO INTERACTIVA DE CHAT DESKLY (Cambio de Escenarios y Animación)
+  // ==========================================================================
+  const demoContainer = document.getElementById('deskly-chat-demo');
+  if (demoContainer) {
+    const scenarios = [
+      {
+        userText: 'Hola, ¿cuál ha sido la facturación de este mes y qué previsión tenemos para el mes que viene?',
+        execText: 'Consultando contabilidad en SAP y pipeline en Salesforce CRM... [0.18s]',
+        botHTML: `
+          <div class="chat-conversational-response">
+            <p class="chat-p">Este mes de septiembre hemos alcanzado una facturación de <strong class="highlight-val">148.500 €</strong>, lo que supone un cumplimiento del <strong>100% del objetivo</strong> y un crecimiento del <strong>+12%</strong> respecto al mes pasado.</p>
+            
+            <p class="chat-p">Para el mes de octubre, la previsión estimada es de <strong class="highlight-val">172.000 €</strong> (+15,8% adicional). El incremento se debe principalmente a tres motivos:</p>
+            
+            <ul class="chat-reasons-list">
+              <li><strong>1. Contrato recurrente:</strong> Firma confirmada con Grupo Industriales (+18.500 €).</li>
+              <li><strong>2. Renovaciones programadas:</strong> 4 cuentas anuales activadas en CRM (+9.000 €).</li>
+              <li><strong>3. Repunte estacional:</strong> Tendencia histórica positiva al inicio del Q4.</li>
+            </ul>
+          </div>
+
+          <div class="res-actions">
+            <span class="res-action-btn primary">Descargar Informe de Previsión PDF</span>
+            <span class="res-action-btn">Ver Desglose por Cliente</span>
+          </div>
+        `,
+        inputText: 'Preguntar sobre facturación, previsiones o margen de beneficio...'
+      },
+      {
+        userText: '¿Cuál es el estado del pedido #8492 de Talleres García y el stock disponible en almacén?',
+        execText: 'Indexando datos en SAP S/4HANA y Salesforce CRM... [0.24s]',
+        botHTML: `
+          <div class="res-row">
+            <span class="res-label">CLIENTE / RAZÓN SOCIAL:</span>
+            <span class="res-val">Talleres García S.L. (ID CRM: #9931)</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">PEDIDO #8492:</span>
+            <span class="res-val status-badge-ok">[EN TRÁNSITO] Entrega estimada: Mañana 10:30h</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">DISPONIBILIDAD ALMACÉN B:</span>
+            <span class="res-val">142 unidades en stock (Ubicación: Estantería A-12)</span>
+          </div>
+          <div class="res-actions">
+            <span class="res-action-btn primary">Ver Albarán Oficial PDF</span>
+            <span class="res-action-btn">Notificar Estado a Cliente (API)</span>
+          </div>
+        `,
+        inputText: 'Introducir comando de consulta ERP, expediente o procedimiento...'
+      },
+      {
+        userText: 'Encuentra la factura de mantenimiento del robot de soldadura de Mayo.',
+        execText: 'Búsqueda vectorial RAG en Servidor Documental... [0.19s]',
+        botHTML: `
+          <div class="res-row">
+            <span class="res-label">DOCUMENTO REGISTRADO:</span>
+            <span class="res-val">Factura_Mantenimiento_Robot_SOL-402.pdf</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">FECHA / IMPORTE:</span>
+            <span class="res-val">14 Mayo 2026 · 1.480,00 € (Contabilidad Vuelcada)</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">PROVEEDOR:</span>
+            <span class="res-val">Industriales S.A. (CIF B-882910)</span>
+          </div>
+          <div class="res-actions">
+            <span class="res-action-btn primary">Descargar Expediente PDF</span>
+            <span class="res-action-btn">Ver Ficha de Proveedor</span>
+          </div>
+        `,
+        inputText: 'Buscar facturas, contratos o expedientes...'
+      },
+      {
+        userText: '¿Qué protocolo de seguridad seguir si salta la alarma de presión en línea 3?',
+        execText: 'Consultando Manual de Operaciones ISO 9001 & Seguridad... [0.22s]',
+        botHTML: `
+          <div class="res-row">
+            <span class="res-label">NORMATIVA ISO:</span>
+            <span class="res-val status-badge-ok">PR-SEG-2026-L3 (Revisión V4 Aprobada)</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">PASO 1 (INMEDIATO):</span>
+            <span class="res-val">Accionar válvula de despresurización V-04</span>
+          </div>
+          <div class="res-row">
+            <span class="res-label">PASO 2 (NOTIFICACIÓN):</span>
+            <span class="res-val">Avisar a responsable de turno (Juan P. · Ext. 402)</span>
+          </div>
+          <div class="res-actions">
+            <span class="res-action-btn primary">Registrar Incidencia de Seguridad</span>
+            <span class="res-action-btn">Abrir Manual ISO 9001</span>
+          </div>
+        `,
+        inputText: 'Consultar procedimientos o normativa interna...'
+      }
+    ];
+
+    const tabs = demoContainer.querySelectorAll('.demo-tab');
+    const userTextEl = document.getElementById('demo-user-text');
+    const execTextEl = document.getElementById('demo-exec-text');
+    const botContentEl = document.getElementById('demo-bot-content');
+    const inputTextEl = document.getElementById('demo-input-text');
+    const execPill = document.getElementById('demo-exec-pill');
+    const botMsg = document.getElementById('demo-bot-msg');
+
+    let currentIdx = 0;
+    let autoInterval = null;
+
+    function loadScenario(idx, isManual = false) {
+      if (isManual && autoInterval) {
+        clearInterval(autoInterval);
+      }
+
+      currentIdx = idx;
+      tabs.forEach((tab, i) => {
+        const isActive = i === idx;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      const sc = scenarios[idx];
+
+      if (botMsg) botMsg.style.opacity = '0.3';
+      if (execPill) execPill.style.opacity = '0.5';
+
+      setTimeout(() => {
+        if (userTextEl) userTextEl.textContent = sc.userText;
+        if (execTextEl) execTextEl.textContent = sc.execText;
+        if (botContentEl) botContentEl.innerHTML = sc.botHTML;
+        if (inputTextEl) inputTextEl.textContent = sc.inputText;
+
+        if (botMsg) botMsg.style.opacity = '1';
+        if (execPill) execPill.style.opacity = '1';
+      }, 180);
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', function () {
+        const idx = parseInt(this.getAttribute('data-scenario'), 10);
+        loadScenario(idx, true);
+      });
+    });
+
+    autoInterval = setInterval(() => {
+      currentIdx = (currentIdx + 1) % scenarios.length;
+      loadScenario(currentIdx, false);
+    }, 5000);
+  }
+
 })();
 
 

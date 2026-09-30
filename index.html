@@ -45,6 +45,10 @@
 
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Precarga de recursos críticos (LCP) -->
+  <link rel="preload" href="assets/logo.jpg" as="image">
+  <link rel="preload" href="assets/speaker.jpg" as="image">
+
   <!-- DATOS ESTRUCTURADOS SCHEMA.ORG (JSON-LD) -->
   <script type="application/ld+json">
   {
@@ -430,12 +434,15 @@
     </section>
 
     <!-- SECCIÓN PROBLEMA: PRIVACIDAD Y SOBERANÍA -->
-    <section class="section section-dark" id="problema">
+    <section class="section section-dark" id="problema" aria-labelledby="h2-problema">
       <div class="container">
         <p class="section-tag reveal">Seguridad & Soberanía del Dato</p>
-        <h2 class="section-title reveal">
+        <h2 class="section-title reveal" id="h2-problema">
           Las soluciones de IA comerciales comprometen la <span class="accent">soberanía de tus datos</span>
         </h2>
+        <p class="section-subtitle reveal" style="max-width: 800px; margin: 0 auto 3rem auto; color: var(--text-secondary);">
+          Deskly es una plataforma de inteligencia artificial operativa 100% privada diseñada para empresas. A diferencia de soluciones públicas, Deskly opera On-Premise o en Nube Privada Dedicada, garantizando el cumplimiento RGPD y evitando que la propiedad intelectual alimente modelos de terceros.
+        </p>
 
         <div class="privacy-box reveal">
           <div class="privacy-icon-wrapper">
@@ -462,16 +469,15 @@
 
     <!-- SECCIÓN PRODUCTO / SOLUCIÓN: SOFTWARE DE CHAT + ALTAVOZ OPCIONAL -->
     <!-- SECCIÓN PLATAFORMA PRINCIPAL: SOFTWARE DE CHAT CORPORATIVO -->
-    <section class="section section-light" id="solucion">
+    <section class="section section-light" id="solucion" aria-labelledby="h2-solucion">
       <div class="container">
         <div class="section-header text-center">
           <p class="section-tag dark reveal">Consola Operativa Integrada</p>
-          <h2 class="section-title dark reveal">
+          <h2 class="section-title dark reveal" id="h2-solucion">
             Software de Chat Corporativo <span class="accent">en vivo</span>
           </h2>
           <p class="section-subtitle dark reveal">
-            Acceso unificado a tu ERP, CRM y documentación empresarial desde cualquier ordenador. Explora a continuación
-            cómo responde la terminal ante diferentes consultas operativas.
+            El Software de Chat Corporativo de Deskly provee acceso unificado a sistemas ERP, CRM y repositorios documentales (ISO, manuales). Permite a los empleados ejecutar acciones de negocio e ingestar conocimiento instantáneo en menos de 2 segundos. Explora a continuación cómo responde la terminal ante diferentes consultas operativas.
           </p>
         </div>
 
@@ -682,12 +688,15 @@
     </section>
 
     <!-- SECCIÓN CÓMO FUNCIONA / ARQUITECTURA -->
-    <section class="section section-dark" id="como-funciona">
+    <section class="section section-dark" id="como-funciona" aria-labelledby="h2-como-funciona">
       <div class="container">
         <p class="section-tag reveal">Arquitectura & Conectividad</p>
-        <h2 class="section-title reveal">
+        <h2 class="section-title reveal" id="h2-como-funciona">
           Todas tus herramientas conectadas: respuestas en <span class="accent">menos de 2 segundos</span>
         </h2>
+        <p class="section-subtitle reveal" style="max-width: 800px; margin: 0 auto 3rem auto; color: var(--text-secondary);">
+          La arquitectura de Deskly integra un motor de Retrieval-Augmented Generation (RAG) corporativo. Conecta de forma bidireccional mediante APIs con los principales sistemas ERP y CRM (SAP, Salesforce, Odoo, Holded) para procesar consultas complejas y ejecutar acciones activas con latencias inferiores a 2 segundos.
+        </p>
 
         <div class="how-grid">
 
@@ -863,12 +872,55 @@
     </section>
 
     <!-- SECCIÓN COMPARATIVA: POR QUÉ DESKLY -->
-    <section class="section section-dark" id="diferencial">
+    <section class="section section-dark" id="diferencial" aria-labelledby="h2-diferencial">
       <div class="container">
         <p class="section-tag reveal">Comparativa</p>
-        <h2 class="section-title reveal">
+        <h2 class="section-title reveal" id="h2-diferencial">
           Esto no es <span class="accent">un asistente de voz más</span>
         </h2>
+        <p class="section-subtitle reveal" style="max-width: 800px; margin: 0 auto 3rem auto; color: var(--text-secondary);">
+          A diferencia de asistentes públicos como Microsoft Copilot o Google Gemini que operan en nubes compartidas y solo procesan texto, Deskly es una plataforma On-Premise que garantiza el 100% de soberanía del dato y ejecuta acciones reales bidireccionales en tu ERP, superando también a terminales industriales tradicionales en coste y flexibilidad.
+        </p>
+        
+        <div class="table-responsive reveal" style="margin-bottom: 4rem; overflow-x: auto;">
+          <table class="comparison-table" style="width: 100%; border-collapse: collapse; text-align: left; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1);">
+            <caption class="sr-only">Tabla comparativa entre Deskly, Microsoft Copilot y Terminales Industriales</caption>
+            <thead>
+              <tr style="background: rgba(255,255,255,0.05);">
+                <th scope="col" style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Característica Operativa</th>
+                <th scope="col" style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent-red);">Deskly (On-Premise)</th>
+                <th scope="col" style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Copilot / ChatGPT</th>
+                <th scope="col" style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Terminales Industriales</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500;">Privacidad y Soberanía</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">100% Local / Nube Dedicada</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Nube Pública Compartida</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Local</td>
+              </tr>
+              <tr>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500;">Ejecución Activa ERP/CRM</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Sí (Lectura y Escritura &lt;2s)</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Limitado (Mayoritariamente texto)</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Sí (Comandos rígidos)</td>
+              </tr>
+              <tr>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500;">Interfaz y Accesibilidad</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Chat de Software + Terminal Voz Opcional</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Web / Integración MS Office</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Hardware pesado</td>
+              </tr>
+              <tr>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500;">Target de Implantación</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Empresas (Llave en mano)</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Masivo / Estándar</td>
+                <td style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: #888;">Grandes Corporaciones</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class="diff-grid">
 
@@ -947,10 +999,10 @@
     </section>
 
     <!-- SECCIÓN EQUIPO -->
-    <section class="section section-light" id="equipo">
+    <section class="section section-light" id="equipo" aria-labelledby="h2-equipo">
       <div class="container container-narrow">
         <p class="section-tag dark reveal">Equipo & Origen</p>
-        <h2 class="section-title dark reveal">Quiénes somos</h2>
+        <h2 class="section-title dark reveal" id="h2-equipo">Quiénes somos</h2>
 
         <div class="origin-layout reveal">
           <p class="origin-text">

@@ -3880,4 +3880,107 @@ img {
   .chat-p {
     font-size: 13px;
   }
+}
+
+/* ==========================================================================
+   GATED CONTENT (EARLY ADOPTER OVERLAY)
+   ========================================================================== */
+.gated-wrapper {
+  position: relative;
+}
+
+.gated-blurred-content {
+  filter: blur(12px) grayscale(40%);
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.4s ease, opacity 0.4s ease;
+  height: 900px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gated-blurred-content::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+  background: linear-gradient(to top, var(--void) 0%, transparent 100%);
+  z-index: 5;
+}
+
+.gated-overlay {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 520px;
+  z-index: 10;
+}
+
+.gated-card {
+  background: rgba(13, 22, 38, 0.85);
+  border: 1px solid rgba(29, 104, 254, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.gated-icon {
+  font-size: 44px;
+  margin-bottom: 18px;
+  animation: pulseIcon 2.5s infinite;
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.gated-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.gated-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.4);
+  color: #FFF;
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.gated-input:focus {
+  border-color: var(--blue-light);
+}
+
+.gated-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .gated-card {
+    padding: 30px 20px;
+  }
 }

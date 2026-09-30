@@ -1,0 +1,31 @@
+# Especificación Técnica y Arquitectura de Deskly — IA Operativa Privada
+
+## 1. Resumen Ejecutivo
+Deskly es un cerebro de inteligencia artificial operativa 100% privado y seguro para empresas. Permite unificar el conocimiento fragmentado (ERP, CRM, bases de datos SQL, manuales técnicos y ficheros) y ofrece capacidad de consulta y ejecución en menos de 2 segundos.
+
+## 2. Pilares Fundamentales
+1. **Soberanía y Privacidad Absoluta:**
+   - La infraestructura se aloja On-Premise (servidores locales en el rack del cliente) o en una Nube Privada Dedicada (VPC aislada).
+   - Los pesos del modelo, el motor semántico RAG y la base vectorial pertenecen al cliente.
+   - Cero llamadas a APIs de OpenAI, Microsoft Copilot o Google Gemini. Cero riesgos de espionaje o fuga de datos corporativos.
+
+2. **Doble Capacidad: Búsqueda RAG + Ejecución en Sistemas:**
+   - Búsqueda en < 2s sobre datos estructurados (SQL, ERP) y no estructurados (PDFs, manuales).
+   - Ejecución activa de acciones: anotar salidas de inventario, crear órdenes de reparación, registrar notas en CRM y notificar a responsables.
+
+3. **Dos Modalidades Adaptadas al Puesto:**
+   - **Software de Chat Corporativo:** Aplicación web/desktop privada para puestos con ordenador.
+   - **Terminal Físico de Voz Deskly:** Dispositivo de sobremesa con matriz de micrófonos con cancelación de ruido para despachos, salas de reuniones y entornos industriales manos libres.
+
+## 3. Integraciones de Software
+Deskly interactúa bidireccionalmente con los sistemas centrales del cliente:
+- ERPs: SAP, Odoo, Microsoft Dynamics 365, Holded, Sage, Navision.
+- CRMs: Salesforce, HubSpot, Zoho CRM.
+- Bases de Datos: PostgreSQL, MySQL, SQL Server, Oracle, MongoDB.
+- Documentos: PDFs, manuales de procedimiento, contratos, normativas ISO.
+
+## 4. Equipo Fundador y Contacto
+- **Sede:** Sevilla, España.
+- **Equipo:** Alberto Bulnes Espinosa, Carlos Rubio Muriel, Noé Hidalgo Fernández.
+- **Contacto:** deskly@outlook.es
+- **Dominio:** https://www.desklyy.com/

@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://www.desklyy.es/</loc>
-    <lastmod>2026-09-27</lastmod>
+    <loc>https://www.desklyy.com/</loc>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://www.desklyy.es/assets/logo.jpg</image:loc>
-      <image:title>Deskly - Plataforma de IA Operativa Privada</image:title>
+      <image:loc>https://www.desklyy.com/assets/logo.jpg</image:loc>
+      <image:title>Deskly - Plataforma de IA Operativa Privada para Empresas</image:title>
     </image:image>
   </url>
 </urlset>

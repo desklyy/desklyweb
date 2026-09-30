@@ -1,8 +1,32 @@
-# robots.txt para Deskly - https://www.desklyy.es/
+# robots.txt para Deskly - https://www.desklyy.com/
 
 User-agent: *
 Allow: /
 Allow: /assets/
 
-# Sitemap oficial
-Sitemap: https://www.desklyy.es/sitemap.xml
+# Directivas para Rastreadores e IA Generativa (GEO / AEO)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Bloqueo de scrapers sin atribución
+User-agent: CCBot
+Disallow: /
+
+# Sitemap y Manifiesto LLM
+Sitemap: https://www.desklyy.com/sitemap.xml
+# LLMs Manifest: https://www.desklyy.com/llms.txt

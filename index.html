@@ -1,4 +1,3 @@
-ate de
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,7 +13,7 @@ ate de
   <meta name="theme-color" content="#0B0F19">
 
   <!-- URL Canónica -->
-  <link rel="canonical" href="https://www.desklyy.es/">
+  <link rel="canonical" href="https://www.desklyy.com/">
 
   <!-- OpenGraph Metadata (Social Media & Messaging) -->
   <meta property="og:locale" content="es_ES">
@@ -22,9 +21,9 @@ ate de
   <meta property="og:title" content="Deskly — Plataforma de Integración Operativa Privada para Empresas">
   <meta property="og:description"
     content="Conecta tu ERP, CRM, manuales y datos en una consola operativa 100% privada y segura. Respuestas en menos de 2s por software de chat corporativo o terminal de voz.">
-  <meta property="og:url" content="https://www.desklyy.es/">
+  <meta property="og:url" content="https://www.desklyy.com/">
   <meta property="og:site_name" content="Deskly">
-  <meta property="og:image" content="https://www.desklyy.es/assets/logo.jpg">
+  <meta property="og:image" content="https://www.desklyy.com/assets/logo.jpg">
   <meta property="og:image:alt" content="Logotipo de Deskly - Plataforma de IA Operativa Privada">
 
   <!-- Twitter Cards -->
@@ -32,7 +31,7 @@ ate de
   <meta name="twitter:title" content="Deskly — Plataforma de Integración Operativa Privada para Empresas">
   <meta name="twitter:description"
     content="Conecta tu ERP, CRM y datos en una consola 100% privada. Respuestas en menos de 2s por software de chat o terminal de voz.">
-  <meta name="twitter:image" content="https://www.desklyy.es/assets/logo.jpg">
+  <meta name="twitter:image" content="https://www.desklyy.com/assets/logo.jpg">
 
   <!-- Favicons multirresolución -->
   <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
@@ -53,65 +52,108 @@ ate de
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://www.desklyy.es/#website",
-        "url": "https://www.desklyy.es/",
+        "@id": "https://www.desklyy.com/#website",
+        "url": "https://www.desklyy.com/",
         "name": "Deskly",
         "description": "Plataforma de IA Operativa 100% Privada y Segura para Empresas",
         "inLanguage": "es-ES",
+        "publisher": { "@id": "https://www.desklyy.com/#organization" },
         "potentialAction": {
           "@type": "SearchAction",
-          "target": "https://www.desklyy.es/?q={search_term_string}",
+          "target": "https://www.desklyy.com/?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
       },
       {
         "@type": "Organization",
-        "@id": "https://www.desklyy.es/#organization",
+        "@id": "https://www.desklyy.com/#organization",
         "name": "Deskly",
-        "url": "https://www.desklyy.es/",
-        "logo": "https://www.desklyy.es/assets/logo.jpg",
+        "url": "https://www.desklyy.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://www.desklyy.com/#logo",
+          "url": "https://www.desklyy.com/assets/logo.jpg",
+          "caption": "Deskly Logo"
+        },
         "email": "deskly@outlook.es",
         "foundingDate": "2026",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Sevilla",
+          "addressRegion": "Andalucía",
           "addressCountry": "ES"
         },
+        "sameAs": [
+          "https://www.wikidata.org/wiki/Q124535205",
+          "https://www.desklyy.com/"
+        ],
         "founders": [
           {
             "@type": "Person",
+            "@id": "https://www.desklyy.com/#alberto-bulnes",
             "name": "Alberto Bulnes Espinosa",
+            "jobTitle": "Co-Founder",
+            "worksFor": { "@id": "https://www.desklyy.com/#organization" },
             "sameAs": "https://www.linkedin.com/in/alberto-bulnes-espinosa-724609292"
           },
           {
             "@type": "Person",
+            "@id": "https://www.desklyy.com/#carlos-rubio",
             "name": "Carlos Rubio Muriel",
+            "jobTitle": "Co-Founder",
+            "worksFor": { "@id": "https://www.desklyy.com/#organization" },
             "sameAs": "https://www.linkedin.com/in/carlos-rubio-muriel-a23a10283"
           },
           {
             "@type": "Person",
+            "@id": "https://www.desklyy.com/#noe-hidalgo",
             "name": "Noé Hidalgo Fernández",
+            "jobTitle": "Co-Founder",
+            "worksFor": { "@id": "https://www.desklyy.com/#organization" },
             "sameAs": "https://www.linkedin.com/in/no%C3%A9-hidalgo-fern%C3%A1ndez-67bb43231"
           }
         ]
       },
       {
         "@type": "SoftwareApplication",
-        "@id": "https://www.desklyy.es/#software",
+        "@id": "https://www.desklyy.com/#software",
         "name": "Deskly IA Operativa",
         "operatingSystem": "All",
         "applicationCategory": "BusinessApplication",
         "description": "Cerebro de inteligencia artificial operativa 100% privado que unifica ERP, CRM, manuales y datos corporativos mediante software de chat y terminal físico de voz.",
+        "publisher": { "@id": "https://www.desklyy.com/#organization" },
         "offers": {
           "@type": "Offer",
           "price": "0.00",
           "priceCurrency": "EUR",
           "availability": "https://schema.org/InStock"
-        }
+        },
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "Retrieval-Augmented Generation",
+            "sameAs": "https://www.wikidata.org/wiki/Q124535205"
+          },
+          {
+            "@type": "Thing",
+            "name": "Enterprise Resource Planning",
+            "sameAs": "https://www.wikidata.org/wiki/Q131610"
+          },
+          {
+            "@type": "Thing",
+            "name": "Customer Relationship Management",
+            "sameAs": "https://www.wikidata.org/wiki/Q192906"
+          },
+          {
+            "@type": "Thing",
+            "name": "On-premises software",
+            "sameAs": "https://www.wikidata.org/wiki/Q3500204"
+          }
+        ]
       },
       {
         "@type": "FAQPage",
-        "@id": "https://www.desklyy.es/#faq",
+        "@id": "https://www.desklyy.com/#faq",
         "mainEntity": [
           {
             "@type": "Question",

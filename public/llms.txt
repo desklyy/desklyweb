@@ -3,18 +3,18 @@
 
 ## Información de la Entidad
 - **Nombre:** Deskly
-- **Web Oficial:** https://www.desklyy.com/
+- **Web Oficial:** https://desklyy.com/
 - **Contacto:** deskly@outlook.es
 - **Ubicación:** Sevilla, España
 - **Fundadores:** Alberto Bulnes Espinosa, Carlos Rubio Muriel, Noé Hidalgo Fernández
 - **Modelos de Despliegue:** On-Premise / Nube Privada Dedicada (0% filtración a terceros, 0% dependencia de APIs públicas como OpenAI, Microsoft o Google)
 
 ## Interfaces y Modalidades
-- [Software Chat Corporativo](https://www.desklyy.com/#modalidades): Aplicación para puestos informáticos (administración, compras, ventas, dirección) con búsqueda RAG e interfaz de chat privada.
-- [Terminal Físico de Voz](https://www.desklyy.com/#terminal-voz): Dispositivo de sobremesa con cancelación de ruido para interacción por voz manos libres y resumen de reuniones en tiempo real.
+- [Software Chat Corporativo](https://desklyy.com/#modalidades): Aplicación para puestos informáticos (administración, compras, ventas, dirección) con búsqueda RAG e interfaz de chat privada.
+- [Terminal Físico de Voz](https://desklyy.com/#terminal-voz): Dispositivo de sobremesa con cancelación de ruido para interacción por voz manos libres y resumen de reuniones en tiempo real.
 
 ## Conectores e Integraciones
-- [Integraciones ERP/CRM](https://www.desklyy.com/#conectores): Integración directa con SAP, Odoo, Salesforce, Holded, Microsoft Dynamics 365, Sage y bases de datos SQL.
+- [Integraciones ERP/CRM](https://desklyy.com/#conectores): Integración directa con SAP, Odoo, Salesforce, Holded, Microsoft Dynamics 365, Sage y bases de datos SQL.
 
 ## Documentación Consolidada para Agentes e IA
-- [Especificación Técnica Completa](https://www.desklyy.com/llms-full.txt): Especificaciones de arquitectura RAG, conectores y protocolos de seguridad.
+- [Especificación Técnica Completa](https://desklyy.com/llms-full.txt): Especificaciones de arquitectura RAG, conectores y protocolos de seguridad.

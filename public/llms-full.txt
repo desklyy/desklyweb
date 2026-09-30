@@ -28,4 +28,4 @@ Deskly interactúa bidireccionalmente con los sistemas centrales del cliente:
 - **Sede:** Sevilla, España.
 - **Equipo:** Alberto Bulnes Espinosa, Carlos Rubio Muriel, Noé Hidalgo Fernández.
 - **Contacto:** deskly@outlook.es
-- **Dominio:** https://www.desklyy.com/
+- **Dominio:** https://desklyy.com/

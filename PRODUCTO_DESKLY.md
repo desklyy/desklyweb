@@ -1,39 +1,43 @@
-# Deskly — Plataforma de IA Operativa 100% Privada y Segura para Empresas
+# Deskly — Plataforma de IA Operativa para Empresas (Mini PC Appliance en Sede + Inferencia Soberana en España)
 
 > **Documento de especificación, arquitectura y modelo de producto**  
-> *Versión 1.4 — Software con Chat Corporativo + Terminal Físico de Voz*
+> *Versión 2.0 — Mini PC Appliance en Sede + Inferencia Segura en Data Center España (ENS / RGPD)*
 
 ---
 
 ## 1. Resumen Ejecutivo y Visión
 
-**Deskly** es una **plataforma integral de inteligencia artificial operativa para empresas** orientada a conectar todas las herramientas de trabajo en un único cerebro inteligente y permitir encontrar cualquier información o ejecutar tareas en **menos de 2 segundos**, con máxima privacidad y seguridad.
+**Deskly** es una **plataforma integral de inteligencia artificial operativa para empresas** orientada a conectar todas las herramientas de trabajo en un único cerebro inteligente y permitir encontrar cualquier información o ejecutar tareas en **menos de 2 segundos**, con máxima privacidad, seguridad y viabilidad económica.
 
-Se compone de dos interfaces de interacción adaptadas a cada puesto de trabajo:
-
-1. **Software de Chat Corporativo Privado**:
-   * Aplicación web y de escritorio con interfaz de chat intuitiva y privada.
-   * Cualquier empleado desde su puesto informático puede consultar información de toda la empresa, verificar inventarios o solicitar tareas en menos de 2 segundos.
-2. **Terminal Físico de Voz Deskly**:
-   * Dispositivo de sobremesa con cancelación de ruido para mesas de oficina, salas de reuniones, despachos o puestos con manos ocupadas.
-   * Permite interactuar mediante la voz, ejecutar tareas ágiles al instante y transcribir/resumir reuniones de equipo con total privacidad.
-3. **Servidor Central Privado (el "Cerebro")**:
-   * Conecta y unifica todas las herramientas que la empresa ya utiliza (ERP, CRM, bases de datos, manuales técnicos y ficheros).
-   * Aloja el modelo de IA propio y el sistema **RAG** (Retrieval-Augmented Generation).
-
-Todo ello bajo un principio innegociable: **100% privado y seguro**. La IA y la infraestructura le pertenecen por completo al cliente. Cero filtraciones y cero dependencia de terceros (OpenAI, Microsoft, Google, etc.).
+La arquitectura de Deskly se basa en un modelo **Appliance Híbrido Soberano**:
+1. **Mini PC Servidor Físico en la Sede del Cliente (el "Cerebro Local")**:
+   * Un hardware compacto, silencioso y de bajo consumo que se entrega directamente e instala en las oficinas/instalaciones de la empresa.
+   * **Donde residen los datos críticos**: el motor RAG (documentación corporativa, fichas técnicas, normativas), los conectores con ERP/CRM, las bases de datos vectoriales y las credenciales/claves de acceso permanecen 100% dentro del Mini PC en la red local del cliente.
+2. **Motor de Inferencia de Alta Capacidad en Data Center en España (Azure OpenAI Enterprise)**:
+   * El Mini PC se conecta de forma cifrada mediante API corporativa privada a endpoints empresariales de Azure OpenAI alojados **en España** (Región Spain Central).
+   * **Privacidad y Cumplimiento RGPD**: Cumplimiento estricto del RGPD europeo. La infraestructura subyacente del centro de datos cuenta con certificación ENS (Esquema Nacional de Seguridad) e ISO 27001 de Microsoft.
+   * **Cero Reentrenamiento & Cero Retención**: Los prompts y respuestas no se almacenan ni se utilizan jamás para entrenar modelos de OpenAI ni de Microsoft.
+   * **Optimización Drástica de Costes**: Elimina la necesidad de adquirir costosos servidores con GPUs de 15.000€-30.000€ y mantenimiento complejo, permitiendo una IA de máxima potencia a un coste accesible para pymes y medianas empresas.
+3. **Interfaces de Usuario Flexibles**:
+   * **Software de Chat Corporativo Privado**: Aplicación web y de escritorio accesible desde cualquier navegador dentro de la red corporativa.
+   * **Terminal Físico de Voz Deskly**: Dispositivo de sobremesa con cancelación de ruido para despachos, mesas operativas, salas de reuniones o puestos con manos ocupadas.
 
 ---
 
-## 2. Los Dos Grandes Pilares Diferenciales
+## 2. Los Grandes Pilares Diferenciales
 
-### Pilar I: Soberanía, Privacidad Absoluta y Cero Dependencias
-* **La IA le pertenece al cliente al 100%**: Los pesos del modelo, el motor semántico y la base de conocimiento son propiedad exclusiva de la empresa.
-* **Cero fugas hacia terceros**: Nada de llamadas a APIs de OpenAI, Microsoft Copilot o Google Gemini. La información confidencial, procesos industriales, tarifas, inventarios y clientes jamás salen del entorno controlado del cliente.
-* **Blindaje contra filtraciones**: Elimina el riesgo de espionaje corporativo, brechas de seguridad en nubes públicas o uso no consentido de datos para reentrenar modelos ajenos.
-* **Independencia tecnológica**: La empresa no queda atada a cambios de precios, caídas globales de servicio, límites de cuotas ni cambios de términos de servicio de terceros.
+### Pilar I: Soberanía de Datos, Privacidad Blindada y Cumplimiento ENS
+* **Tus datos nunca salen de tu control**: Los documentos confidenciales, procesos industriales, manuales, tarifas y bases de datos se almacenan y vectorizan localmente dentro del **Mini PC en la propia empresa**.
+* **Centro de datos en España**: El procesamiento cognitivo de inferencia se ejecuta en centros de datos ubicados en territorio español, bajo estricto cumplimiento del **RGPD** y apoyándose en infraestructura con certificación ENS de Microsoft.
+* **Garantía contractual de confidencialidad**: Conexión a través de endpoints empresariales dedicados (Enterprise SLA) que garantizan por contrato que ninguna consulta se almacena, ni se expone a terceros, ni se utiliza para reentrenar modelos.
+* **Aislamiento de credenciales**: Las credenciales de acceso al ERP (SAP, Odoo, Navision), CRM y bases de datos SQL nunca viajan a la nube; se autentican y ejecutan directamente desde el Mini PC en la red interna.
 
-### Pilar II: Conocimiento Unificado y Doble Capacidad (Búsqueda < 2s + Ejecución)
+### Pilar II: Reducción Drástica de Costes y Despliegue Plug & Play
+* **Sin inversión astronómica en hardware**: Los despliegues tradicionales de modelos locales pesados requerían infraestructura de servidores GPU extremadamente cara, ruidosa y con alto consumo eléctrico.
+* **Appliance Plug & Play**: El cliente recibe un Mini PC preconfigurado. Solo requiere conectarlo a la corriente y a la red local (Ethernet/Wi-Fi). En menos de 48 horas el sistema está sincronizado y operativo.
+* **Costes predecibles y contenidos**: Tarifas pensadas para pymes y medianas empresas, evitando sorpresas de facturación y garantizando la máxima potencia de razonamiento del mercado.
+
+### Pilar III: Conocimiento Unificado y Doble Capacidad (Búsqueda < 2s + Ejecución)
 Deskly no se queda en dar respuestas conversacionales; unifica todas las herramientas y es un operador activo dentro de los sistemas:
 
 ```
@@ -44,50 +48,50 @@ Deskly no se queda en dar respuestas conversacionales; unifica todas las herrami
                      │ Consultas / Acciones                            │ Audio cifrado
                      │ (Texto)                                         │ (Voz bidireccional)
                      └─────────────────────────┬───────────────────────┘
-                                               │
+                                               │ (Red Local / LAN Cifrada)
                                                ▼
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 SERVIDOR CENTRAL DESKLY                                   │
-│                               (On-Premise o Nube Privada)                                 │
+│                       MINI PC SERVIDOR FÍSICO DESKLY (EN LA EMPRESA)                      │
 │                                                                                           │
-│   ┌───────────────────────────┐                 ┌─────────────────────────────────────┐   │
-│   │   MOTOR DE IA PROPIO      │ ◄─────────────► │         SISTEMA RAG INTERNO         │   │
-│   │   (Voz, Lenguaje, Razon.) │                 │  (Procedimientos, Manuales, Docs)   │   │
-│   └─────────────┬─────────────┘                 └─────────────────────────────────────┘   │
-│                 │                                                                         │
-│                 ▼                                                                         │
+│   ┌─────────────────────────────────────┐       ┌─────────────────────────────────────┐   │
+│   │         SISTEMA RAG INTERNO         │       │    ORQUESTADOR DE PERMISOS Y ROLES  │   │
+│   │  (Documentos, Manuales, Fichas)     │       │     (Autenticación y Auditoría)     │   │
+│   └──────────────────┬──────────────────┘       └──────────────────┬──────────────────┘   │
+│                      │                                             │                      │
+│                      ▼                                             ▼                      │
 │   ┌───────────────────────────────────────────────────────────────────────────────────┐   │
 │   │                    CAPA DE CONECTORES Y ACCIONES EN TIEMPO REAL                   │   │
-│   │                     (ERP, CRM, SGA/WMS, Bases de Datos, APIs)                     │   │
+│   │              (APIs, Bases de Datos SQL, ERP Odoo/SAP, CRM, Webhooks)              │   │
 │   └─────────────────────────────────────┬─────────────────────────────────────────────┘   │
 └─────────────────────────────────────────┼─────────────────────────────────────────────────┘
-                                          ▼
-               ┌─────────────────────────────────────────────────────┐
-               │         HERRAMIENTAS ACTUALES DE LA EMPRESA         │
-               │       (SAP, Odoo, Navision, Holded, CRM, etc.)      │
-               └─────────────────────────────────────────────────────┘
+                                          │
+                  ┌───────────────────────┴────────────────────────┐
+                  │                                                │
+                  ▼ (Llamada Cifrada TLS 1.3 / Endpoint Privado)   ▼ (Acceso LAN Local)
+┌───────────────────────────────────────────────┐  ┌────────────────────────────────────────┐
+│     INFERENCIA SEGURA EN ESPAÑA               │  │   HERRAMIENTAS VIVAS DE LA EMPRESA     │
+│   (Data Center Azure España - Spain Central)  │  │ (ERP, CRM, SQL Server, Holded, etc.)   │
+│   • Infraestructura con ENS Nivel Alto & RGPD │  └────────────────────────────────────────┘
+│   • Cero retención y cero reentrenamiento     │
+│   • Máxima velocidad de razonamiento (< 2s)   │
+└───────────────────────────────────────────────┘
 ```
 
-### Pilar III: Más que un Producto, un Servicio de Personalización al 100%
-Deskly no se vende como una herramienta cerrada o genérica que el cliente deba aprender a configurar solo:
+### Pilar IV: Servicio Llave en Mano y Personalización al 100%
 * **Entendimiento de arriba a abajo del organigrama**:
-  * Para la **Dirección General / C-Level**: control estratégico, auditoría, trazabilidad y blindaje de la propiedad intelectual.
+  * Para la **Dirección General / C-Level**: control estratégico, auditoría completa, trazabilidad y blindaje de la propiedad intelectual.
   * Para los **Mandos Intermedios y Jefes de Equipo**: supervisión de flujos, reducción de incidencias y datos actualizados al segundo.
-  * Para el **Personal Operativo de Primera Línea** (almacén, taller, mostrador, compras): interfaces directas sin fricción (por chat o altavoz manos libres), sin pantallas complejas y con respuestas instantáneas.
-* **Adaptación a la operativa y jerga interna**:
-  * El motor RAG y los conectores se afinan a medida con las referencias, acrónimos, manuales y hábitos propios de la empresa.
-* **Conexión integral y derribo de silos**:
-  * Conecta departamentos que habitualmente operan de forma aislada, mejorando la colaboración global y la velocidad de respuesta.
-* **Ingeniería llave en mano**: El equipo de Deskly asume la integración completa con el ERP/CRM y la infraestructura del cliente.
+  * Para el **Personal Operativo** (almacén, taller, mostrador, compras): interfaces directas sin fricción (por chat o altavoz manos libres), sin pantallas complejas y con respuestas instantáneas.
+* **Adaptación a la jerga y procesos internos**: afinado con las referencias, códigos de producto, manuales y hábitos propios de la empresa.
+* **Integración sin fricción técnica**: El equipo de Deskly se encarga de parametrizar el Mini PC, los conectores y la base de conocimiento sin cargar de trabajo al departamento de IT del cliente.
 
 ---
 
 ## 3. Capacidades Operativas: Búsqueda y Ejecución
 
-Tanto desde el **Chat de Software** como desde el **Altavoz Conversacional**, Deskly ofrece dos capacidades críticas:
+Tanto desde el **Chat de Software** como desde el **Terminal de Voz**, Deskly ofrece dos capacidades críticas:
 
-### A. Capacidad de Búsqueda y Consulta (RAG + Datos Vivos)
-Gracias al motor **RAG** (Retrieval-Augmented Generation) y la sincronización con las bases de datos:
+### A. Capacidad de Búsqueda y Consulta (RAG Local + Datos Vivos)
 * **Procedimientos y normativa interna**: *“¿Cuál es el protocolo de seguridad para la parada de emergencia en la línea 2?”*
 * **Fichas técnicas y manuales**: *“¿Qué referencia de repuesto se necesita para la bomba hidráulica?”*
 * **Consultas de negocio en tiempo real**: *“¿Cuánto stock disponible queda del producto X?”* o *“¿Cuál fue el último presupuesto emitido al cliente Gómez?”*
@@ -102,7 +106,7 @@ Deskly no solo lee y explica, **actúa y escribe** en el software de la empresa:
 
 ---
 
-## 4. Modalidades de Uso: Flexibilidad Total
+## 4. Modalidades de Uso
 
 1. **Modalidad Software / Chat (Para puestos con ordenador)**:
    * Empleados de administración, ventas, compras, dirección y gestión.
@@ -116,43 +120,48 @@ Deskly no solo lee y explica, **actúa y escribe** en el software de la empresa:
 
 ---
 
-## 5. Arquitectura Técnica y Despliegue
+## 5. Arquitectura Técnica Detallada
 
-1. **El Servidor Central Deskly**:
-   * **LLM Propio y Soberano**: Modelo afinado y optimizado para lenguaje natural y operaciones de negocio.
-   * **Base Vectorial & RAG**: Indexa manuales, normativas, contratos, guías de calidad y procedimientos internos.
-   * **Conectores ERP/CRM**: Módulos de conexión (APIs, bases de datos SQL, Webhooks) parametrizados con control de roles y permisos.
-2. **Terminal Físico de Voz**:
-   * Matriz de micrófonos con cancelación de ruido ambiente.
-   * Altavoz de alta nitidez.
-   * Conectividad cifrada directa a la red local hacia el servidor Deskly.
-3. **Opciones de Alojamiento Blindado**:
-   * **On-Premise**: Desplegado en un servidor local dentro del rack del cliente.
-   * **Nube Privada Dedicada**: Desplegado en una instancia/VPC aislada exclusiva para el cliente (sin compartición con otros clientes ni APIs públicas).
+1. **El Mini PC Servidor Físico Deskly**:
+   * **Ubicación**: Instalado físicamente en las instalaciones de la empresa (Plug & Play, Ethernet/Wi-Fi).
+   * **Capa RAG & Almacenamiento Local**: Base de datos vectorial interna (Chroma / Qdrant) con embeddings locales o seguros para indexar contratos, fichas técnicas, normativas y manuales.
+   * **Capa de Conectores Locales**: Módulos de conexión directa con ERP (Odoo, SAP, Navision, Holded) y bases de datos internas (PostgreSQL, MySQL, SQL Server) protegidos tras el firewall de la empresa.
+   * **Módulo de Seguridad y RBAC**: Control de acceso granular basado en roles de usuario.
+2. **Motor de Inferencia Soberano (Data Center España)**:
+   * **Infraestructura**: Endpoint corporativo de Azure OpenAI alojado en la región **Spain Central** (Madrid, España).
+   * **Seguridad de la Infraestructura**: Centro de datos con certificación ENS (Esquema Nacional de Seguridad) categoría Alta e ISO 27001 por parte de Microsoft.
+   * **Privacidad**: Cumplimiento RGPD, SLA enterprise sin almacenamiento persistente de prompts y con prohibición explícita de reentrenamiento de modelos con datos de clientes.
+   * **Latencia ultrabaja**: Al estar alojado en España, los tiempos de respuesta se sitúan sistemáticamente por debajo de 2 segundos.
+3. **Terminal Físico de Voz**:
+   * Matriz de micrófonos con cancelación de ruido ambiental.
+   * Altavoz de alta nitidez para respuestas por voz sintetizada ultranatural.
+   * Conectividad cifrada a la red local hacia el Mini PC Deskly.
 
 ---
 
 ## 6. Comparativa con Alternativas
 
-| Característica | Asistentes Cloud Públicos (ChatGPT / Copilot) | Terminales Industriales Rígidos (Zebra / Vocollect) | Deskly |
+| Característica | Asistentes Cloud Públicos Genéricos (ChatGPT / Copilot) | Servidores GPU On-Premise Tradicionales | Deskly (Appliance Híbrido Soberano) |
 | :--- | :--- | :--- | :--- |
-| **Propiedad y Privacidad** | ❌ Pertenecen a OpenAI / Microsoft / Google | ⚠️ Soluciones cerradas pero no inteligentes | ✅ **100% propiedad del cliente, cero filtraciones** |
-| **Interfaz de Acceso** | ❌ Solo web/móvil genérico | ⚠️ Dispositivos industriales muy aparatosos | ✅ **Chat de software propio + Terminal físico de voz** |
-| **Conocimiento Interno (RAG)**| ⚠️ Limitado o expuesto a nubes públicas | ❌ Inexistente (solo comandos pregrabados) | ✅ **RAG completo con todos los manuales y procesos** |
-| **Ejecución en ERP / CRM** | ❌ Difícil y con riesgos de seguridad | ⚠️ Tareas hiper-específicas de almacén | ✅ **Búsqueda y ejecución activa en el software actual** |
-| **Costes y Dependencia** | ⚠️ Suscripción recurrente + tokens volátiles | ❌ Inversiones astronómicas solo para gigantes | ✅ **Diseñado y tarificado para pymes, sin dependencias** |
+| **Residencia de Datos y APIs** | ❌ Servidores en EE.UU., datos expuestos | ✅ En la empresa pero con altísimo coste de hardware | ✅ **Datos, RAG y conectores en Mini PC en la empresa** |
+| **Inferencia y Cumplimiento** | ❌ Nubes públicas genéricas | ⚠️ Modelos locales pequeños o limitados | ✅ **Data Center en España con certificación ENS y RGPD** |
+| **Coste de Adquisición** | ⚠️ Suscripciones por usuario acumulativas | ❌ Servidores GPU de 15.000€-30.000€ + mantenimiento | ✅ **Mini PC compacto a bajo coste, accesible para pymes** |
+| **Despliegue y Mantenimiento** | ❌ Sin integración con ERP local | ❌ Exige equipo especializado de sistemas e IT | ✅ **Plug & play en 48 horas, soporte gestionado** |
+| **Integración ERP / CRM** | ❌ Inexistente o compleja con riesgos de seguridad | ⚠️ Requiere desarrollos largos a medida | ✅ **Conectores activos y ejecución de tareas directa** |
+| **Terminal de Voz Físico** | ❌ No disponible | ❌ No disponible | ✅ **Terminal de voz para salas y puestos de trabajo** |
 
 ---
 
 ## 7. Sobre el Equipo
 
 * **Origen**: Desarrollado en Sevilla, España.
-* **Equipo fundador**:
-  * **Alberto Bulnes Espinosa** ([LinkedIn](https://www.linkedin.com/in/alberto-bulnes-espinosa-724609292))
-  * **Carlos Rubio Muriel** ([LinkedIn](https://www.linkedin.com/in/carlos-rubio-muriel-a23a10283))
-  * **Noé Hidalgo Fernández** ([LinkedIn](https://www.linkedin.com/in/no%C3%A9-hidalgo-fern%C3%A1ndez-67bb43231))
-* **Contacto**: `deskly@outlook.es`
-* **Web**: [www.desklyy.es](https://www.desklyy.es/)
+* **Equipo directivo y fundador**:
+  * **Alberto Bulnes Espinosa** — CEO ([LinkedIn](https://www.linkedin.com/in/alberto-bulnes-espinosa-724609292))
+  * **Alejandro Ruiz Navarrete** — CTO ([LinkedIn](https://www.linkedin.com/in/alejandro-ruiz-navarrete-808698268/))
+  * **Carlos Rubio Muriel** — CFO ([LinkedIn](https://www.linkedin.com/in/carlos-rubio-muriel-a23a10283))
+  * **Noé Hidalgo Fernández** — COO ([LinkedIn](https://www.linkedin.com/in/no%C3%A9-hidalgo-fern%C3%A1ndez-67bb43231))
+* **Contacto**: `contacto@desklyy.com`
+* **Web**: [www.desklyy.com](https://www.desklyy.com/)
 
 ---
 
@@ -166,4 +175,4 @@ Deskly no solo lee y explica, **actúa y escribe** en el software de la empresa:
   * **Azul Eléctrico / Deskly Blue**: `#1D68FE` (identidad primaria, tecnología y agilidad).
   * **Fondo Dark Navy / Grafito Profundo**: `#0B0F19` a `#0F172A` (elegancia, seguridad y privacidad blindada).
   * **Blanco y Grises Fríos**: `#FFFFFF`, `#F8FAFC` y `#94A3B8` (legibilidad y contraste limpio).
-* **Asset oficial**: Almacenado localmente en [`assets/logo.jpg`](file:///c:/Users/noehi/OneDrive/Escritorio/desklyweb/assets/logo.jpg).
+* **Asset oficial**: Almacenado localmente en [`assets/logo.jpg`](file:///c:/Users/noehi/Desktop/desklyweb/assets/logo.jpg).

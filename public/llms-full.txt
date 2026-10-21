@@ -1,31 +1,32 @@
-# Especificación Técnica y Arquitectura de Deskly — IA Operativa Privada
+# Especificación Técnica y Arquitectura de Deskly — IA Operativa para Empresas
 
 ## 1. Resumen Ejecutivo
-Deskly es un cerebro de inteligencia artificial operativa 100% privado y seguro para empresas. Permite unificar el conocimiento fragmentado (ERP, CRM, bases de datos SQL, manuales técnicos y ficheros) y ofrece capacidad de consulta y ejecución en menos de 2 segundos.
+Deskly es un cerebro de inteligencia artificial operativa privado y seguro para empresas. Permite unificar el conocimiento fragmentado (ERP, CRM, bases de datos SQL, manuales técnicos y ficheros) y ofrece capacidad de consulta y ejecución en menos de 2 segundos mediante un servidor mini físico dedicado que se entrega e instala directamente en las oficinas o instalaciones del cliente.
 
 ## 2. Pilares Fundamentales
-1. **Soberanía y Privacidad Absoluta:**
-   - La infraestructura se aloja On-Premise (servidores locales en el rack del cliente) o en una Nube Privada Dedicada (VPC aislada).
-   - Los pesos del modelo, el motor semántico RAG y la base vectorial pertenecen al cliente.
-   - Cero llamadas a APIs de OpenAI, Microsoft Copilot o Google Gemini. Cero riesgos de espionaje o fuga de datos corporativos.
+1. **Soberanía y Privacidad de Datos en Sede:**
+   - La empresa recibe un servidor mini físico (Mini PC Appliance preconfigurado).
+   - En este hardware local residen los documentos corporativos, las bases de datos vectoriales RAG, los conectores directos con el ERP/CRM y las credenciales de acceso, protegidos tras el propio firewall de la empresa.
+   - Cumplimiento íntegro de la normativa europea RGPD. Cero retención y cero reentrenamiento: los datos y consultas de la empresa jamás se utilizan para alimentar o entrenar modelos de inteligencia artificial ajenos.
+   - Elimina la necesidad de adquirir costosos servidores con GPUs complejas de decenas de miles de euros, haciendo accesible la tecnología para pequeñas y medianas empresas.
 
 2. **Doble Capacidad: Búsqueda RAG + Ejecución en Sistemas:**
    - Búsqueda en < 2s sobre datos estructurados (SQL, ERP) y no estructurados (PDFs, manuales).
-   - Ejecución activa de acciones: anotar salidas de inventario, crear órdenes de reparación, registrar notas en CRM y notificar a responsables.
+   - Ejecución activa de acciones: anotar salidas de inventario, crear órdenes de trabajo, registrar notas de clientes en CRM y disparar notificaciones operativas.
 
 3. **Dos Modalidades Adaptadas al Puesto:**
-   - **Software de Chat Corporativo:** Aplicación web/desktop privada para puestos con ordenador.
-   - **Terminal Físico de Voz Deskly:** Dispositivo de sobremesa con matriz de micrófonos con cancelación de ruido para despachos, salas de reuniones y entornos industriales manos libres.
+   - **Software de Chat Corporativo:** Aplicación web y desktop privada para puestos con ordenador (administración, compras, ventas, dirección).
+   - **Terminal Físico de Voz Deskly:** Dispositivo de sobremesa con matriz de micrófonos y cancelación de ruido para despachos, salas de reuniones y entornos operativos manos libres.
 
 ## 3. Integraciones de Software
-Deskly interactúa bidireccionalmente con los sistemas centrales del cliente:
-- ERPs: SAP, Odoo, Microsoft Dynamics 365, Holded, Sage, Navision.
+Deskly interactúa bidireccionalmente desde el servidor mini local con los sistemas centrales del cliente:
+- ERPs: SAP, Odoo, Microsoft Dynamics 365, Holded, Sage, Navision, Factusol.
 - CRMs: Salesforce, HubSpot, Zoho CRM.
-- Bases de Datos: PostgreSQL, MySQL, SQL Server, Oracle, MongoDB.
-- Documentos: PDFs, manuales de procedimiento, contratos, normativas ISO.
+- Bases de Datos: PostgreSQL, MySQL, SQL Server, Oracle.
+- Documentos: PDFs, manuales de procedimiento, especificaciones técnicas, contratos, normativas ISO.
 
-## 4. Equipo Fundador y Contacto
+## 4. Equipo Directivo, Fundador y Contacto
 - **Sede:** Sevilla, España.
-- **Equipo:** Alberto Bulnes Espinosa, Carlos Rubio Muriel, Noé Hidalgo Fernández.
-- **Contacto:** deskly@outlook.es
+- **Equipo:** Alberto Bulnes Espinosa (CEO), Alejandro Ruiz Navarrete (CTO), Carlos Rubio Muriel (CFO), Noé Hidalgo Fernández (COO).
+- **Contacto:** contacto@desklyy.com
 - **Dominio:** https://desklyy.com/

@@ -44,12 +44,31 @@
     nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
   }
 
+  const cleanUrlHash = () => {
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.pathname + window.location.search);
+    }
+  };
+
+  // Si la página se abre con un hash antiguo pegado (ej. #procesos), desplaza y limpia la URL
+  if (window.location.hash) {
+    const initialTarget = document.querySelector(window.location.hash);
+    if (initialTarget) {
+      setTimeout(() => {
+        const y = initialTarget.getBoundingClientRect().top + window.pageYOffset - 64;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }, 100);
+    }
+    cleanUrlHash();
+  }
+
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
       if (id === '#' || id === '#top') {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        cleanUrlHash();
         return;
       }
       const target = document.querySelector(id);
@@ -57,6 +76,7 @@
       e.preventDefault();
       const y = target.getBoundingClientRect().top + window.pageYOffset - 64;
       window.scrollTo({ top: y, behavior: 'smooth' });
+      cleanUrlHash();
     });
   });
 
@@ -122,14 +142,14 @@
         src: [['erp', 0.4]],
         total: 1.2,
         a: '142 unidades en el almacén central. 30 están reservadas para Talleres García.',
-        meta: 'Fuente: Odoo · inventario'
+        meta: 'Fuente: ERP · inventario'
       },
       {
         q: 'Crea una orden de reparación para la máquina 3, prioridad alta.',
         src: [['docs', 0.3], ['erp', 0.5]],
         total: 1.6,
         a: 'Orden OR-2291 creada y asignada al equipo de mantenimiento del turno de tarde.',
-        meta: '<strong>Acción ejecutada</strong> · Odoo · órdenes de trabajo'
+        meta: '<strong>Acción ejecutada</strong> · ERP · órdenes de trabajo'
       },
       {
         q: '¿Qué hago si salta la alarma de presión en la línea 3?',
@@ -142,8 +162,8 @@
         q: 'Añade una nota al cliente Pérez: reunión el martes a las 10.',
         src: [['crm', 0.4], ['cal', 0.3]],
         total: 1.4,
-        a: 'Nota añadida en HubSpot y reunión creada en tu calendario para el martes a las 10:00.',
-        meta: '<strong>Acción ejecutada</strong> · HubSpot · Outlook'
+        a: 'Nota añadida en el CRM y cita creada en tu calendario para el martes a las 10:00.',
+        meta: '<strong>Acción ejecutada</strong> · CRM · Calendario'
       }
     ];
 
@@ -238,45 +258,45 @@
     const scenarios = {
       odoo: {
         title: 'Consulta ERP',
-        system: 'Odoo',
+        system: 'ERP',
         user: '¿Cómo va el pedido de Talleres García? ¿Tenemos válvulas suficientes?',
         text: 'El pedido está en tránsito y hay stock de sobra. Te dejo el detalle:',
-        card: 'Pedido PV-1187', badge: 'Odoo ERP',
+        card: 'Pedido PV-1187', badge: 'ERP',
         rows: [
           ['Cliente', 'Talleres García S.L.'],
           ['Estado', 'En tránsito, entrega mañana a las 10:30'],
           ['Stock válvula V-12', '142 unidades disponibles']
         ],
         actions: [['Ver albarán', true], ['Avisar a almacén', false]],
-        sources: 'Odoo · inventario, pedidos de venta'
+        sources: 'ERP · inventario, pedidos de venta'
       },
       outlook: {
-        title: 'Reunión con Alberto',
-        system: 'Outlook',
+        title: 'Agendar cita',
+        system: 'Email / Calendario',
         user: 'Agéndame una reunión con Alberto el martes a las 16:00',
-        text: 'He preparado la reunión. Revísala y confírmala:',
-        card: 'Reunión preparada', badge: 'Outlook',
+        text: 'He preparado la cita en el calendario. Revísala y confírmala:',
+        card: 'Cita en calendario', badge: 'Email / Calendario',
         rows: [
           ['Asunto', 'Reunión con Alberto'],
           ['Cuándo', 'Martes 20 de octubre, 16:00 – 17:00'],
-          ['Asistentes', 'alberto@desklyy.com']
+          ['Asistentes', 'alberto@empresa.com']
         ],
         actions: [['Confirmar', true], ['Cambiar hora', false]],
-        sources: 'Outlook · calendario'
+        sources: 'Calendario corporativo'
       },
       hubspot: {
         title: 'Facturación del mes',
-        system: 'HubSpot',
+        system: 'CRM',
         user: '¿Cuánto hemos facturado este mes y qué oportunidades hay abiertas?',
         text: 'Este mes vais por encima del objetivo. Resumen:',
-        card: 'Resumen comercial', badge: 'HubSpot CRM',
+        card: 'Resumen comercial', badge: 'CRM',
         rows: [
           ['Facturación', '148.500 € (+12 % vs. mes anterior)'],
           ['Previsión', '172.000 € al cierre'],
           ['Oportunidades', 'Grupo Industriales 18.500 € · Automoción 12.000 €']
         ],
         actions: [['Descargar informe', true], ['Ver por comercial', false]],
-        sources: 'HubSpot · negocios · Contabilidad'
+        sources: 'CRM · ventas y oportunidades'
       },
       iso: {
         title: 'Protocolo de seguridad',
@@ -496,5 +516,26 @@
       });
     }
   }
+
+  /* ========================================================================
+     INDICADORES DE SCROLL LATERAL IMPLÍCITOS (Arquitectura y Comparativa)
+     ======================================================================== */
+  const setupHorizontalScrollCue = (wrapSelector, scrollElSelector) => {
+    const wrap = document.querySelector(wrapSelector);
+    const scroller = scrollElSelector ? document.querySelector(scrollElSelector) : wrap;
+    if (!wrap || !scroller) return;
+
+    const updateCue = () => {
+      const isEnd = scroller.scrollLeft + scroller.clientWidth >= scroller.scrollWidth - 12;
+      wrap.classList.toggle('scrolled-end', isEnd);
+    };
+
+    scroller.addEventListener('scroll', updateCue, { passive: true });
+    window.addEventListener('resize', updateCue, { passive: true });
+    updateCue();
+  };
+
+  setupHorizontalScrollCue('.arch-wrap', '#arch-scroll');
+  setupHorizontalScrollCue('.table-wrap');
 })();
 

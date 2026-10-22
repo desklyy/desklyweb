@@ -131,35 +131,40 @@ ${bottlenecks ? bottlenecks : 'No se detallaron procesos concretos.'}
               Hola <strong>${name}</strong>,
             </p>
             <p style="font-size: 15px; color: #334155; margin-bottom: 20px;">
-              Hemos recibido tu solicitud de Diagnóstico Operativo para <strong>${company}</strong>.
+              ¡Muchas gracias por solicitar tu <strong>Diagnóstico Operativo</strong> para <strong>${company}</strong>! Hemos recibido tu solicitud correctamente.
             </p>
             <p style="font-size: 14.5px; color: #475569; margin-bottom: 24px;">
-              En Deskly ayudamos a empresas a <strong>optimizar el tiempo de trabajo</strong> conectando de forma segura sus sistemas (como <strong>${toolsFormatted}</strong>) dentro de su propia red local, permitiendo resolver consultas en 2 segundos sin que los datos salgan jamás de la oficina.
+              En Deskly ayudamos a empresas a optimizar su tiempo de trabajo conectando sus herramientas (como <strong>${toolsFormatted}</strong>) en un servidor local dentro de su oficina, con respuestas inmediatas y máxima seguridad.
             </p>
 
             <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
               <div style="margin: 0 0 12px; font-size: 14px; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.04em;">
-                Próximos pasos
+                ¿Cuáles son los siguientes pasos?
               </div>
               <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; font-size: 14px; color: #475569;">
                 <tr>
                   <td style="width: 24px; vertical-align: top; padding: 6px 0; font-weight: 700; color: #1658F5;">1.</td>
-                  <td style="padding: 6px 0;">Analizamos la compatibilidad con tus herramientas (<strong>${toolsFormatted}</strong>) y los cuellos de botella que nos has indicado.</td>
+                  <td style="padding: 6px 0;">Revisamos tus sistemas y las necesidades que nos has indicado.</td>
                 </tr>
                 <tr>
                   <td style="width: 24px; vertical-align: top; padding: 6px 0; font-weight: 700; color: #1658F5;">2.</td>
-                  <td style="padding: 6px 0;">En menos de 24 horas laborables nos pondremos en contacto contigo para coordinar una breve sesión técnica de 30 minutos.</td>
+                  <td style="padding: 6px 0;">En menos de 24 horas laborables te contactaremos para agendar una sesión técnica de 30 minutos sin coste.</td>
                 </tr>
                 <tr>
                   <td style="width: 24px; vertical-align: top; padding: 6px 0; font-weight: 700; color: #1658F5;">3.</td>
-                  <td style="padding: 6px 0;">Te mostraremos cómo unificar consultas y ahorrar horas a tu equipo con una demostración adaptada a vuestra operativa, sin compromiso.</td>
+                  <td style="padding: 6px 0;">Te mostraremos la propuesta exacta y cómo funcionaría Deskly con tu operativa, sin compromiso.</td>
                 </tr>
               </table>
             </div>
 
-            <p style="font-size: 14px; color: #64748b; margin-bottom: 28px;">
-              Si deseas adelantarnos más detalles, puedes responder directamente a este correo o escribirnos a <a href="mailto:contacto@desklyy.com" style="color: #1658F5; text-decoration: underline;">contacto@desklyy.com</a>.
+            <p style="font-size: 14.5px; color: #334155; margin-bottom: 20px;">
+              Para cualquier otra cosa, duda o información adicional que quieras comentarnos, puedes escribirnos directamente a nuestro correo: <a href="mailto:contacto@desklyy.com" style="color: #1658F5; font-weight: 600; text-decoration: underline;">contacto@desklyy.com</a>.
             </p>
+
+            <!-- Aviso noreply -->
+            <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 6px; font-size: 13px; color: #92400e; margin-bottom: 28px;">
+              <strong>Aviso:</strong> Este es un correo automático enviado desde una dirección desatendida (<em>noreply</em>). Por favor, <strong>no respondas a este email</strong>; si necesitas ponerte en contacto escríbenos a <a href="mailto:contacto@desklyy.com" style="color: #92400e; font-weight: 600;">contacto@desklyy.com</a>.
+            </div>
 
             <div style="padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 13.5px; color: #475569;">
               <strong>Equipo de Ingeniería Deskly</strong><br>

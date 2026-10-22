@@ -1,4 +1,4 @@
-# robots.txt para Deskly - https://desklyy.com/
+# robots.txt para Deskly - https://www.desklyy.com/
 
 User-agent: *
 Allow: /
@@ -28,5 +28,5 @@ User-agent: CCBot
 Disallow: /
 
 # Sitemap y Manifiesto LLM
-Sitemap: https://desklyy.com/sitemap.xml
-# LLMs Manifest: https://desklyy.com/llms.txt
+Sitemap: https://www.desklyy.com/sitemap.xml
+# LLMs Manifest: https://www.desklyy.com/llms.txt

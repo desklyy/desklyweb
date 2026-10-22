@@ -57,7 +57,7 @@ export default async function handler(req, res) {
                       <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td style="width: 32px; vertical-align: middle;">
-                            <img src="https://www.desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
+                            <img src="https://desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
                           </td>
                           <td style="padding-left: 10px; vertical-align: middle; font-size: 18px; font-weight: 700; color: #0D1627; letter-spacing: -0.02em;">
                             Desk<span style="color: #1658F5;">ly</span>
@@ -130,7 +130,7 @@ ${bottlenecks ? bottlenecks : 'No se especificaron detalles.'}
                 <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 26px;">
                   <tr>
                     <td style="width: 32px; vertical-align: middle;">
-                      <img src="https://www.desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
+                      <img src="https://desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
                     </td>
                     <td style="padding-left: 10px; vertical-align: middle; font-size: 18px; font-weight: 700; color: #0D1627; letter-spacing: -0.02em;">
                       Desk<span style="color: #1658F5;">ly</span>
@@ -155,7 +155,7 @@ ${bottlenecks ? bottlenecks : 'No se especificaron detalles.'}
                 <!-- Signature -->
                 <div style="padding-top: 20px; border-top: 1px solid #f1f5f9; font-size: 13.5px; color: #0f172a; line-height: 1.5;">
                   <strong>Deskly</strong><br>
-                  <span style="color: #64748b; font-size: 12.5px;">Sevilla, España · <a href="https://www.desklyy.com" style="color: #1658F5; text-decoration: none;">www.desklyy.com</a></span>
+                  <span style="color: #64748b; font-size: 12.5px;">Sevilla, España · <a href="https://desklyy.com" style="color: #1658F5; text-decoration: none;">desklyy.com</a></span>
                 </div>
 
                 <!-- Footer notice -->

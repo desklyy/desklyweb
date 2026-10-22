@@ -161,7 +161,7 @@ Deskly no solo lee y explica, **actúa y escribe** en el software de la empresa:
   * **Carlos Rubio Muriel** — CFO ([LinkedIn](https://www.linkedin.com/in/carlos-rubio-muriel-a23a10283))
   * **Noé Hidalgo Fernández** — COO ([LinkedIn](https://www.linkedin.com/in/no%C3%A9-hidalgo-fern%C3%A1ndez-67bb43231))
 * **Contacto**: `contacto@desklyy.com`
-* **Web**: [www.desklyy.com](https://www.desklyy.com/)
+* **Web**: [desklyy.com](https://desklyy.com/)
 
 ---
 

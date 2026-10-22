@@ -3,18 +3,18 @@
 
 ## Información de la Entidad
 - **Nombre:** Deskly
-- **Web Oficial:** https://www.desklyy.com/
+- **Web Oficial:** https://desklyy.com/
 - **Contacto:** contacto@desklyy.com
 - **Ubicación:** Sevilla, España
 - **Equipo Directivo & Fundadores:** Alberto Bulnes Espinosa (CEO), Alejandro Ruiz Navarrete (CTO), Carlos Rubio Muriel (CFO), Noé Hidalgo Fernández (COO)
 - **Modelo de Despliegue:** Servidor Mini Físico (Appliance Plug & Play) en la sede de la empresa donde residen los datos, documentos, APIs y conectores. Cero fugas hacia terceros, cumplimiento estricto del RGPD y garantía de que los datos corporativos nunca entrenan modelos externos.
 
 ## Interfaces y Modalidades
-- [Software Chat Corporativo](https://www.desklyy.com/#solucion): Aplicación para puestos informáticos (administración, compras, ventas, dirección) con búsqueda RAG e interfaz de chat privada.
-- [Terminal Físico de Voz](https://www.desklyy.com/#solucion): Dispositivo de sobremesa con cancelación de ruido para interacción por voz manos libres y resumen de reuniones en tiempo real.
+- [Software Chat Corporativo](https://desklyy.com/#solucion): Aplicación para puestos informáticos (administración, compras, ventas, dirección) con búsqueda RAG e interfaz de chat privada.
+- [Terminal Físico de Voz](https://desklyy.com/#solucion): Dispositivo de sobremesa con cancelación de ruido para interacción por voz manos libres y resumen de reuniones en tiempo real.
 
 ## Conectores e Integraciones
-- [Integraciones Universales](https://www.desklyy.com/#como-funciona): Conexión directa con ERP (SAP, Odoo, Holded, Microsoft Dynamics 365, Sage, Factusol), CRM (Salesforce, HubSpot, Zoho), bases de datos SQL (PostgreSQL, MySQL, SQL Server), correo, calendario, repositorios documentales y cualquier software interno o API propia de la empresa.
+- [Integraciones Universales](https://desklyy.com/#como-funciona): Conexión directa con ERP (SAP, Odoo, Holded, Microsoft Dynamics 365, Sage, Factusol), CRM (Salesforce, HubSpot, Zoho), bases de datos SQL (PostgreSQL, MySQL, SQL Server), correo, calendario, repositorios documentales y cualquier software interno o API propia de la empresa.
 
 ## Documentación Consolidada para Agentes e IA
-- [Especificación Técnica Completa](https://www.desklyy.com/llms-full.txt): Especificaciones de arquitectura de servidor físico, conectores y protocolos de seguridad y privacidad RGPD.
+- [Especificación Técnica Completa](https://desklyy.com/llms-full.txt): Especificaciones de arquitectura de servidor físico, conectores y protocolos de seguridad y privacidad RGPD.

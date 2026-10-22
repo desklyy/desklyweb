@@ -176,4 +176,3 @@ Deskly no solo lee y explica, **actúa y escribe** en el software de la empresa:
   * **Fondo Dark Navy / Grafito Profundo**: `#0B0F19` a `#0F172A` (elegancia, seguridad y privacidad blindada).
   * **Blanco y Grises Fríos**: `#FFFFFF`, `#F8FAFC` y `#94A3B8` (legibilidad y contraste limpio).
 * **Asset oficial**: Almacenado localmente en [`assets/logo.jpg`](file:///c:/Users/noehi/Desktop/desklyweb/assets/logo.jpg).
-a

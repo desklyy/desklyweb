@@ -46,60 +46,71 @@ export default async function handler(req, res) {
       reply_to: email,
       subject: `[Diagnóstico Operativo] ${company} — ${name}`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
-          <div style="background: #0D1627; padding: 24px 32px; border-radius: 10px 10px 0 0; border-bottom: 2px solid #1658F5;">
-            <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
-              <tr>
-                <td style="width: 42px; vertical-align: middle;">
-                  <img src="https://www.desklyy.com/assets/logo.jpg" alt="Deskly" width="38" height="38" style="display: block; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
-                </td>
-                <td style="padding-left: 14px; vertical-align: middle;">
-                  <div style="color: #ffffff; font-size: 20px; font-weight: 700; letter-spacing: -0.01em;">Desk<span style="color: #1658F5;">ly</span></div>
-                  <div style="color: #8FB0FF; font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">Nueva solicitud de diagnóstico</div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          
-          <div style="background: #ffffff; padding: 32px; border: 1px solid #e2e8f0; border-top: 0; border-radius: 0 0 10px 10px;">
-            <h2 style="font-size: 15px; margin: 0 0 16px; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
-              Datos de la empresa
-            </h2>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14.5px;">
-              <tr>
-                <td style="padding: 9px 0; color: #64748b; width: 140px; font-weight: 500;">Empresa:</td>
-                <td style="padding: 9px 0; font-weight: 700; color: #0f172a;">${company}</td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; color: #64748b; font-weight: 500;">Contacto:</td>
-                <td style="padding: 9px 0; color: #0f172a;">${name}</td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; color: #64748b; font-weight: 500;">Email:</td>
-                <td style="padding: 9px 0;"><a href="mailto:${email}" style="color: #1658F5; text-decoration: none; font-weight: 600;">${email}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; color: #64748b; font-weight: 500;">Teléfono:</td>
-                <td style="padding: 9px 0; color: #0f172a;">${phone || 'No especificado'}</td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; color: #64748b; font-weight: 500;">Sistemas a conectar:</td>
-                <td style="padding: 9px 0; color: #1658F5; font-weight: 600;">${toolsFormatted}</td>
-              </tr>
-            </table>
+        <div style="background-color: #f8fafc; padding: 40px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+          <table align="center" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px; width: 100%; background: #ffffff; border-radius: 10px; border: 1px solid #e9edf2; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <tr>
+              <td style="padding: 36px 36px 30px;">
+                <!-- Header -->
+                <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px; width: 100%;">
+                  <tr>
+                    <td style="vertical-align: middle;">
+                      <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td style="width: 32px; vertical-align: middle;">
+                            <img src="https://www.desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
+                          </td>
+                          <td style="padding-left: 10px; vertical-align: middle; font-size: 18px; font-weight: 700; color: #0D1627; letter-spacing: -0.02em;">
+                            Desk<span style="color: #1658F5;">ly</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td style="text-align: right; vertical-align: middle;">
+                      <span style="background: rgba(22,88,245,0.08); color: #1658F5; font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.04em; text-transform: uppercase;">Nuevo diagnóstico</span>
+                    </td>
+                  </tr>
+                </table>
 
-            <h2 style="font-size: 15px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">
-              Consultas que generan pérdidas de tiempo
-            </h2>
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #1658F5; padding: 16px; border-radius: 6px; font-size: 14.5px; color: #334155; white-space: pre-wrap; line-height: 1.5;">
-${bottlenecks ? bottlenecks : 'No se detallaron procesos concretos.'}
-            </div>
+                <div style="font-size: 15px; font-weight: 600; color: #0f172a; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9;">
+                  Solicitud de ${company}
+                </div>
 
-            <div style="margin-top: 28px; padding-top: 18px; border-top: 1px solid #e2e8f0; font-size: 12.5px; color: #94a3b8; text-align: center;">
-              Puedes responder a este correo para escribir directamente a ${name} (${email}).
-            </div>
-          </div>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
+                  <tr>
+                    <td style="padding: 7px 0; color: #64748b; width: 140px;">Empresa:</td>
+                    <td style="padding: 7px 0; font-weight: 600; color: #0f172a;">${company}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 7px 0; color: #64748b;">Contacto:</td>
+                    <td style="padding: 7px 0; font-weight: 600; color: #0f172a;">${name}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 7px 0; color: #64748b;">Email:</td>
+                    <td style="padding: 7px 0;"><a href="mailto:${email}" style="color: #1658F5; text-decoration: none; font-weight: 500;">${email}</a></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 7px 0; color: #64748b;">Teléfono:</td>
+                    <td style="padding: 7px 0; color: #0f172a;">${phone || 'No especificado'}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 7px 0; color: #64748b;">Herramientas:</td>
+                    <td style="padding: 7px 0; color: #1658F5; font-weight: 600;">${toolsFormatted}</td>
+                  </tr>
+                </table>
+
+                <div style="font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin-bottom: 8px;">
+                  Detalle del caso:
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #1658F5; padding: 14px 16px; border-radius: 6px; font-size: 13.5px; color: #334155; white-space: pre-wrap; line-height: 1.5; margin-bottom: 20px;">
+${bottlenecks ? bottlenecks : 'No se especificaron detalles.'}
+                </div>
+
+                <div style="padding-top: 16px; border-top: 1px solid #f1f5f9; font-size: 12px; color: #94a3b8; text-align: center;">
+                  Puedes responder a este correo para escribir directamente a ${name} (${email}).
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       `
     };
@@ -109,68 +120,51 @@ ${bottlenecks ? bottlenecks : 'No se detallaron procesos concretos.'}
       from: fromEmail,
       to: [email],
       reply_to: adminEmail,
-      subject: `Solicitud de Diagnóstico Operativo — Deskly`,
+      subject: `Solicitud de diagnóstico operativo — Deskly`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
-          <div style="background: #0D1627; padding: 26px 32px; border-radius: 10px 10px 0 0; border-bottom: 2px solid #1658F5;">
-            <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
-              <tr>
-                <td style="width: 42px; vertical-align: middle;">
-                  <img src="https://www.desklyy.com/assets/logo.jpg" alt="Deskly" width="38" height="38" style="display: block; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);">
-                </td>
-                <td style="padding-left: 14px; vertical-align: middle;">
-                  <div style="color: #ffffff; font-size: 20px; font-weight: 700; letter-spacing: -0.01em;">Desk<span style="color: #1658F5;">ly</span></div>
-                  <div style="color: #8FB0FF; font-size: 11.5px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;">Optimización del tiempo & Conexión segura</div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          
-          <div style="background: #ffffff; padding: 32px; border: 1px solid #e2e8f0; border-top: 0; border-radius: 0 0 10px 10px;">
-            <p style="font-size: 16px; color: #0f172a; margin-top: 0;">
-              Hola <strong>${name}</strong>,
-            </p>
-            <p style="font-size: 15px; color: #334155; margin-bottom: 20px;">
-              ¡Muchas gracias por solicitar tu <strong>Diagnóstico Operativo</strong> para <strong>${company}</strong>! Hemos recibido tu solicitud correctamente.
-            </p>
-            <p style="font-size: 14.5px; color: #475569; margin-bottom: 24px;">
-              En Deskly ayudamos a empresas a optimizar su tiempo de trabajo conectando sus herramientas (como <strong>${toolsFormatted}</strong>) en un servidor local dentro de su oficina, con respuestas inmediatas y máxima seguridad.
-            </p>
+        <div style="background-color: #f8fafc; padding: 40px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+          <table align="center" cellpadding="0" cellspacing="0" border="0" style="max-width: 520px; width: 100%; background: #ffffff; border-radius: 10px; border: 1px solid #e9edf2; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <tr>
+              <td style="padding: 36px 36px 30px;">
+                <!-- Logo & Brand Header -->
+                <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 26px;">
+                  <tr>
+                    <td style="width: 32px; vertical-align: middle;">
+                      <img src="https://www.desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
+                    </td>
+                    <td style="padding-left: 10px; vertical-align: middle; font-size: 18px; font-weight: 700; color: #0D1627; letter-spacing: -0.02em;">
+                      Desk<span style="color: #1658F5;">ly</span>
+                    </td>
+                  </tr>
+                </table>
 
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
-              <div style="margin: 0 0 12px; font-size: 14px; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.04em;">
-                ¿Cuáles son los siguientes pasos?
-              </div>
-              <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; font-size: 14px; color: #475569;">
-                <tr>
-                  <td style="width: 24px; vertical-align: top; padding: 6px 0; font-weight: 700; color: #1658F5;">1.</td>
-                  <td style="padding: 6px 0;">Revisamos tus sistemas y las necesidades que nos has indicado.</td>
-                </tr>
-                <tr>
-                  <td style="width: 24px; vertical-align: top; padding: 6px 0; font-weight: 700; color: #1658F5;">2.</td>
-                  <td style="padding: 6px 0;">En menos de 24 horas laborables te contactaremos para agendar una sesión técnica de 30 minutos sin coste.</td>
-                </tr>
-                <tr>
-                  <td style="width: 24px; vertical-align: top; padding: 6px 0; font-weight: 700; color: #1658F5;">3.</td>
-                  <td style="padding: 6px 0;">Te mostraremos la propuesta exacta y cómo funcionaría Deskly con tu operativa, sin compromiso.</td>
-                </tr>
-              </table>
-            </div>
+                <!-- Body -->
+                <p style="font-size: 15px; color: #0f172a; margin: 0 0 16px; font-weight: 600;">
+                  Hola ${name},
+                </p>
+                <p style="font-size: 14.5px; color: #334155; margin: 0 0 16px; line-height: 1.6;">
+                  Hemos recibido correctamente tu solicitud de diagnóstico operativo para <strong>${company}</strong>.
+                </p>
+                <p style="font-size: 14.5px; color: #334155; margin: 0 0 16px; line-height: 1.6;">
+                  Revisaremos las herramientas y la información que nos has indicado. En las próximas 24 horas laborables nos pondremos en contacto contigo para agendar una breve sesión técnica de 30 minutos y mostrarte cómo se adaptaría Deskly a vuestros procesos.
+                </p>
+                <p style="font-size: 14.5px; color: #334155; margin: 0 0 28px; line-height: 1.6;">
+                  Si deseas aportar algún dato adicional antes de la llamada, puedes escribirnos directamente a <a href="mailto:contacto@desklyy.com" style="color: #1658F5; text-decoration: underline;">contacto@desklyy.com</a>.
+                </p>
 
-            <p style="font-size: 14.5px; color: #334155; margin-bottom: 20px;">
-              Para cualquier otra cosa, duda o información adicional que quieras comentarnos, puedes escribirnos directamente a nuestro correo: <a href="mailto:contacto@desklyy.com" style="color: #1658F5; font-weight: 600; text-decoration: underline;">contacto@desklyy.com</a>.
-            </p>
+                <!-- Signature -->
+                <div style="padding-top: 20px; border-top: 1px solid #f1f5f9; font-size: 13.5px; color: #0f172a; line-height: 1.5;">
+                  <strong>Deskly</strong><br>
+                  <span style="color: #64748b; font-size: 12.5px;">Sevilla, España · <a href="https://www.desklyy.com" style="color: #1658F5; text-decoration: none;">www.desklyy.com</a></span>
+                </div>
 
-            <!-- Aviso noreply -->
-            <div style="background: #fffbeb; border: 1px solid #fef3c7; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 6px; font-size: 13px; color: #92400e; margin-bottom: 28px;">
-              <strong>Aviso:</strong> Este es un correo automático enviado desde una dirección desatendida (<em>noreply</em>). Por favor, <strong>no respondas a este email</strong>; si necesitas ponerte en contacto escríbenos a <a href="mailto:contacto@desklyy.com" style="color: #92400e; font-weight: 600;">contacto@desklyy.com</a>.
-            </div>
-
-            <div style="padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 13.5px; color: #475569;">
-              <strong>Equipo de Ingeniería Deskly</strong><br>
-              <span style="color: #94a3b8; font-size: 13px;">Sevilla, España · <a href="https://www.desklyy.com" style="color: #1658F5; text-decoration: none;">www.desklyy.com</a></span>
-            </div>
-          </div>
+                <!-- Footer notice -->
+                <div style="margin-top: 24px; padding-top: 14px; border-top: 1px solid #f8fafc; font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
+                  Este es un correo automático enviado desde una dirección desatendida. Para cualquier consulta escríbenos a <a href="mailto:contacto@desklyy.com" style="color: #64748b; text-decoration: underline;">contacto@desklyy.com</a>.
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       `
     };

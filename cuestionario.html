@@ -540,10 +540,12 @@
       const groupName = groupEl.getAttribute('data-group');
       const cards = groupEl.querySelectorAll('.choice-card');
       cards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+          e.preventDefault();
           cards.forEach(c => c.classList.remove('selected'));
-          card.classList.add('selected');
-          state[groupName] = card.getAttribute('data-val');
+          const targetCard = e.currentTarget;
+          targetCard.classList.add('selected');
+          state[groupName] = targetCard.getAttribute('data-val');
         });
       });
     });
@@ -686,26 +688,33 @@
       const erpOther = document.getElementById('erpOther') ? document.getElementById('erpOther').value.trim() : '';
       const crmOther = document.getElementById('crmOther') ? document.getElementById('crmOther').value.trim() : '';
 
-      const selectedErp = state.erp || erpOther || 'ERP no especificado';
+      // Respaldo de seguridad leyendo directamente la tarjeta marcada si el estado no coincidiese
+      const getSelected = (groupName) => {
+        if (state[groupName]) return state[groupName];
+        const activeCard = document.querySelector(`[data-group="${groupName}"] .choice-card.selected`);
+        return activeCard ? activeCard.getAttribute('data-val') : '';
+      };
+
+      const selectedErp = getSelected('erp') || erpOther || 'ERP no especificado';
 
       const payload = {
         companyName: state.companyName,
         contactName: state.contactName,
         contactEmail: state.contactEmail,
         contactPhone: state.contactPhone,
-        industry: state.industry || indOther || 'No especificado',
-        companySize: state.companySize || 'No especificado',
+        industry: getSelected('industry') || indOther || 'No especificado',
+        companySize: getSelected('companySize') || 'No especificado',
         erp: selectedErp,
-        erpHotspot: state.erpHotspot || 'No especificado',
-        crm: state.crm || crmOther || 'No especificado',
-        productivity: state.productivity || 'No especificado',
-        storage: state.storage || 'No especificado',
-        monthlyVolume: state.monthlyVolume || 'No especificado',
+        erpHotspot: getSelected('erpHotspot') || 'No especificado',
+        crm: getSelected('crm') || crmOther || 'No especificado',
+        productivity: getSelected('productivity') || 'No especificado',
+        storage: getSelected('storage') || 'No especificado',
+        monthlyVolume: getSelected('monthlyVolume') || 'No especificado',
         departments: state.departments,
         manualTasks: state.manualTasks || 'No especificadas',
         strictPrivacy: state.strictPrivacy,
         onPremise: state.onPremise,
-        goal: state.goal || 'No especificado'
+        goal: getSelected('goal') || 'No especificado'
       };
 
       const submitBtn = document.getElementById('submit-btn');

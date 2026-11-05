@@ -682,9 +682,9 @@
       state.contactPhone = phone;
       state.manualTasks = document.getElementById('manualTasks').value.trim();
 
-      const indOther = document.getElementById('industryOther').value.trim();
-      const erpOther = document.getElementById('erpOther').value.trim();
-      const crmOther = document.getElementById('crmOther').value.trim();
+      const indOther = document.getElementById('industryOther') ? document.getElementById('industryOther').value.trim() : '';
+      const erpOther = document.getElementById('erpOther') ? document.getElementById('erpOther').value.trim() : '';
+      const crmOther = document.getElementById('crmOther') ? document.getElementById('crmOther').value.trim() : '';
 
       const selectedErp = state.erp || erpOther || 'ERP no especificado';
 

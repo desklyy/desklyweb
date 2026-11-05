@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Deskly — Diagnóstico Operativo & Discovery</title>
+  <meta name="description" content="Cuestionario de diagnóstico técnico y operativo para empresas. Descubre cómo conectar Deskly a tu ERP, CRM y bases de datos con soberanía total.">
+  <meta name="theme-color" content="#0D1627">
+  <link rel="icon" type="image/jpeg" href="/assets/logo.jpg">
+
+  <!-- Tipografía IBM Plex Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blue: {
+              deskly: '#1658F5',
+              hover: '#0F48D4',
+              soft: 'rgba(22, 88, 245, 0.14)',
+            },
+            navy: {
+              main: '#0D1627',
+              surface: '#121D33',
+              elevated: '#1A2742',
+            }
+          },
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #0D1627;
+      color: #EEF2F8;
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Tarjetas interactivas con tacto refinado */
+    .choice-card {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      word-break: normal;
+      overflow-wrap: normal;
+      white-space: normal;
+    }
+    .choice-card.selected {
+      border-color: #1658F5 !important;
+      background: linear-gradient(135deg, rgba(22, 88, 245, 0.16) 0%, rgba(22, 88, 245, 0.06) 100%) !important;
+      box-shadow: 0 0 0 1px rgba(22, 88, 245, 0.55), 0 8px 24px -6px rgba(22, 88, 245, 0.25) !important;
+      color: #FFFFFF !important;
+    }
+    .choice-card.selected .card-icon-box {
+      background-color: #1658F5 !important;
+      color: #FFFFFF !important;
+    }
+    .choice-card.selected .check-circle {
+      border-color: #1658F5 !important;
+      background-color: #1658F5 !important;
+    }
+    .choice-card.selected .check-icon {
+      display: block !important;
+    }
+
+    /* Chips de dolor */
+    .pain-tag {
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pain-tag.active {
+      background-color: rgba(22, 88, 245, 0.22) !important;
+      border-color: #1658F5 !important;
+      color: #5E8DFF !important;
+      box-shadow: 0 0 12px rgba(22, 88, 245, 0.3) !important;
+    }
+
+    /* Animación de entrada de paso suave */
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .step-fade-in {
+      animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Safe-area padding para iPhones con Notch o barra inferior */
+    .safe-bottom {
+      padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#1658F5] selection:text-white antialiased overflow-x-hidden">
+
+  <!-- Glow ambiental sutil de fondo para estética de software moderno -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-[#1658F5]/10 via-[#1658F5]/5 to-transparent pointer-events-none blur-3xl -z-10"></div>
+
+  <!-- Header minimalista responsive -->
+  <header class="w-full border-b border-white/[0.08] bg-[#0D1627]/85 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2.5 group">
+        <img src="/assets/logo.jpg" alt="Deskly Logo" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg object-contain border border-white/10 group-hover:border-[#1658F5]/60 transition-all">
+        <span class="text-base sm:text-lg font-semibold tracking-tight text-white">Deskly<span class="text-[#1658F5]">.</span></span>
+      </a>
+      <a href="/" class="text-xs font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 py-1 px-2.5 rounded-lg hover:bg-white/[0.04]">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span class="hidden xs:inline">Volver a la web</span>
+        <span class="xs:hidden">Salir</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenido Central -->
+  <main class="flex-1 w-full max-w-3xl mx-auto px-3.5 sm:px-6 py-5 sm:py-10 flex flex-col justify-center">
+    
+    <!-- Tarjeta Principal con elevación moderna -->
+    <div class="w-full rounded-2xl sm:rounded-3xl bg-[#0D1627]/90 border border-white/[0.09] shadow-2xl shadow-black/60 overflow-hidden relative backdrop-blur-sm">
+      
+      <!-- Barra superior de progreso ultrafina -->
+      <div class="w-full h-1 bg-white/[0.05] relative overflow-hidden">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-[#1658F5] to-[#5E8DFF] transition-all duration-500 ease-out shadow-[0_0_12px_rgba(22,88,245,0.7)]" style="width: 25%;"></div>
+      </div>
+
+      <!-- Cabecera del Wizard adaptada a mobile -->
+      <div class="px-5 sm:px-8 pt-6 sm:pt-8 pb-4 sm:pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-white/[0.06]">
+        <div>
+          <span class="inline-block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#5E8DFF] mb-0.5">
+            Cuestionario Cliente
+          </span>
+          <h1 id="step-title" class="text-lg sm:text-2xl font-semibold text-white tracking-tight">
+            Perfil de Empresa
+          </h1>
+        </div>
+        <div class="self-start sm:self-auto">
+          <span class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-slate-300 bg-[#121D33] px-3 py-1 sm:py-1.5 rounded-full border border-white/[0.08]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#1658F5] animate-pulse"></span>
+            Paso <span id="current-step-badge" class="text-white font-bold">1</span> de 4
+          </span>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <form id="wizard-form" class="p-5 sm:p-8 space-y-6 sm:space-y-8">
+
+        <!-- ==========================================
+             PASO 1: PERFIL EMPRESARIAL
+             ========================================== -->
+        <div id="step-1" class="step-pane step-fade-in space-y-5 sm:space-y-6">
+          <div class="space-y-1.5 sm:space-y-2">
+            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">
+              Nombre de la empresa <span class="text-[#1658F5]">*</span>
+            </label>
+            <input type="text" id="companyName" required placeholder="Ej. Logística Navarro S.L." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#121D33]/70 border border-white/[0.1] text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-[#1658F5] focus:ring-2 focus:ring-[#1658F5]/25 transition-all">
+          </div>
+
+          <!-- Sector -->
+          <div class="space-y-2.5 sm:space-y-3">
+            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Sector de actividad</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5" data-group="industry">
+              <div class="choice-card flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start text-center sm:text-left gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all duration-200 cursor-pointer min-h-[58px]" data-val="Industria">
+                <div class="card-icon-box p-1 sm:p-1.5 rounded-lg bg-white/[0.05] text-slate-400 transition-colors shrink-0"><i data-lucide="factory" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium leading-tight">Industria</span>
+                <div class="check-circle hidden sm:flex w-3.5 h-3.5 rounded-full border border-white/20 items-center justify-center shrink-0 ml-auto"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start text-center sm:text-left gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all duration-200 cursor-pointer min-h-[58px]" data-val="Logística">
+                <div class="card-icon-box p-1 sm:p-1.5 rounded-lg bg-white/[0.05] text-slate-400 transition-colors shrink-0"><i data-lucide="truck" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium leading-tight">Logística</span>
+                <div class="check-circle hidden sm:flex w-3.5 h-3.5 rounded-full border border-white/20 items-center justify-center shrink-0 ml-auto"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start text-center sm:text-left gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all duration-200 cursor-pointer min-h-[58px]" data-val="Distribución / Retail">
+                <div class="card-icon-box p-1 sm:p-1.5 rounded-lg bg-white/[0.05] text-slate-400 transition-colors shrink-0"><i data-lucide="shopping-bag" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium leading-tight">Retail</span>
+                <div class="check-circle hidden sm:flex w-3.5 h-3.5 rounded-full border border-white/20 items-center justify-center shrink-0 ml-auto"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start text-center sm:text-left gap-1.5 sm:gap-2.5 p-2 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all duration-200 cursor-pointer min-h-[58px]" data-val="Servicios B2B">
+                <div class="card-icon-box p-1 sm:p-1.5 rounded-lg bg-white/[0.05] text-slate-400 transition-colors shrink-0"><i data-lucide="briefcase" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium leading-tight">Servicios</span>
+                <div class="check-circle hidden sm:flex w-3.5 h-3.5 rounded-full border border-white/20 items-center justify-center shrink-0 ml-auto"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+            </div>
+            <input type="text" id="industryOther" placeholder="O escribe tu sector si es otro..." class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5] focus:ring-1 focus:ring-[#1658F5]">
+          </div>
+
+          <!-- Tamaño -->
+          <div class="space-y-2.5 sm:space-y-3">
+            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Número de empleados</label>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5" data-group="companySize">
+              <div class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center" data-val="1-10">
+                <span class="text-xs sm:text-sm font-medium flex-1">1 - 10</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center" data-val="11-50">
+                <span class="text-xs sm:text-sm font-medium flex-1">11 - 50</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center" data-val="51-200">
+                <span class="text-xs sm:text-sm font-medium flex-1">51 - 200</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center" data-val="+200">
+                <span class="text-xs sm:text-sm font-medium flex-1">+200</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             PASO 2: ECOSISTEMA TECNOLÓGICO Y ALOJAMIENTO
+             ========================================== -->
+        <div id="step-2" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
+          <!-- ERP -->
+          <div class="space-y-2 sm:space-y-2.5">
+            <div>
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">ERP Principal</label>
+              <p class="text-[11px] sm:text-xs text-slate-400">Software donde registráis pedidos, almacén o facturas</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5" data-group="erp">
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer min-h-[48px]" data-val="Sage">
+                <span class="text-xs sm:text-sm font-medium flex-1 leading-snug">Sage (50 / 200)</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer min-h-[48px]" data-val="Odoo">
+                <span class="text-xs sm:text-sm font-medium flex-1 leading-snug">Odoo</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer min-h-[48px]" data-val="SAP">
+                <span class="text-xs sm:text-sm font-medium flex-1 leading-snug">SAP Business One</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer min-h-[48px]" data-val="Holded">
+                <span class="text-xs sm:text-sm font-medium flex-1 leading-snug">Holded</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer min-h-[48px]" data-val="Factusol">
+                <span class="text-xs sm:text-sm font-medium flex-1 leading-snug">Factusol</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer min-h-[48px]" data-val="A medida / Propio">
+                <span class="text-xs sm:text-sm font-medium flex-1 leading-snug">A medida</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+            </div>
+            <input type="text" id="erpOther" placeholder="¿Otro ERP o base de datos? Indícalo..." class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
+          </div>
+
+          <!-- Alojamiento ERP -->
+          <div class="space-y-2 sm:space-y-2.5">
+            <div>
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">¿Dónde está alojado vuestro ERP?</label>
+              <p class="text-[11px] sm:text-xs text-slate-400">Para dimensionar la integración por red local LAN o API</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5" data-group="erpHotspot">
+              <div class="choice-card flex items-center gap-2.5 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Servidor Local (On-Premise)">
+                <div class="card-icon-box p-1.5 rounded-lg bg-white/[0.05] text-slate-400 shrink-0"><i data-lucide="server" class="w-4 h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium flex-1">Servidor local / NAS</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2.5 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Cloud / Servidor VPS">
+                <div class="card-icon-box p-1.5 rounded-lg bg-white/[0.05] text-slate-400 shrink-0"><i data-lucide="cloud" class="w-4 h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium flex-1">Nube / Cloud SaaS</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2.5 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Híbrido / No estoy seguro">
+                <div class="card-icon-box p-1.5 rounded-lg bg-white/[0.05] text-slate-400 shrink-0"><i data-lucide="help-circle" class="w-4 h-4"></i></div>
+                <span class="text-xs sm:text-sm font-medium flex-1">Híbrido / Revisar</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CRM -->
+          <div class="space-y-2 sm:space-y-2.5">
+            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">CRM Comercial</label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5" data-group="crm">
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="HubSpot"><span class="text-xs sm:text-sm font-medium flex-1">HubSpot</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Salesforce"><span class="text-xs sm:text-sm font-medium flex-1">Salesforce</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Pipedrive"><span class="text-xs sm:text-sm font-medium flex-1">Pipedrive</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="El mismo ERP"><span class="text-xs sm:text-sm font-medium flex-1">El mismo ERP</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer col-span-2 sm:col-span-1" data-val="Ninguno"><span class="text-xs sm:text-sm font-medium flex-1">Ninguno / Excel</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+            </div>
+          </div>
+
+          <!-- Ofimática y Almacenamiento -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
+            <div class="space-y-2">
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Correo / Ofimática</label>
+              <div class="grid grid-cols-1 gap-2" data-group="productivity">
+                <div class="choice-card flex items-center gap-2.5 p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Microsoft 365"><span class="text-xs sm:text-sm font-medium flex-1">Microsoft 365</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+                <div class="choice-card flex items-center gap-2.5 p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Google Workspace"><span class="text-xs sm:text-sm font-medium flex-1">Google Workspace</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Almacén de archivos</label>
+              <div class="grid grid-cols-1 gap-2" data-group="storage">
+                <div class="choice-card flex items-center gap-2.5 p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="NAS Local"><span class="text-xs sm:text-sm font-medium flex-1">NAS Local / Red</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+                <div class="choice-card flex items-center gap-2.5 p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="SharePoint / Drive"><span class="text-xs sm:text-sm font-medium flex-1">SharePoint / Drive</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             PASO 3: OPERATIVA Y PUNTOS DE DOLOR
+             ========================================== -->
+        <div id="step-3" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
+          <!-- Volumen mensual -->
+          <div class="space-y-2 sm:space-y-2.5">
+            <div>
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Volumen mensual de pedidos / facturas</label>
+              <p class="text-[11px] sm:text-xs text-slate-400">Para dimensionar el ahorro de horas recuperable</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5" data-group="monthlyVolume">
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer text-center" data-val="Menos de 100/mes">
+                <span class="text-xs sm:text-sm font-medium flex-1">&lt; 100 docs</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer text-center" data-val="100 a 500/mes">
+                <span class="text-xs sm:text-sm font-medium flex-1">100 - 500</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer text-center" data-val="500 a 2.000/mes">
+                <span class="text-xs sm:text-sm font-medium flex-1">500 - 2.000</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div class="choice-card flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer text-center" data-val="+2.000/mes">
+                <span class="text-xs sm:text-sm font-medium flex-1">&gt; 2.000</span>
+                <div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Departamentos -->
+          <div class="space-y-2 sm:space-y-2.5">
+            <div>
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Departamentos con mayor cuello de botella</label>
+              <p class="text-[11px] sm:text-xs text-slate-400">Pulsa los que apliquen (multiselección)</p>
+            </div>
+            <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 gap-2" id="multi-departments">
+              <div class="dept-card p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-center text-xs sm:text-sm font-medium text-slate-300 cursor-pointer transition-all" data-val="Ventas">Ventas</div>
+              <div class="dept-card p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-center text-xs sm:text-sm font-medium text-slate-300 cursor-pointer transition-all" data-val="Compras">Compras</div>
+              <div class="dept-card p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-center text-xs sm:text-sm font-medium text-slate-300 cursor-pointer transition-all" data-val="Almacén">Almacén</div>
+              <div class="dept-card p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-center text-xs sm:text-sm font-medium text-slate-300 cursor-pointer transition-all" data-val="Finanzas">Finanzas</div>
+              <div class="dept-card p-2.5 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-center text-xs sm:text-sm font-medium text-slate-300 cursor-pointer transition-all col-span-2 xs:col-span-1" data-val="RRHH">RRHH</div>
+            </div>
+          </div>
+
+          <!-- Tareas manuales y chips guiados -->
+          <div class="space-y-2">
+            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">
+              ¿Qué tareas manuales consumen más horas al día?
+            </label>
+            <p class="text-[11px] sm:text-xs text-slate-400">Pulsa los dolores más habituales para añadirlos de inmediato:</p>
+            
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-1 pb-1">
+              <button type="button" class="pain-tag text-[11px] sm:text-xs font-medium px-2.5 sm:px-3 py-1.5 rounded-lg border border-white/[0.08] bg-[#121D33] text-slate-300 hover:border-[#1658F5]/60 hover:text-white transition-all cursor-pointer" data-text="Picar pedidos y facturas en PDF al ERP a mano">
+                + Picar pedidos en PDF al ERP
+              </button>
+              <button type="button" class="pain-tag text-[11px] sm:text-xs font-medium px-2.5 sm:px-3 py-1.5 rounded-lg border border-white/[0.08] bg-[#121D33] text-slate-300 hover:border-[#1658F5]/60 hover:text-white transition-all cursor-pointer" data-text="Reclamar y casar albaranes de proveedores">
+                + Casar albaranes de compras
+              </button>
+              <button type="button" class="pain-tag text-[11px] sm:text-xs font-medium px-2.5 sm:px-3 py-1.5 rounded-lg border border-white/[0.08] bg-[#121D33] text-slate-300 hover:border-[#1658F5]/60 hover:text-white transition-all cursor-pointer" data-text="Buscar stock y precios desfasados entre almacén y ventas">
+                + Consultar stock y tarifas desfasadas
+              </button>
+              <button type="button" class="pain-tag text-[11px] sm:text-xs font-medium px-2.5 sm:px-3 py-1.5 rounded-lg border border-white/[0.08] bg-[#121D33] text-slate-300 hover:border-[#1658F5]/60 hover:text-white transition-all cursor-pointer" data-text="Redactar ofertas comerciales repitiendo datos de fichas técnicas">
+                + Redactar ofertas comerciales repetitivas
+              </button>
+            </div>
+
+            <textarea id="manualTasks" rows="3" placeholder="Describe brevemente tus tareas manuales más pesadas..." class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#121D33]/60 border border-white/[0.1] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5] resize-none leading-relaxed"></textarea>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             PASO 4: SOBERANÍA Y CONTACTO FINAL
+             ========================================== -->
+        <div id="step-4" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
+          
+          <!-- Privacidad y Mini PC -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div class="p-3.5 sm:p-4 rounded-xl bg-[#121D33]/60 border border-white/[0.08] space-y-2">
+              <div class="flex items-center gap-2 text-white font-semibold text-xs sm:text-sm">
+                <i data-lucide="lock" class="w-4 h-4 text-[#5E8DFF] shrink-0"></i>
+                Privacidad de datos
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-400">¿Exigís que los datos no viajen a IAs públicas como OpenAI?</p>
+              <div class="grid grid-cols-2 gap-2 pt-0.5" data-bool="strictPrivacy">
+                <button type="button" class="bool-btn py-2 px-2.5 rounded-lg border border-white/[0.08] bg-[#0D1627] hover:bg-[#1A2742] text-xs font-medium text-slate-300 text-center transition-all" data-val="true">Sí, crítica</button>
+                <button type="button" class="bool-btn py-2 px-2.5 rounded-lg border border-white/[0.08] bg-[#0D1627] hover:bg-[#1A2742] text-xs font-medium text-slate-300 text-center transition-all" data-val="false">No es estricta</button>
+              </div>
+            </div>
+
+            <div class="p-3.5 sm:p-4 rounded-xl bg-[#121D33]/60 border border-white/[0.08] space-y-2">
+              <div class="flex items-center gap-2 text-white font-semibold text-xs sm:text-sm">
+                <i data-lucide="server" class="w-4 h-4 text-[#5E8DFF] shrink-0"></i>
+                Mini PC en vuestra oficina
+              </div>
+              <p class="text-[11px] sm:text-xs text-slate-400">Deskly corre en hardware físico local. ¿Disponéis de red LAN?</p>
+              <div class="grid grid-cols-2 gap-2 pt-0.5" data-bool="onPremise">
+                <button type="button" class="bool-btn py-2 px-2.5 rounded-lg border border-white/[0.08] bg-[#0D1627] hover:bg-[#1A2742] text-xs font-medium text-slate-300 text-center transition-all" data-val="true">Sí, hay red</button>
+                <button type="button" class="bool-btn py-2 px-2.5 rounded-lg border border-white/[0.08] bg-[#0D1627] hover:bg-[#1A2742] text-xs font-medium text-slate-300 text-center transition-all" data-val="false">Revisar con IT</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Objetivo -->
+          <div class="space-y-2 sm:space-y-2.5">
+            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Objetivo prioritario para la sesión técnica</label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5" data-group="goal">
+              <div class="choice-card flex items-center gap-2.5 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Reducir horas administrativas"><span class="text-xs sm:text-sm font-medium flex-1">Reducir horas manuales</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              <div class="choice-card flex items-center gap-2.5 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="Automatizar avisos y datos ERP"><span class="text-xs sm:text-sm font-medium flex-1">Automatizar avisos ERP</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+              <div class="choice-card flex items-center gap-2.5 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 text-slate-300 cursor-pointer" data-val="IA privada y blindada RGPD"><span class="text-xs sm:text-sm font-medium flex-1">IA blindada en local</span><div class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0"><i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div></div>
+            </div>
+          </div>
+
+          <!-- DATOS DE CONTACTO (Caja destacada) -->
+          <div class="p-4 sm:p-6 rounded-2xl bg-[#121D33]/90 border border-[#1658F5]/35 space-y-3.5 shadow-xl">
+            <h3 class="text-xs sm:text-sm font-semibold text-white">¿Dónde enviamos el informe técnico y propuesta?</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="space-y-1">
+                <label class="text-[11px] sm:text-xs font-medium text-slate-300 block">Tu nombre y cargo <span class="text-[#1658F5]">*</span></label>
+                <input type="text" id="contactName" required placeholder="Carlos Mendoza" class="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.12] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] sm:text-xs font-medium text-slate-300 block">Email corporativo <span class="text-[#1658F5]">*</span></label>
+                <input type="email" id="contactEmail" required placeholder="carlos@empresa.com" class="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.12] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] sm:text-xs font-medium text-slate-300 block">Teléfono / WhatsApp <span class="text-[#1658F5]">*</span></label>
+                <input type="tel" id="contactPhone" required placeholder="612 34 56 78" class="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.12] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Pantalla de Éxito -->
+        <div id="step-success" class="hidden text-center py-6 sm:py-8 space-y-4">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#1658F5]/20 border border-[#1658F5]/40 text-[#1658F5] flex items-center justify-center mx-auto shadow-lg shadow-[#1658F5]/10">
+            <i data-lucide="check" class="w-7 h-7 sm:w-8 sm:h-8 stroke-[2.5]"></i>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-semibold text-white tracking-tight">¡Cuestionario recibido con éxito!</h2>
+          <p class="text-slate-300 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+            Hemos analizado preliminarmente tu stack (<span id="success-stack-summary" class="text-white font-medium">ERP y herramientas</span>). Nuestro equipo técnico se pondrá en contacto por teléfono o email en menos de 24 horas laborables.
+          </p>
+          <div class="pt-3">
+            <a href="/" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1658F5] hover:bg-[#0F48D4] text-white text-xs sm:text-sm font-semibold transition-all shadow-lg shadow-[#1658F5]/30">
+              Volver a la portada
+            </a>
+          </div>
+        </div>
+
+        <!-- Barra de Navegación Sticky/Responsive -->
+        <div id="wizard-nav" class="pt-4 border-t border-white/[0.06] flex items-center justify-between safe-bottom">
+          <button type="button" id="prev-btn" class="hidden items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl border border-white/[0.1] bg-transparent hover:bg-white/[0.05] active:scale-95 text-slate-300 hover:text-white text-xs sm:text-sm font-medium transition-all cursor-pointer">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+            Atrás
+          </button>
+          <div id="nav-spacer" class="w-1"></div>
+
+          <button type="button" id="next-btn" class="inline-flex items-center gap-1.5 sm:gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl bg-[#1658F5] hover:bg-[#0F48D4] active:scale-95 text-white text-xs sm:text-sm font-semibold shadow-md shadow-[#1658F5]/30 hover:shadow-lg transition-all cursor-pointer">
+            Siguiente
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+          </button>
+
+          <button type="submit" id="submit-btn" class="hidden items-center gap-2 px-6 sm:px-7 py-2 sm:py-2.5 rounded-xl bg-[#1658F5] hover:bg-[#0F48D4] active:scale-95 text-white text-xs sm:text-sm font-semibold shadow-md shadow-[#1658F5]/30 hover:shadow-lg transition-all cursor-pointer">
+            <span id="submit-text" class="flex items-center gap-2">
+              Enviar cuestionario
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+            </span>
+            <span id="submit-loading" class="hidden items-center gap-2">
+              <i data-lucide="loader-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-spin"></i>
+              Procesando...
+            </span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <footer class="py-4 sm:py-6 border-t border-white/[0.06] text-center text-[11px] sm:text-xs text-slate-500">
+    © Deskly — Soberanía de datos y automatización operativa B2B con IA local.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    let step = 1;
+    const totalSteps = 4;
+    const titles = [
+      "Perfil de Empresa",
+      "Ecosistema Tecnológico",
+      "Operativa y Tareas Manuales",
+      "Soberanía y Contacto"
+    ];
+
+    const state = {
+      companyName: '',
+      industry: '',
+      companySize: '',
+      erp: '',
+      erpHotspot: '',
+      crm: '',
+      productivity: '',
+      storage: '',
+      monthlyVolume: '',
+      departments: [],
+      manualTasks: '',
+      strictPrivacy: null,
+      onPremise: null,
+      goal: '',
+      contactName: '',
+      contactEmail: '',
+      contactPhone: ''
+    };
+
+    // Selección de Choice Cards
+    document.querySelectorAll('[data-group]').forEach(groupEl => {
+      const groupName = groupEl.getAttribute('data-group');
+      const cards = groupEl.querySelectorAll('.choice-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          cards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          state[groupName] = card.getAttribute('data-val');
+        });
+      });
+    });
+
+    // Multiselección de departamentos
+    document.querySelectorAll('#multi-departments .dept-card').forEach(deptCard => {
+      deptCard.addEventListener('click', () => {
+        const val = deptCard.getAttribute('data-val');
+        if (state.departments.includes(val)) {
+          state.departments = state.departments.filter(d => d !== val);
+          deptCard.classList.remove('selected', 'border-[#1658F5]', 'bg-[#1658F5]/10', 'text-white', 'ring-1', 'ring-[#1658F5]/50');
+        } else {
+          state.departments.push(val);
+          deptCard.classList.add('selected', 'border-[#1658F5]', 'bg-[#1658F5]/10', 'text-white', 'ring-1', 'ring-[#1658F5]/50');
+        }
+      });
+    });
+
+    // Ejemplos guiados de dolor (Pain Tags)
+    document.querySelectorAll('.pain-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const text = tag.getAttribute('data-text');
+        const textarea = document.getElementById('manualTasks');
+        tag.classList.toggle('active');
+        
+        let current = textarea.value.trim();
+        if (tag.classList.contains('active')) {
+          if (current.length > 0) {
+            textarea.value = current + '\n• ' + text;
+          } else {
+            textarea.value = '• ' + text;
+          }
+        } else {
+          textarea.value = current.replace('• ' + text, '').replace(text, '').trim();
+        }
+      });
+    });
+
+    // Booleanos paso 4
+    document.querySelectorAll('[data-bool]').forEach(boolGroup => {
+      const boolName = boolGroup.getAttribute('data-bool');
+      const buttons = boolGroup.querySelectorAll('.bool-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => {
+            b.classList.remove('border-[#1658F5]', 'bg-[#1658F5]', 'text-white', 'shadow-lg');
+            b.classList.add('bg-[#0D1627]', 'text-slate-300');
+          });
+          btn.classList.remove('bg-[#0D1627]', 'text-slate-300');
+          btn.classList.add('border-[#1658F5]', 'bg-[#1658F5]', 'text-white', 'shadow-lg');
+          state[boolName] = btn.getAttribute('data-val') === 'true';
+        });
+      });
+    });
+
+    function updateView() {
+      for (let i = 1; i <= totalSteps; i++) {
+        const el = document.getElementById(`step-${i}`);
+        el.classList.add('hidden');
+        el.classList.remove('step-fade-in');
+      }
+      const currentEl = document.getElementById(`step-${step}`);
+      currentEl.classList.remove('hidden');
+      void currentEl.offsetWidth; // Trigger reflow para reiniciar animación CSS
+      currentEl.classList.add('step-fade-in');
+
+      document.getElementById('current-step-badge').textContent = step;
+      document.getElementById('step-title').textContent = titles[step - 1];
+      document.getElementById('progress-bar').style.width = `${(step / totalSteps) * 100}%`;
+
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const submitBtn = document.getElementById('submit-btn');
+
+      if (step === 1) {
+        prevBtn.classList.add('hidden');
+        prevBtn.classList.remove('inline-flex');
+      } else {
+        prevBtn.classList.remove('hidden');
+        prevBtn.classList.add('inline-flex');
+      }
+
+      if (step === totalSteps) {
+        nextBtn.classList.add('hidden');
+        nextBtn.classList.remove('inline-flex');
+        submitBtn.classList.remove('hidden');
+        submitBtn.classList.add('inline-flex');
+      } else {
+        nextBtn.classList.remove('hidden');
+        nextBtn.classList.add('inline-flex');
+        submitBtn.classList.add('hidden');
+        submitBtn.classList.remove('inline-flex');
+      }
+
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (step === 1) {
+        const comp = document.getElementById('companyName').value.trim();
+        if (!comp) {
+          alert('Por favor, indica el nombre de tu empresa para personalizar el diagnóstico.');
+          return;
+        }
+        state.companyName = comp;
+      }
+      if (step < totalSteps) {
+        step++;
+        updateView();
+      }
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (step > 1) {
+        step--;
+        updateView();
+      }
+    });
+
+    // Envío del Formulario
+    document.getElementById('wizard-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const phone = document.getElementById('contactPhone').value.trim();
+
+      if (!name || !email || !phone) {
+        alert('Por favor, completa tus datos de contacto (nombre, email y teléfono).');
+        return;
+      }
+
+      state.contactName = name;
+      state.contactEmail = email;
+      state.contactPhone = phone;
+      state.manualTasks = document.getElementById('manualTasks').value.trim();
+
+      const indOther = document.getElementById('industryOther').value.trim();
+      const erpOther = document.getElementById('erpOther').value.trim();
+      const crmOther = document.getElementById('crmOther').value.trim();
+
+      const selectedErp = state.erp || erpOther || 'ERP no especificado';
+
+      const payload = {
+        companyName: state.companyName,
+        contactName: state.contactName,
+        contactEmail: state.contactEmail,
+        contactPhone: state.contactPhone,
+        industry: state.industry || indOther || 'No especificado',
+        companySize: state.companySize || 'No especificado',
+        erp: selectedErp,
+        erpHotspot: state.erpHotspot || 'No especificado',
+        crm: state.crm || crmOther || 'No especificado',
+        productivity: state.productivity || 'No especificado',
+        storage: state.storage || 'No especificado',
+        monthlyVolume: state.monthlyVolume || 'No especificado',
+        departments: state.departments,
+        manualTasks: state.manualTasks || 'No especificadas',
+        strictPrivacy: state.strictPrivacy,
+        onPremise: state.onPremise,
+        goal: state.goal || 'No especificado'
+      };
+
+      const submitBtn = document.getElementById('submit-btn');
+      const submitText = document.getElementById('submit-text');
+      const submitLoading = document.getElementById('submit-loading');
+
+      submitBtn.disabled = true;
+      submitText.classList.add('hidden');
+      submitLoading.classList.remove('hidden');
+      submitLoading.classList.add('flex');
+
+      try {
+        const res = await fetch('/api/cuestionario', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        document.getElementById('step-4').classList.add('hidden');
+        document.getElementById('wizard-nav').classList.add('hidden');
+        document.getElementById('step-success').classList.remove('hidden');
+        document.getElementById('success-stack-summary').textContent = `${selectedErp} + ${state.productivity || 'Ofimática'}`;
+        lucide.createIcons();
+      } catch (err) {
+        console.error(err);
+        alert('Hubo un problema de conexión al registrar. Revisa tu conexión o inténtalo de nuevo.');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.classList.remove('hidden');
+        submitLoading.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

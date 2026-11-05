@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/react": "^19.3.0",
+    "lucide-react": "^1.69.0",
+    "react": "^19.3.1",
+    "typescript": "^7.0.2",
     "vite": "^5.4.11"
   }
 }

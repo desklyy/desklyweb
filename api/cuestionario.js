@@ -21,6 +21,8 @@ export default async function handler(req, res) {
       contactPhone,
       industry,
       companySize,
+      companyDepartments,
+      companyDepartmentsFormatted,
       erp,
       erpHotspot,
       crm,
@@ -56,6 +58,12 @@ export default async function handler(req, res) {
     const deptsFormatted = Array.isArray(departments) && departments.length > 0
       ? departments.join(', ')
       : 'No especificados';
+
+    const companyDeptsFormatted = companyDepartmentsFormatted || (
+      Array.isArray(companyDepartments) && companyDepartments.length > 0
+        ? companyDepartments.map(d => typeof d === 'object' && d.name ? `${d.name} (${d.workers || 0} personas)` : d).join(', ')
+        : 'No especificados'
+    );
 
     // 1. Email para el equipo de Deskly (contacto@desklyy.com)
     const adminEmailPayload = {
@@ -117,6 +125,10 @@ export default async function handler(req, res) {
                     <td style="padding: 7px 0; color: #E2E8F0;">${industry || 'N/A'} · ${companySize || 'N/A'} empleados</td>
                   </tr>
                   <tr>
+                    <td style="padding: 7px 0; color: #94A3B8;">Departamentos y equipo:</td>
+                    <td style="padding: 7px 0; color: #5E8DFF; font-weight: 600;">${companyDeptsFormatted}</td>
+                  </tr>
+                  <tr>
                     <td style="padding: 7px 0; color: #94A3B8;">ERP Principal:</td>
                     <td style="padding: 7px 0; color: #5E8DFF; font-weight: 600;">${erp || 'N/A'} <span style="color:#94A3B8; font-weight: normal;">(${erpHotspot || 'Alojamiento no definido'})</span></td>
                   </tr>
@@ -137,20 +149,12 @@ export default async function handler(req, res) {
                     <td style="padding: 7px 0; color: #E2E8F0;">${monthlyVolume || 'N/A'}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 7px 0; color: #94A3B8;">Departamentos con carga:</td>
-                    <td style="padding: 7px 0; color: #E2E8F0;">${deptsFormatted}</td>
-                  </tr>
-                  <tr>
                     <td style="padding: 7px 0; color: #94A3B8;">Privacidad Crítica:</td>
                     <td style="padding: 7px 0; color: ${strictPrivacy ? '#34D399' : '#CBD5E1'}; font-weight: 600;">${strictPrivacy ? 'SÍ (Exige IA local/privada)' : 'No estricta'}</td>
                   </tr>
                   <tr>
                     <td style="padding: 7px 0; color: #94A3B8;">Mini PC On-Premise:</td>
                     <td style="padding: 7px 0; color: ${onPremise ? '#34D399' : '#CBD5E1'}; font-weight: 600;">${onPremise ? 'SÍ (Disponen de red y espacio)' : 'Dudoso / Requiere IT'}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 7px 0; color: #94A3B8;">Objetivo de la reunión:</td>
-                    <td style="padding: 7px 0; color: #FFFFFF; font-weight: 600;">${goal || 'N/A'}</td>
                   </tr>
                 </table>
 
@@ -177,61 +181,82 @@ ${manualTasks ? manualTasks : 'No se especificaron detalles.'}
       to: [contactEmail],
       reply_to: adminEmail,
       subject: `Hemos recibido tu cuestionario — Deskly`,
-      html: `
-        <div style="background-color: #0D1627; padding: 40px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-          <table align="center" cellpadding="0" cellspacing="0" border="0" style="max-width: 540px; width: 100%; background: #121D33; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-            <tr>
-              <td style="padding: 36px 32px 30px;">
-                <!-- Logo & Brand Header -->
-                <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
-                  <tr>
-                    <td style="width: 32px; vertical-align: middle;">
-                      <img src="https://desklyy.com/assets/logo.jpg" alt="Deskly" width="28" height="28" style="display: block; border-radius: 6px;">
-                    </td>
-                    <td style="padding-left: 10px; vertical-align: middle; font-size: 19px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.02em;">
-                      Desk<span style="color: #1658F5;">ly</span>
-                    </td>
-                  </tr>
-                </table>
+      html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmación Deskly</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
-                <!-- Body -->
-                <p style="font-size: 16px; color: #FFFFFF; margin: 0 0 16px; font-weight: 600;">
-                  Hola ${contactName},
-                </p>
-                <p style="font-size: 14.5px; color: #CBD5E1; margin: 0 0 16px; line-height: 1.6;">
-                  Muchas gracias por completar el cuestionario para <strong>${companyName}</strong>.
-                </p>
-                <p style="font-size: 14.5px; color: #CBD5E1; margin: 0 0 16px; line-height: 1.6;">
-                  Nuestro equipo técnico ya está revisando vuestro stack tecnológico (ERP, alojamiento y operativa) para preparar la demo adaptada a vuestros sistemas.
-                </p>
-                <p style="font-size: 14.5px; color: #CBD5E1; margin: 0 0 24px; line-height: 1.6;">
-                  En menos de <strong>24 horas laborables</strong> nos pondremos en contacto contigo por teléfono o email para mostrarte cómo Deskly automatiza vuestros flujos con privacidad total.
-                </p>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color: #F8FAFC; padding: 40px 16px;">
+    <tr>
+      <td align="center">
+        
+        <!-- Contenedor Principal -->
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 600px; background-color: #FFFFFF; border: 1px solid #E2E8F0;">
+          
+          <!-- Encabezado -->
+          <tr>
+            <td style="padding: 30px; border-bottom: 1px solid #F1F5F9;">
+              <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="middle" style="vertical-align: middle;">
+                    <img src="https://desklyy.com/assets/logo.jpg" alt="Deskly" width="24" height="24" style="display: block; border: none;">
+                  </td>
+                  <td valign="middle" style="vertical-align: middle; padding-left: 8px;">
+                    <span style="color: #0F172A; font-size: 18px; font-weight: 700;">Desk<span style="color: #1658F5;">ly</span></span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-                <!-- Box Soberanía del Dato -->
-                <div style="background: rgba(22, 88, 245, 0.08); border: 1px solid rgba(22, 88, 245, 0.3); border-radius: 10px; padding: 14px 16px; margin-bottom: 24px;">
-                  <div style="font-size: 13px; font-weight: 600; color: #5E8DFF; margin-bottom: 4px;">
-                    🔒 Privacidad y Confidencialidad
-                  </div>
-                  <div style="font-size: 12.5px; color: #94A3B8; line-height: 1.5;">
-                    Toda la información facilitada es tratada bajo estricta confidencialidad y nunca se transfiere a modelos o IAs públicas.
-                  </div>
-                </div>
+          <!-- Cuerpo -->
+          <tr>
+            <td style="padding: 30px;">
+              
+              <p style="color: #0F172A; font-size: 16px; font-weight: 600; margin: 0 0 16px;">
+                Hola ${contactName},
+              </p>
+              
+              <p style="color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
+                Muchas gracias por completar el cuestionario para <strong>${companyName}</strong>.
+              </p>
+              
+              <p style="color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
+                Nuestro equipo técnico ya está revisando vuestro stack tecnológico (ERP, alojamiento y operativa).
+              </p>
+              
+              <p style="color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
+                En menos de <strong>24 horas laborables</strong> nos pondremos en contacto contigo por teléfono o email para concertar la reunión.
+              </p>
 
-                <p style="font-size: 14px; color: #CBD5E1; margin: 0 0 28px; line-height: 1.6;">
-                  Si deseas aportar algún detalle antes de la llamada, puedes escribirnos directamente a <a href="mailto:contacto@desklyy.com" style="color: #5E8DFF; text-decoration: underline;">contacto@desklyy.com</a>.
-                </p>
+              <p style="color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 24px;">
+                Toda la información facilitada es tratada bajo estricta confidencialidad y nunca se transfiere a modelos o IAs públicas.
+              </p>
 
-                <!-- Signature -->
-                <div style="padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13.5px; color: #FFFFFF; line-height: 1.5;">
-                  <strong>Equipo Deskly</strong><br>
-                  <span style="color: #64748B; font-size: 12.5px;">IA Operativa On-Premise · <a href="https://desklyy.com" style="color: #5E8DFF; text-decoration: none;">desklyy.com</a></span>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
-      `
+              <p style="color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 28px;">
+                Si deseas aportar algún detalle antes de la reunión, puedes escribirnos directamente a <a href="mailto:contacto@desklyy.com" style="color: #1658F5; text-decoration: underline;">contacto@desklyy.com</a>.
+              </p>
+
+              <!-- Firma -->
+              <div style="padding-top: 20px; border-top: 1px solid #F1F5F9; color: #0F172A; font-size: 14px; line-height: 1.5;">
+                <strong style="font-weight: 600;">Equipo Deskly</strong><br>
+                <span style="color: #64748B; font-size: 13px;"><a href="https://desklyy.com" style="color: #1658F5; text-decoration: none;">desklyy.com</a></span>
+              </div>
+
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>`
     };
 
     const sendMail = async (payload) => {

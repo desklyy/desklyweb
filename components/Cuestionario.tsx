@@ -21,14 +21,22 @@ import {
   Lock,
   Cloud,
   Mail,
-  HelpCircle
+  HelpCircle,
+  Plus,
+  X
 } from 'lucide-react';
+
+export interface DepartmentStaff {
+  name: string;
+  workers: number;
+}
 
 export interface CuestionarioPayload {
   // Paso 1: Perfil Empresa (Baja fricción)
   companyName: string;
   industry: string;
   industryCustom?: string;
+  companyDepartments?: DepartmentStaff[];
   companySize: string;
 
   // Paso 2: Ecosistema y Alojamiento
@@ -38,11 +46,12 @@ export interface CuestionarioPayload {
   crm: string;
   crmCustom?: string;
   productivity: string;
+  productivityCustom?: string;
   storage: string;
+  storageCustom?: string;
 
   // Paso 3: Operativa y Volumen
   monthlyVolume: string;
-  highBurdenDepartments: string[];
   manualTasksDescription: string;
 
   // Paso 4: Soberanía y Contacto Final
@@ -61,6 +70,7 @@ const INITIAL_DATA: CuestionarioPayload = {
   companyName: '',
   industry: '',
   industryCustom: '',
+  companyDepartments: [],
   companySize: '',
 
   erp: '',
@@ -69,10 +79,11 @@ const INITIAL_DATA: CuestionarioPayload = {
   crm: '',
   crmCustom: '',
   productivity: '',
+  productivityCustom: '',
   storage: '',
+  storageCustom: '',
 
   monthlyVolume: '',
-  highBurdenDepartments: [],
   manualTasksDescription: '',
 
   strictDataPrivacy: null,
@@ -94,6 +105,46 @@ export default function Cuestionario({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
 
+  const [customDeptInput, setCustomDeptInput] = useState<string>('');
+  const [deptList, setDeptList] = useState<string[]>([
+    'Ventas / Comercial',
+    'Compras',
+    'Almacén / Logística',
+    'Administración / Finanzas',
+    'Producción / Operaciones',
+    'Recursos Humanos',
+    'Atención al Cliente',
+    'Dirección / Gerencia',
+  ]);
+
+  const toggleCompanyDept = (deptName: string) => {
+    const current = formData.companyDepartments || [];
+    const exists = current.find((d) => d.name === deptName);
+    if (exists) {
+      updateField('companyDepartments', current.filter((d) => d.name !== deptName));
+    } else {
+      updateField('companyDepartments', [...current, { name: deptName, workers: 0 }]);
+    }
+  };
+
+  const updateDeptWorkers = (deptName: string, workers: number) => {
+    const current = formData.companyDepartments || [];
+    updateField('companyDepartments', current.map((d) => (d.name === deptName ? { ...d, workers } : d)));
+  };
+
+  const addCustomDept = () => {
+    const trimmed = customDeptInput.trim();
+    if (!trimmed) return;
+    if (!deptList.includes(trimmed)) {
+      setDeptList((prev) => [...prev, trimmed]);
+    }
+    const current = formData.companyDepartments || [];
+    if (!current.some((d) => d.name === trimmed)) {
+      updateField('companyDepartments', [...current, { name: trimmed, workers: 0 }]);
+    }
+    setCustomDeptInput('');
+  };
+
   const totalSteps = 4;
 
   const updateField = <K extends keyof CuestionarioPayload>(
@@ -101,18 +152,6 @@ export default function Cuestionario({
     val: CuestionarioPayload[K]
   ) => {
     setFormData((prev) => ({ ...prev, [key]: val }));
-  };
-
-  const toggleMultiSelect = (val: string) => {
-    setFormData((prev) => {
-      const exists = prev.highBurdenDepartments.includes(val);
-      return {
-        ...prev,
-        highBurdenDepartments: exists
-          ? prev.highBurdenDepartments.filter((item) => item !== val)
-          : [...prev.highBurdenDepartments, val],
-      };
-    });
   };
 
   const addPainChip = (text: string) => {
@@ -170,21 +209,30 @@ export default function Cuestionario({
       if (onComplete) {
         await onComplete(finalPayload);
       } else {
-        await fetch('/api/diagnostic', {
+        await fetch('/api/cuestionario', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: finalPayload.contactName,
-            company: finalPayload.companyName,
-            email: finalPayload.contactEmail,
-            phone: finalPayload.contactPhone,
-            tools: [
-              `ERP: ${finalPayload.erp || finalPayload.erpCustom || 'N/A'} (${finalPayload.erpHotspot})`,
-              `CRM: ${finalPayload.crm || finalPayload.crmCustom || 'N/A'}`,
-              `Ofimática: ${finalPayload.productivity}`,
-              `Almacén: ${finalPayload.storage}`,
-            ],
-            bottlenecks: `[Volumen: ${finalPayload.monthlyVolume}] [Dptos: ${finalPayload.highBurdenDepartments.join(', ')}] [Privacidad: ${finalPayload.strictDataPrivacy ? 'SÍ' : 'NO'}] [MiniPC: ${finalPayload.onPremiseReadiness ? 'SÍ' : 'NO'}] [Objetivo: ${finalPayload.meetingGoal}] [Tareas: ${finalPayload.manualTasksDescription}]`,
+            contactName: finalPayload.contactName,
+            companyName: finalPayload.companyName,
+            contactEmail: finalPayload.contactEmail,
+            contactPhone: finalPayload.contactPhone,
+            industry: finalPayload.industry || finalPayload.industryCustom || 'No especificado',
+            companySize: finalPayload.companySize,
+            companyDepartments: finalPayload.companyDepartments || [],
+            companyDepartmentsFormatted: (finalPayload.companyDepartments || [])
+              .map((d) => (d.workers > 0 ? `${d.name} (${d.workers} trab.)` : d.name))
+              .join(', '),
+            erp: finalPayload.erp || finalPayload.erpCustom || 'No especificado',
+            erpHotspot: finalPayload.erpHotspot,
+            crm: finalPayload.crm || finalPayload.crmCustom || 'No especificado',
+            productivity: finalPayload.productivity || finalPayload.productivityCustom || 'No especificado',
+            storage: finalPayload.storage || finalPayload.storageCustom || 'No especificado',
+            monthlyVolume: finalPayload.monthlyVolume,
+            manualTasks: finalPayload.manualTasksDescription,
+            strictPrivacy: finalPayload.strictDataPrivacy,
+            onPremise: finalPayload.onPremiseReadiness,
+            goal: finalPayload.meetingGoal || finalPayload.meetingGoalCustom || 'No especificado',
           }),
         });
       }
@@ -282,6 +330,101 @@ export default function Cuestionario({
                 </div>
               </div>
 
+              {/* Departamentos y equipo */}
+              <div className="space-y-3">
+                <div>
+                  <label className="text-sm font-semibold text-slate-100 block">Departamentos de la empresa</label>
+                  <p className="text-xs text-slate-400 mt-0.5">Selecciona tus departamentos e indica los trabajadores en cada uno</p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {deptList.map((dept) => {
+                    const sel = (formData.companyDepartments || []).find((d) => d.name === dept);
+                    return (
+                      <button
+                        type="button"
+                        key={dept}
+                        onClick={() => toggleCompanyDept(dept)}
+                        className={`px-3 py-1.5 rounded-xl border text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 ${
+                          sel
+                            ? 'border-[#1658F5] bg-[#1658F5]/15 text-white ring-1 ring-[#1658F5]/50'
+                            : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
+                        }`}
+                      >
+                        <span>{dept}</span>
+                        {sel && sel.workers > 0 && (
+                          <span className="text-[10px] font-bold bg-[#1658F5] text-white px-1.5 py-0.5 rounded-full">
+                            {sel.workers}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={customDeptInput}
+                    onChange={(e) => setCustomDeptInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addCustomDept();
+                      }
+                    }}
+                    placeholder="Añadir otro departamento (ej. Calidad, I+D)..."
+                    className="flex-1 px-3.5 py-2 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]"
+                  />
+                  <button
+                    type="button"
+                    onClick={addCustomDept}
+                    className="px-3.5 py-2 rounded-xl bg-[#1658F5]/15 hover:bg-[#1658F5]/25 border border-[#1658F5]/40 text-[#5E8DFF] text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 shrink-0"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Añadir</span>
+                  </button>
+                </div>
+
+                {(formData.companyDepartments || []).length > 0 && (
+                  <div className="space-y-2 pt-1">
+                    <span className="text-xs font-semibold text-slate-300 block">Número de trabajadores:</span>
+                    <div className="space-y-2">
+                      {(formData.companyDepartments || []).map((dept) => (
+                        <div
+                          key={dept.name}
+                          className="flex items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#0D1627]/80 border border-white/[0.08]"
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <div className="w-2 h-2 rounded-full bg-[#1658F5] shrink-0" />
+                            <span className="text-xs sm:text-sm font-medium text-slate-200 truncate">{dept.name}</span>
+                          </div>
+                          <div className="flex items-center gap-2 shrink-0">
+                            <input
+                              type="number"
+                              min={1}
+                              max={9999}
+                              value={dept.workers || ''}
+                              onChange={(e) => updateDeptWorkers(dept.name, parseInt(e.target.value, 10) || 0)}
+                              placeholder="Nº pers."
+                              className="w-20 sm:w-24 px-2.5 py-1.5 rounded-lg bg-[#121D33] border border-white/[0.12] text-xs sm:text-sm text-white text-center font-semibold focus:outline-none focus:border-[#1658F5]"
+                            />
+                            <span className="text-xs text-slate-400 hidden sm:inline">trabajadores</span>
+                            <button
+                              type="button"
+                              onClick={() => toggleCompanyDept(dept.name)}
+                              className="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/[0.05]"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {/* Tamaño */}
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-slate-100 block">Número de empleados</label>
@@ -326,6 +469,13 @@ export default function Cuestionario({
                     </button>
                   ))}
                 </div>
+                <input
+                  type="text"
+                  placeholder="¿Otro ERP o base de datos? Indícalo..."
+                  value={formData.erpCustom || ''}
+                  onChange={(e) => updateField('erpCustom', e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-[#1658F5]"
+                />
               </div>
 
               {/* Alojamiento del ERP */}
@@ -356,6 +506,91 @@ export default function Cuestionario({
                   ))}
                 </div>
               </div>
+
+              {/* CRM Comercial */}
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-slate-100 block">CRM Comercial</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                  {['HubSpot', 'Salesforce', 'Microsoft Dynamics', 'Pipedrive', 'El mismo ERP', 'Ninguno / Excel'].map((crm) => (
+                    <button
+                      type="button"
+                      key={crm}
+                      onClick={() => updateField('crm', crm)}
+                      className={`p-3 rounded-xl border text-sm text-left font-medium transition-all ${
+                        formData.crm === crm
+                          ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
+                          : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
+                      }`}
+                    >
+                      {crm}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  placeholder="¿Otro CRM? Indícalo..."
+                  value={formData.crmCustom || ''}
+                  onChange={(e) => updateField('crmCustom', e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-[#1658F5]"
+                />
+              </div>
+
+              {/* Ofimática y Almacenamiento */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-slate-100 block">Correo / Ofimática</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {['Microsoft 365', 'Google Workspace', 'Otro'].map((p) => (
+                      <button
+                        type="button"
+                        key={p}
+                        onClick={() => updateField('productivity', p)}
+                        className={`p-2.5 rounded-xl border text-sm text-left font-medium transition-all ${
+                          formData.productivity === p
+                            ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
+                            : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
+                        }`}
+                      >
+                        {p}
+                      </button>
+                    ))}
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="¿Otro correo? Indícalo..."
+                    value={formData.productivityCustom || ''}
+                    onChange={(e) => updateField('productivityCustom', e.target.value)}
+                    className="w-full px-4 py-2 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-[#1658F5]"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-sm font-semibold text-slate-100 block">Almacén de archivos</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {['NAS Local / Red', 'SharePoint / Drive', 'Otro'].map((s) => (
+                      <button
+                        type="button"
+                        key={s}
+                        onClick={() => updateField('storage', s)}
+                        className={`p-2.5 rounded-xl border text-sm text-left font-medium transition-all ${
+                          formData.storage === s
+                            ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
+                            : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
+                        }`}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="¿Otro almacén? Indícalo..."
+                    value={formData.storageCustom || ''}
+                    onChange={(e) => updateField('storageCustom', e.target.value)}
+                    className="w-full px-4 py-2 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-sm focus:outline-none focus:border-[#1658F5]"
+                  />
+                </div>
+              </div>
             </div>
           )}
 
@@ -380,30 +615,6 @@ export default function Cuestionario({
                       {vol}
                     </button>
                   ))}
-                </div>
-              </div>
-
-              {/* Departamentos */}
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-100 block">Departamentos con mayor cuello de botella</label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                  {['Ventas', 'Compras', 'Almacén', 'Finanzas', 'RRHH'].map((dept) => {
-                    const sel = formData.highBurdenDepartments.includes(dept);
-                    return (
-                      <button
-                        type="button"
-                        key={dept}
-                        onClick={() => toggleMultiSelect(dept)}
-                        className={`p-2.5 rounded-xl border text-xs text-center font-medium transition-all ${
-                          sel
-                            ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
-                            : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
-                        }`}
-                      >
-                        {dept}
-                      </button>
-                    );
-                  })}
                 </div>
               </div>
 
@@ -456,7 +667,7 @@ export default function Cuestionario({
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="space-y-1">
-                    <label className="text-xs text-slate-300 block">Nombre y cargo <span className="text-[#1658F5]">*</span></label>
+                    <label className="text-xs text-slate-300 block">Nombre y apellidos <span className="text-[#1658F5]">*</span></label>
                     <input
                       type="text"
                       required

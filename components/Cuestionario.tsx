@@ -60,7 +60,8 @@ export interface CuestionarioPayload {
   onPremiseReadiness: boolean | null;
   meetingGoal: string;
   meetingGoalCustom?: string;
-  contactName: string;
+  first_name: string;
+  last_name: string;
   contactEmail: string;
   contactPhone: string;
 
@@ -91,7 +92,8 @@ const INITIAL_DATA: CuestionarioPayload = {
   onPremiseReadiness: null,
   meetingGoal: '',
   meetingGoalCustom: '',
-  contactName: '',
+  first_name: '',
+  last_name: '',
   contactEmail: '',
   contactPhone: '',
 };
@@ -118,19 +120,38 @@ export default function Cuestionario({
     'Dirección / Gerencia',
   ]);
 
+  const [companySizeManuallySet, setCompanySizeManuallySet] = useState<boolean>(false);
+
+  const syncCompanySizeFromDepts = (depts: DepartmentStaff[], manuallySet: boolean) => {
+    if (manuallySet) return;
+    const sum = depts.reduce((acc, d) => acc + (d.workers > 0 ? d.workers : 0), 0);
+    if (sum <= 0) {
+      updateField('companySize', '');
+      return;
+    }
+    let suggested = '';
+    if (sum <= 10) suggested = '1-10';
+    else if (sum <= 50) suggested = '11-50';
+    else if (sum <= 200) suggested = '51-200';
+    else suggested = '+200';
+    updateField('companySize', suggested);
+  };
+
   const toggleCompanyDept = (deptName: string) => {
     const current = formData.companyDepartments || [];
     const exists = current.find((d) => d.name === deptName);
-    if (exists) {
-      updateField('companyDepartments', current.filter((d) => d.name !== deptName));
-    } else {
-      updateField('companyDepartments', [...current, { name: deptName, workers: 0, procedures: '' }]);
-    }
+    const next = exists
+      ? current.filter((d) => d.name !== deptName)
+      : [...current, { name: deptName, workers: 0, procedures: '' }];
+    updateField('companyDepartments', next);
+    syncCompanySizeFromDepts(next, companySizeManuallySet);
   };
 
   const updateDeptWorkers = (deptName: string, workers: number) => {
     const current = formData.companyDepartments || [];
-    updateField('companyDepartments', current.map((d) => (d.name === deptName ? { ...d, workers } : d)));
+    const next = current.map((d) => (d.name === deptName ? { ...d, workers } : d));
+    updateField('companyDepartments', next);
+    syncCompanySizeFromDepts(next, companySizeManuallySet);
   };
 
   const updateDeptProcedures = (deptName: string, procedures: string) => {
@@ -200,8 +221,8 @@ export default function Cuestionario({
       return;
     }
 
-    if (!formData.contactName || !formData.contactEmail || !formData.contactPhone) {
-      alert('Por favor completa tus datos de contacto (nombre, email y teléfono).');
+    if (!formData.first_name.trim() || !formData.last_name.trim() || !formData.contactEmail.trim() || !formData.contactPhone.trim()) {
+      alert('Por favor completa tus datos de contacto (nombre, apellidos, email y teléfono).');
       return;
     }
 
@@ -219,7 +240,9 @@ export default function Cuestionario({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contactName: finalPayload.contactName,
+            first_name: finalPayload.first_name.trim(),
+            last_name: finalPayload.last_name.trim(),
+            contactName: `${finalPayload.first_name} ${finalPayload.last_name}`.trim(),
             companyName: finalPayload.companyName,
             contactEmail: finalPayload.contactEmail,
             contactPhone: finalPayload.contactPhone,
@@ -345,27 +368,6 @@ export default function Cuestionario({
                   ))}
                 </div>
               </div>
-
-              {/* Tamaño */}
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-100 block">Número de empleados</label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {['1-10', '11-50', '51-200', '+200'].map((size) => (
-                    <button
-                      type="button"
-                      key={size}
-                      onClick={() => updateField('companySize', size)}
-                      className={`p-3.5 rounded-xl border text-sm text-center font-medium transition-all ${
-                        formData.companySize === size
-                          ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
-                          : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
 
@@ -478,6 +480,50 @@ export default function Cuestionario({
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Tamaño (calculado automáticamente por departamentos) */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <label className="text-sm font-semibold text-slate-100 block">
+                    Número total de empleados
+                    {!companySizeManuallySet &&
+                      (formData.companyDepartments || []).some((d) => d.workers > 0) && (
+                        <span className="ml-2 text-xs font-normal text-[#5E8DFF]">
+                          (calculado por departamentos)
+                        </span>
+                      )}
+                  </label>
+                  {(formData.companyDepartments || []).length > 0 && (
+                    <span className="text-xs font-semibold text-[#5E8DFF]">
+                      Total:{' '}
+                      {(formData.companyDepartments || []).reduce(
+                        (acc, d) => acc + (d.workers > 0 ? d.workers : 0),
+                        0
+                      )}{' '}
+                      trabajadores
+                    </span>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  {['1-10', '11-50', '51-200', '+200'].map((size) => (
+                    <button
+                      type="button"
+                      key={size}
+                      onClick={() => {
+                        setCompanySizeManuallySet(true);
+                        updateField('companySize', size);
+                      }}
+                      className={`p-3.5 rounded-xl border text-sm text-center font-medium transition-all ${
+                        formData.companySize === size
+                          ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
+                          : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
@@ -699,15 +745,26 @@ export default function Cuestionario({
                   <h3 className="text-sm font-semibold text-white">¿Dónde enviamos el informe y propuesta técnica?</h3>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-xs text-slate-300 block">Nombre y apellidos <span className="text-[#1658F5]">*</span></label>
+                    <label className="text-xs text-slate-300 block">Nombre <span className="text-[#1658F5]">*</span></label>
                     <input
                       type="text"
                       required
-                      value={formData.contactName}
-                      onChange={(e) => updateField('contactName', e.target.value)}
-                      placeholder="Ej. Carlos Mendoza"
+                      value={formData.first_name}
+                      onChange={(e) => updateField('first_name', e.target.value)}
+                      placeholder="Ej. Carlos"
+                      className="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.1] text-slate-100 text-sm focus:outline-none focus:border-[#1658F5]"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-slate-300 block">Apellidos <span className="text-[#1658F5]">*</span></label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.last_name}
+                      onChange={(e) => updateField('last_name', e.target.value)}
+                      placeholder="Ej. Mendoza"
                       className="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.1] text-slate-100 text-sm focus:outline-none focus:border-[#1658F5]"
                     />
                   </div>

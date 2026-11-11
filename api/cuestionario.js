@@ -16,6 +16,8 @@ export default async function handler(req, res) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     const {
       companyName,
+      first_name,
+      last_name,
       contactName,
       contactEmail,
       contactPhone,
@@ -37,8 +39,27 @@ export default async function handler(req, res) {
       goal
     } = body || {};
 
-    if (!companyName || !contactName || !contactEmail) {
-      return res.status(400).json({ error: 'Empresa, persona de contacto y email son obligatorios.' });
+    const trimmedFirst = typeof first_name === 'string' ? first_name.trim() : '';
+    const trimmedLast = typeof last_name === 'string' ? last_name.trim() : '';
+    const trimmedContact = typeof contactName === 'string' ? contactName.trim() : '';
+
+    let resolvedFirstName = trimmedFirst;
+    let resolvedLastName = trimmedLast;
+
+    if (!resolvedFirstName && trimmedContact) {
+      const spaceIdx = trimmedContact.indexOf(' ');
+      if (spaceIdx > 0) {
+        resolvedFirstName = trimmedContact.slice(0, spaceIdx).trim();
+        resolvedLastName = resolvedLastName || trimmedContact.slice(spaceIdx + 1).trim();
+      } else {
+        resolvedFirstName = trimmedContact;
+      }
+    }
+
+    const resolvedFullName = [resolvedFirstName, resolvedLastName].filter(Boolean).join(' ') || trimmedContact;
+
+    if (!companyName || !resolvedFirstName || !contactEmail) {
+      return res.status(400).json({ error: 'Empresa, nombre de contacto y email son obligatorios.' });
     }
 
     const apiKey = process.env.RESEND_API_KEY;
@@ -82,7 +103,7 @@ export default async function handler(req, res) {
       from: fromEmail,
       to: [adminEmail],
       reply_to: contactEmail,
-      subject: `[Cuestionario Cliente] ${companyName} — ${contactName}`,
+      subject: `[Cuestionario Cliente] ${companyName} — ${resolvedFullName}`,
       html: `
         <div style="background-color: #0D1627; padding: 40px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
           <table align="center" cellpadding="0" cellspacing="0" border="0" style="max-width: 580px; width: 100%; background: #121D33; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
@@ -121,8 +142,12 @@ export default async function handler(req, res) {
                     <td style="padding: 7px 0; font-weight: 600; color: #FFFFFF;">${companyName}</td>
                   </tr>
                   <tr>
-                    <td style="padding: 7px 0; color: #94A3B8;">Contacto:</td>
-                    <td style="padding: 7px 0; font-weight: 600; color: #FFFFFF;">${contactName}</td>
+                    <td style="padding: 7px 0; color: #94A3B8;">Nombre:</td>
+                    <td style="padding: 7px 0; font-weight: 600; color: #FFFFFF;">${resolvedFirstName}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 7px 0; color: #94A3B8;">Apellidos:</td>
+                    <td style="padding: 7px 0; font-weight: 600; color: #FFFFFF;">${resolvedLastName || 'No especificado'}</td>
                   </tr>
                   <tr>
                     <td style="padding: 7px 0; color: #94A3B8;">Email:</td>
@@ -185,7 +210,7 @@ ${manualTasks ? manualTasks : 'No se especificaron detalles.'}
                 </div>
 
                 <div style="padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 12px; color: #64748B; text-align: center;">
-                  Pulsa "Responder" para contestar directamente a ${contactName} (${contactEmail}).
+                  Pulsa "Responder" para contestar directamente a ${resolvedFullName} (${contactEmail}).
                 </div>
               </td>
             </tr>
@@ -237,7 +262,7 @@ ${manualTasks ? manualTasks : 'No se especificaron detalles.'}
             <td style="padding: 30px;">
               
               <p style="color: #0F172A; font-size: 16px; font-weight: 600; margin: 0 0 16px;">
-                Hola ${contactName},
+                Hola ${resolvedFirstName || resolvedFullName},
               </p>
               
               <p style="color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 16px;">
@@ -333,7 +358,9 @@ ${manualTasks ? manualTasks : 'No se especificaron detalles.'}
         mode: 'questionnaire',
         lead_source: 'cuestionario',
         email: String(contactEmail).trim(),
-        full_name: String(contactName).trim(),
+        first_name: resolvedFirstName,
+        last_name: resolvedLastName || undefined,
+        full_name: resolvedFullName,
         phone: isSpecified(contactPhone) ? contactPhone.trim() : undefined,
         company_name: String(companyName).trim(),
         industry: isSpecified(industry) ? industry.trim() : undefined,

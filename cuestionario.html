@@ -247,46 +247,6 @@
             <input type="text" id="industryOther" placeholder="O escribe tu sector si es otro..."
               class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5] focus:ring-1 focus:ring-[#1658F5]">
           </div>
-
-          <!-- Tamaño -->
-          <div class="space-y-2.5 sm:space-y-3">
-            <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Número de
-              empleados</label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5" data-group="companySize">
-              <div
-                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
-                data-val="1-10">
-                <span class="text-xs sm:text-sm font-medium flex-1">1 - 10</span>
-                <div
-                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
-              </div>
-              <div
-                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
-                data-val="11-50">
-                <span class="text-xs sm:text-sm font-medium flex-1">11 - 50</span>
-                <div
-                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
-              </div>
-              <div
-                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
-                data-val="51-200">
-                <span class="text-xs sm:text-sm font-medium flex-1">51 - 200</span>
-                <div
-                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
-              </div>
-              <div
-                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
-                data-val="+200">
-                <span class="text-xs sm:text-sm font-medium flex-1">+200</span>
-                <div
-                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
-                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- ==========================================
@@ -320,6 +280,50 @@
                 <span id="total-workers-counter" class="text-[#5E8DFF] font-semibold">Total: 0</span>
               </div>
               <div id="selected-depts-list" class="space-y-2.5"></div>
+            </div>
+          </div>
+
+          <!-- Tamaño (se suma automáticamente según trabajadores por departamento) -->
+          <div class="space-y-2.5 sm:space-y-3 pt-1">
+            <div class="flex items-center justify-between gap-2">
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">
+                Número total de empleados
+                <span id="size-auto-badge" class="hidden ml-1.5 text-[11px] font-normal text-[#5E8DFF]">(calculado por departamentos)</span>
+              </label>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5" data-group="companySize">
+              <div
+                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
+                data-val="1-10">
+                <span class="text-xs sm:text-sm font-medium flex-1">1 - 10</span>
+                <div
+                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
+                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div
+                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
+                data-val="11-50">
+                <span class="text-xs sm:text-sm font-medium flex-1">11 - 50</span>
+                <div
+                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
+                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div
+                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
+                data-val="51-200">
+                <span class="text-xs sm:text-sm font-medium flex-1">51 - 200</span>
+                <div
+                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
+                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
+              <div
+                class="choice-card flex items-center gap-2 p-3 rounded-xl border border-white/[0.08] bg-[#121D33]/60 hover:bg-[#1A2742]/80 active:scale-[0.98] text-slate-300 transition-all cursor-pointer text-center"
+                data-val="+200">
+                <span class="text-xs sm:text-sm font-medium flex-1">+200</span>
+                <div
+                  class="check-circle w-3.5 h-3.5 rounded-full border border-white/20 flex items-center justify-center shrink-0">
+                  <i data-lucide="check" class="check-icon hidden w-2 h-2 text-white stroke-[3]"></i></div>
+              </div>
             </div>
           </div>
         </div>
@@ -677,11 +681,17 @@
           <div class="p-4 sm:p-6 rounded-2xl bg-[#121D33]/90 border border-[#1658F5]/35 space-y-3.5 shadow-xl">
             <h3 class="text-xs sm:text-sm font-semibold text-white">¿Dónde enviamos el informe técnico y propuesta?</h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div class="space-y-1">
-                <label class="text-[11px] sm:text-xs font-medium text-slate-300 block">Nombre y apellidos <span
+                <label class="text-[11px] sm:text-xs font-medium text-slate-300 block">Nombre <span
                     class="text-[#1658F5]">*</span></label>
-                <input type="text" id="contactName" required placeholder="Carlos Mendoza"
+                <input type="text" id="contactFirstName" required placeholder="Carlos"
+                  class="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.12] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
+              </div>
+              <div class="space-y-1">
+                <label class="text-[11px] sm:text-xs font-medium text-slate-300 block">Apellidos <span
+                    class="text-[#1658F5]">*</span></label>
+                <input type="text" id="contactLastName" required placeholder="Mendoza"
                   class="w-full px-3 py-2 rounded-xl bg-[#0D1627] border border-white/[0.12] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
               </div>
               <div class="space-y-1">
@@ -786,7 +796,8 @@
       strictPrivacy: null,
       onPremise: null,
       goal: '',
-      contactName: '',
+      first_name: '',
+      last_name: '',
       contactEmail: '',
       contactPhone: ''
     };
@@ -820,22 +831,30 @@
       if (totalWorkersCounter) {
         totalWorkersCounter.textContent = `Total: ${sum} trabajadores`;
       }
-      if (!state.companySizeManuallySet && sum > 0) {
-        let suggestedSize = '';
-        if (sum <= 10) suggestedSize = '1-10';
-        else if (sum <= 50) suggestedSize = '11-50';
-        else if (sum <= 200) suggestedSize = '51-200';
-        else suggestedSize = '+200';
-
+      const sizeAutoBadge = document.getElementById('size-auto-badge');
+      if (!state.companySizeManuallySet) {
         const sizeCards = document.querySelectorAll('[data-group="companySize"] .choice-card');
-        sizeCards.forEach(c => {
-          if (c.getAttribute('data-val') === suggestedSize) {
-            c.classList.add('selected');
-            state.companySize = suggestedSize;
-          } else {
-            c.classList.remove('selected');
-          }
-        });
+        if (sum > 0) {
+          let suggestedSize = '';
+          if (sum <= 10) suggestedSize = '1-10';
+          else if (sum <= 50) suggestedSize = '11-50';
+          else if (sum <= 200) suggestedSize = '51-200';
+          else suggestedSize = '+200';
+
+          sizeCards.forEach(c => {
+            if (c.getAttribute('data-val') === suggestedSize) {
+              c.classList.add('selected');
+              state.companySize = suggestedSize;
+            } else {
+              c.classList.remove('selected');
+            }
+          });
+          if (sizeAutoBadge) sizeAutoBadge.classList.remove('hidden');
+        } else {
+          sizeCards.forEach(c => c.classList.remove('selected'));
+          state.companySize = '';
+          if (sizeAutoBadge) sizeAutoBadge.classList.add('hidden');
+        }
       }
     }
 
@@ -1003,6 +1022,8 @@
           e.preventDefault();
           if (groupName === 'companySize') {
             state.companySizeManuallySet = true;
+            const sizeAutoBadge = document.getElementById('size-auto-badge');
+            if (sizeAutoBadge) sizeAutoBadge.classList.add('hidden');
           }
           cards.forEach(c => c.classList.remove('selected'));
           const targetCard = e.currentTarget;
@@ -1118,16 +1139,18 @@
     document.getElementById('wizard-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById('contactName').value.trim();
+      const firstName = document.getElementById('contactFirstName').value.trim();
+      const lastName = document.getElementById('contactLastName').value.trim();
       const email = document.getElementById('contactEmail').value.trim();
       const phone = document.getElementById('contactPhone').value.trim();
 
-      if (!name || !email || !phone) {
-        alert('Por favor, completa tus datos de contacto (nombre, email y teléfono).');
+      if (!firstName || !lastName || !email || !phone) {
+        alert('Por favor, completa tus datos de contacto (nombre, apellidos, email y teléfono).');
         return;
       }
 
-      state.contactName = name;
+      state.first_name = firstName;
+      state.last_name = lastName;
       state.contactEmail = email;
       state.contactPhone = phone;
       state.manualTasks = document.getElementById('manualTasks').value.trim();
@@ -1180,7 +1203,9 @@
 
       const payload = {
         companyName: state.companyName,
-        contactName: state.contactName,
+        first_name: state.first_name,
+        last_name: state.last_name,
+        contactName: `${state.first_name} ${state.last_name}`.trim(),
         contactEmail: state.contactEmail,
         contactPhone: state.contactPhone,
         industry: getSelected('industry') || indOther || 'No especificado',

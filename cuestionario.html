@@ -174,7 +174,7 @@
           <span
             class="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-slate-300 bg-[#121D33] px-3 py-1 sm:py-1.5 rounded-full border border-white/[0.08]">
             <span class="w-1.5 h-1.5 rounded-full bg-[#1658F5] animate-pulse"></span>
-            Paso <span id="current-step-badge" class="text-white font-bold">1</span> de 4
+            Paso <span id="current-step-badge" class="text-white font-bold">1</span> de 5
           </span>
         </div>
       </div>
@@ -248,39 +248,6 @@
               class="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5] focus:ring-1 focus:ring-[#1658F5]">
           </div>
 
-          <!-- Departamentos y equipo -->
-          <div class="space-y-2.5 sm:space-y-3">
-            <div>
-              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Departamentos de la
-                empresa</label>
-              <p class="text-[11px] sm:text-xs text-slate-400">Pulsa los departamentos que tengáis e indica el número de
-                trabajadores en cada uno:</p>
-            </div>
-
-            <!-- Chips de departamentos base + añadidos -->
-            <div id="company-dept-chips" class="flex flex-wrap gap-2"></div>
-
-            <!-- Campo para agregar departamento escribiendo -->
-            <div class="flex gap-2">
-              <input type="text" id="addDeptInput" placeholder="Añadir otro departamento (ej. Calidad, I+D, Legal)..."
-                class="flex-1 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
-              <button type="button" id="addDeptBtn"
-                class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#1658F5]/15 hover:bg-[#1658F5]/25 border border-[#1658F5]/40 text-[#5E8DFF] text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 cursor-pointer shrink-0">
-                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                <span>Añadir</span>
-              </button>
-            </div>
-
-            <!-- Lista de departamentos seleccionados con número de trabajadores -->
-            <div id="selected-depts-container" class="space-y-2 pt-1 hidden">
-              <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-400 font-medium pb-0.5">
-                <span>Número de trabajadores por departamento:</span>
-                <span id="total-workers-counter" class="text-[#5E8DFF] font-semibold">Total: 0</span>
-              </div>
-              <div id="selected-depts-list" class="space-y-2"></div>
-            </div>
-          </div>
-
           <!-- Tamaño -->
           <div class="space-y-2.5 sm:space-y-3">
             <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Número de
@@ -323,9 +290,44 @@
         </div>
 
         <!-- ==========================================
-             PASO 2: ECOSISTEMA TECNOLÓGICO Y ALOJAMIENTO
+             PASO 2: DEPARTAMENTOS Y PROCEDIMIENTOS
              ========================================== -->
         <div id="step-2" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
+          <div class="space-y-2.5 sm:space-y-3">
+            <div>
+              <label class="text-xs sm:text-sm font-semibold text-slate-200 tracking-tight block">Departamentos, equipo y procedimientos</label>
+              <p class="text-[11px] sm:text-xs text-slate-400">Pulsa los departamentos que tengáis, indica el número de trabajadores y qué procedimientos realizan en cada uno:</p>
+            </div>
+
+            <!-- Chips de departamentos base + añadidos -->
+            <div id="company-dept-chips" class="flex flex-wrap gap-2"></div>
+
+            <!-- Campo para agregar departamento escribiendo -->
+            <div class="flex gap-2">
+              <input type="text" id="addDeptInput" placeholder="Añadir otro departamento (ej. Calidad, I+D, Legal)..."
+                class="flex-1 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#121D33]/60 border border-white/[0.08] text-slate-100 placeholder:text-slate-500 text-xs sm:text-sm focus:outline-none focus:border-[#1658F5]">
+              <button type="button" id="addDeptBtn"
+                class="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#1658F5]/15 hover:bg-[#1658F5]/25 border border-[#1658F5]/40 text-[#5E8DFF] text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 cursor-pointer shrink-0">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>Añadir</span>
+              </button>
+            </div>
+
+            <!-- Lista de departamentos seleccionados con trabajadores y procedimientos -->
+            <div id="selected-depts-container" class="space-y-2.5 pt-1 hidden">
+              <div class="flex items-center justify-between text-[11px] sm:text-xs text-slate-400 font-medium pb-0.5">
+                <span>Trabajadores y procedimientos que realizan por departamento:</span>
+                <span id="total-workers-counter" class="text-[#5E8DFF] font-semibold">Total: 0</span>
+              </div>
+              <div id="selected-depts-list" class="space-y-2.5"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             PASO 3: ECOSISTEMA TECNOLÓGICO Y ALOJAMIENTO
+             ========================================== -->
+        <div id="step-3" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
           <!-- ERP -->
           <div class="space-y-2 sm:space-y-2.5">
             <div>
@@ -547,9 +549,9 @@
         </div>
 
         <!-- ==========================================
-             PASO 3: OPERATIVA Y PUNTOS DE DOLOR
+             PASO 4: OPERATIVA Y PUNTOS DE DOLOR
              ========================================== -->
-        <div id="step-3" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
+        <div id="step-4" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
           <!-- Volumen mensual -->
           <div class="space-y-2 sm:space-y-2.5">
             <div>
@@ -630,9 +632,9 @@
         </div>
 
         <!-- ==========================================
-             PASO 4: SOBERANÍA Y CONTACTO FINAL
+             PASO 5: SOBERANÍA Y CONTACTO FINAL
              ========================================== -->
-        <div id="step-4" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
+        <div id="step-5" class="step-pane step-fade-in hidden space-y-5 sm:space-y-6">
 
           <!-- Privacidad y Mini PC -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -759,9 +761,10 @@
     lucide.createIcons();
 
     let step = 1;
-    const totalSteps = 4;
+    const totalSteps = 5;
     const titles = [
       "Perfil de Empresa",
+      "Departamentos y Procedimientos",
       "Ecosistema Tecnológico",
       "Operativa y Tareas Manuales",
       "Soberanía y Contacto"
@@ -836,33 +839,52 @@
       }
     }
 
-    function renderDeptRow(deptName, workersVal) {
+    function renderDeptRow(deptName, workersVal, proceduresVal) {
       const row = document.createElement('div');
-      row.className = 'flex items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#0D1627]/80 border border-white/[0.08] hover:border-white/[0.15] transition-all';
+      row.className = 'p-3 sm:p-3.5 rounded-xl bg-[#0D1627]/85 border border-white/[0.08] hover:border-white/[0.15] transition-all space-y-2.5';
       row.setAttribute('data-dept', deptName);
+
       row.innerHTML = `
-        <div class="flex items-center gap-2 min-w-0">
-          <div class="w-2 h-2 rounded-full bg-[#1658F5] shrink-0"></div>
-          <span class="text-xs sm:text-sm font-medium text-slate-200 truncate">${deptName}</span>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <div class="flex items-center gap-1.5">
-            <input type="number" min="1" max="9999" inputmode="numeric" placeholder="Nº pers." class="dept-worker-count w-20 sm:w-24 px-2.5 py-1.5 rounded-lg bg-[#121D33] border border-white/[0.12] text-xs sm:text-sm text-white text-center font-semibold focus:outline-none focus:border-[#1658F5] focus:ring-1 focus:ring-[#1658F5]" value="${workersVal || ''}">
-            <span class="text-[11px] sm:text-xs text-slate-400 hidden sm:inline">trabajadores</span>
+        <div class="flex items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-2 h-2 rounded-full bg-[#1658F5] shrink-0"></div>
+            <span class="dept-title text-xs sm:text-sm font-semibold text-slate-100 truncate"></span>
           </div>
-          <button type="button" class="remove-dept-btn text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors cursor-pointer" title="Quitar departamento">
-            <i data-lucide="x" class="w-3.5 h-3.5"></i>
-          </button>
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-1.5">
+              <input type="number" min="1" max="9999" inputmode="numeric" placeholder="Nº pers." class="dept-worker-count w-20 sm:w-24 px-2.5 py-1.5 rounded-lg bg-[#121D33] border border-white/[0.12] text-xs sm:text-sm text-white text-center font-semibold focus:outline-none focus:border-[#1658F5] focus:ring-1 focus:ring-[#1658F5]">
+              <span class="text-[11px] sm:text-xs text-slate-400 hidden sm:inline">trabajadores</span>
+            </div>
+            <button type="button" class="remove-dept-btn text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors cursor-pointer" title="Quitar departamento">
+              <i data-lucide="x" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <label class="text-[11px] font-medium text-slate-400 block">Procedimientos que realizan en este departamento</label>
+          <textarea rows="2" placeholder="Ej. Recepción de pedidos, emisión de facturas, atención a proveedores..." class="dept-procedures w-full px-3 py-2 rounded-lg bg-[#121D33]/80 border border-white/[0.1] text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-[#1658F5] focus:ring-1 focus:ring-[#1658F5] resize-none leading-relaxed"></textarea>
         </div>
       `;
 
+      row.querySelector('.dept-title').textContent = deptName;
+
       const input = row.querySelector('.dept-worker-count');
+      input.value = workersVal || '';
       input.addEventListener('input', (e) => {
         const item = state.companyDepartments.find(d => d.name === deptName);
         if (item) {
           item.workers = e.target.value;
           updateChipBadge(deptName, e.target.value);
           updateTotalWorkers();
+        }
+      });
+
+      const procInput = row.querySelector('.dept-procedures');
+      procInput.value = proceduresVal || '';
+      procInput.addEventListener('input', (e) => {
+        const item = state.companyDepartments.find(d => d.name === deptName);
+        if (item) {
+          item.procedures = e.target.value;
         }
       });
 
@@ -877,7 +899,7 @@
     }
 
     function updateChipBadge(deptName, workers) {
-      const chip = deptChipsContainer.querySelector(`[data-dept="${deptName}"]`);
+      const chip = Array.from(deptChipsContainer.children).find(el => el.getAttribute('data-dept') === deptName);
       if (!chip) return;
       const badge = chip.querySelector('.worker-count-badge');
       if (badge) {
@@ -892,20 +914,20 @@
     }
 
     function toggleDepartment(deptName, forceState) {
-      const chip = deptChipsContainer.querySelector(`[data-dept="${deptName}"]`);
+      const chip = Array.from(deptChipsContainer.children).find(el => el.getAttribute('data-dept') === deptName);
       const existingIdx = state.companyDepartments.findIndex(d => d.name.toLowerCase() === deptName.toLowerCase());
       const isCurrentlySelected = existingIdx !== -1;
       const willSelect = typeof forceState === 'boolean' ? forceState : !isCurrentlySelected;
 
       if (willSelect) {
         if (!isCurrentlySelected) {
-          state.companyDepartments.push({ name: deptName, workers: '' });
+          state.companyDepartments.push({ name: deptName, workers: '', procedures: '' });
           if (chip) {
             chip.classList.add('selected', 'border-[#1658F5]', 'bg-[#1658F5]/15', 'text-white', 'ring-1', 'ring-[#1658F5]/50');
             chip.classList.remove('border-white/[0.08]', 'bg-[#121D33]/60', 'text-slate-300');
           }
           selectedDeptsContainer.classList.remove('hidden');
-          const input = renderDeptRow(deptName, '');
+          const input = renderDeptRow(deptName, '', '');
           if (input) input.focus();
         }
       } else {
@@ -917,7 +939,7 @@
             const badge = chip.querySelector('.worker-count-badge');
             if (badge) badge.classList.add('hidden');
           }
-          const row = selectedDeptsList.querySelector(`[data-dept="${deptName}"]`);
+          const row = Array.from(selectedDeptsList.children).find(el => el.getAttribute('data-dept') === deptName);
           if (row) row.remove();
           if (state.companyDepartments.length === 0) {
             selectedDeptsContainer.classList.add('hidden');
@@ -1146,6 +1168,16 @@
         }).join(', ')
         : 'No especificados';
 
+      const hasAnyProcedure = (state.companyDepartments || []).some(d => (d.procedures || '').trim() !== '');
+      const companyProceduresFormatted = hasAnyProcedure
+        ? (state.companyDepartments || []).map(d => {
+          const w = parseInt(d.workers, 10);
+          const prefix = (w > 0) ? `${d.name} (${w} trab.)` : d.name;
+          const proc = (d.procedures || '').trim();
+          return `• ${prefix}: ${proc || 'Sin procedimientos detallados'}`;
+        }).join('\n')
+        : 'No especificados';
+
       const payload = {
         companyName: state.companyName,
         contactName: state.contactName,
@@ -1155,6 +1187,7 @@
         companySize: getSelected('companySize') || 'No especificado',
         companyDepartments: state.companyDepartments,
         companyDepartmentsFormatted: companyDeptsFormatted,
+        companyProceduresFormatted: companyProceduresFormatted,
         erp: selectedErp,
         erpHotspot: getSelected('erpHotspot') || 'No especificado',
         crm: selectedCrm,
@@ -1187,7 +1220,7 @@
           throw new Error(errData.error || 'Error en el servidor al enviar');
         }
 
-        document.getElementById('step-4').classList.add('hidden');
+        document.getElementById('step-5').classList.add('hidden');
         document.getElementById('wizard-nav').classList.add('hidden');
         document.getElementById('step-success').classList.remove('hidden');
         document.getElementById('success-stack-summary').textContent = `${selectedErp} + ${state.productivity || 'Ofimática'}`;

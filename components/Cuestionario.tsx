@@ -29,6 +29,7 @@ import {
 export interface DepartmentStaff {
   name: string;
   workers: number;
+  procedures?: string;
 }
 
 export interface CuestionarioPayload {
@@ -123,13 +124,18 @@ export default function Cuestionario({
     if (exists) {
       updateField('companyDepartments', current.filter((d) => d.name !== deptName));
     } else {
-      updateField('companyDepartments', [...current, { name: deptName, workers: 0 }]);
+      updateField('companyDepartments', [...current, { name: deptName, workers: 0, procedures: '' }]);
     }
   };
 
   const updateDeptWorkers = (deptName: string, workers: number) => {
     const current = formData.companyDepartments || [];
     updateField('companyDepartments', current.map((d) => (d.name === deptName ? { ...d, workers } : d)));
+  };
+
+  const updateDeptProcedures = (deptName: string, procedures: string) => {
+    const current = formData.companyDepartments || [];
+    updateField('companyDepartments', current.map((d) => (d.name === deptName ? { ...d, procedures } : d)));
   };
 
   const addCustomDept = () => {
@@ -140,12 +146,12 @@ export default function Cuestionario({
     }
     const current = formData.companyDepartments || [];
     if (!current.some((d) => d.name === trimmed)) {
-      updateField('companyDepartments', [...current, { name: trimmed, workers: 0 }]);
+      updateField('companyDepartments', [...current, { name: trimmed, workers: 0, procedures: '' }]);
     }
     setCustomDeptInput('');
   };
 
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const updateField = <K extends keyof CuestionarioPayload>(
     key: K,
@@ -223,6 +229,15 @@ export default function Cuestionario({
             companyDepartmentsFormatted: (finalPayload.companyDepartments || [])
               .map((d) => (d.workers > 0 ? `${d.name} (${d.workers} trab.)` : d.name))
               .join(', '),
+            companyProceduresFormatted: (finalPayload.companyDepartments || []).some((d) => (d.procedures || '').trim())
+              ? (finalPayload.companyDepartments || [])
+                  .map((d) => {
+                    const prefix = d.workers > 0 ? `${d.name} (${d.workers} trab.)` : d.name;
+                    const proc = (d.procedures || '').trim();
+                    return `• ${prefix}: ${proc || 'Sin procedimientos detallados'}`;
+                  })
+                  .join('\n')
+              : 'No especificados',
             erp: finalPayload.erp || finalPayload.erpCustom || 'No especificado',
             erpHotspot: finalPayload.erpHotspot,
             crm: finalPayload.crm || finalPayload.crmCustom || 'No especificado',
@@ -275,9 +290,10 @@ export default function Cuestionario({
             <span className="text-xs font-bold uppercase tracking-wider text-[#5E8DFF]">Diagnóstico Operativo Deskly</span>
             <h2 className="text-xl sm:text-2xl font-semibold text-white tracking-tight mt-0.5">
               {currentStep === 1 && 'Perfil de Empresa'}
-              {currentStep === 2 && 'Ecosistema Tecnológico'}
-              {currentStep === 3 && 'Operativa y Tareas Manuales'}
-              {currentStep === 4 && 'Soberanía y Contacto'}
+              {currentStep === 2 && 'Departamentos y Procedimientos'}
+              {currentStep === 3 && 'Ecosistema Tecnológico'}
+              {currentStep === 4 && 'Operativa y Tareas Manuales'}
+              {currentStep === 5 && 'Soberanía y Contacto'}
             </h2>
           </div>
           <span className="text-xs font-mono font-medium text-slate-400 bg-[#121D33] px-3 py-1.5 rounded-lg border border-white/[0.06]">
@@ -330,11 +346,36 @@ export default function Cuestionario({
                 </div>
               </div>
 
-              {/* Departamentos y equipo */}
+              {/* Tamaño */}
+              <div className="space-y-3">
+                <label className="text-sm font-semibold text-slate-100 block">Número de empleados</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  {['1-10', '11-50', '51-200', '+200'].map((size) => (
+                    <button
+                      type="button"
+                      key={size}
+                      onClick={() => updateField('companySize', size)}
+                      className={`p-3.5 rounded-xl border text-sm text-center font-medium transition-all ${
+                        formData.companySize === size
+                          ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
+                          : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* PASO 2: DEPARTAMENTOS Y PROCEDIMIENTOS */}
+          {currentStep === 2 && (
+            <div className="space-y-6">
               <div className="space-y-3">
                 <div>
-                  <label className="text-sm font-semibold text-slate-100 block">Departamentos de la empresa</label>
-                  <p className="text-xs text-slate-400 mt-0.5">Selecciona tus departamentos e indica los trabajadores en cada uno</p>
+                  <label className="text-sm font-semibold text-slate-100 block">Departamentos, equipo y procedimientos</label>
+                  <p className="text-xs text-slate-400 mt-0.5">Selecciona tus departamentos, indica los trabajadores en cada uno y qué procedimientos realizan</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -387,36 +428,50 @@ export default function Cuestionario({
                 </div>
 
                 {(formData.companyDepartments || []).length > 0 && (
-                  <div className="space-y-2 pt-1">
-                    <span className="text-xs font-semibold text-slate-300 block">Número de trabajadores:</span>
-                    <div className="space-y-2">
+                  <div className="space-y-2.5 pt-1">
+                    <span className="text-xs font-semibold text-slate-300 block">Trabajadores y procedimientos que realizan por departamento:</span>
+                    <div className="space-y-2.5">
                       {(formData.companyDepartments || []).map((dept) => (
                         <div
                           key={dept.name}
-                          className="flex items-center justify-between gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[#0D1627]/80 border border-white/[0.08]"
+                          className="p-3 rounded-xl bg-[#0D1627]/80 border border-white/[0.08] space-y-2.5"
                         >
-                          <div className="flex items-center gap-2 min-w-0">
-                            <div className="w-2 h-2 rounded-full bg-[#1658F5] shrink-0" />
-                            <span className="text-xs sm:text-sm font-medium text-slate-200 truncate">{dept.name}</span>
+                          <div className="flex items-center justify-between gap-2.5">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <div className="w-2 h-2 rounded-full bg-[#1658F5] shrink-0" />
+                              <span className="text-xs sm:text-sm font-medium text-slate-200 truncate">{dept.name}</span>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0">
+                              <input
+                                type="number"
+                                min={1}
+                                max={9999}
+                                value={dept.workers || ''}
+                                onChange={(e) => updateDeptWorkers(dept.name, parseInt(e.target.value, 10) || 0)}
+                                placeholder="Nº pers."
+                                className="w-20 sm:w-24 px-2.5 py-1.5 rounded-lg bg-[#121D33] border border-white/[0.12] text-xs sm:text-sm text-white text-center font-semibold focus:outline-none focus:border-[#1658F5]"
+                              />
+                              <span className="text-xs text-slate-400 hidden sm:inline">trabajadores</span>
+                              <button
+                                type="button"
+                                onClick={() => toggleCompanyDept(dept.name)}
+                                className="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/[0.05]"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2 shrink-0">
-                            <input
-                              type="number"
-                              min={1}
-                              max={9999}
-                              value={dept.workers || ''}
-                              onChange={(e) => updateDeptWorkers(dept.name, parseInt(e.target.value, 10) || 0)}
-                              placeholder="Nº pers."
-                              className="w-20 sm:w-24 px-2.5 py-1.5 rounded-lg bg-[#121D33] border border-white/[0.12] text-xs sm:text-sm text-white text-center font-semibold focus:outline-none focus:border-[#1658F5]"
+                          <div className="space-y-1">
+                            <label className="text-[11px] font-medium text-slate-400 block">
+                              Procedimientos que realizan en este departamento
+                            </label>
+                            <textarea
+                              rows={2}
+                              value={dept.procedures || ''}
+                              onChange={(e) => updateDeptProcedures(dept.name, e.target.value)}
+                              placeholder="Ej. Recepción de pedidos, emisión de facturas, atención a proveedores..."
+                              className="w-full px-3 py-2 rounded-lg bg-[#121D33]/80 border border-white/[0.1] text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-[#1658F5] resize-none leading-relaxed"
                             />
-                            <span className="text-xs text-slate-400 hidden sm:inline">trabajadores</span>
-                            <button
-                              type="button"
-                              onClick={() => toggleCompanyDept(dept.name)}
-                              className="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/[0.05]"
-                            >
-                              <X className="w-3.5 h-3.5" />
-                            </button>
                           </div>
                         </div>
                       ))}
@@ -424,32 +479,11 @@ export default function Cuestionario({
                   </div>
                 )}
               </div>
-
-              {/* Tamaño */}
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-100 block">Número de empleados</label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {['1-10', '11-50', '51-200', '+200'].map((size) => (
-                    <button
-                      type="button"
-                      key={size}
-                      onClick={() => updateField('companySize', size)}
-                      className={`p-3.5 rounded-xl border text-sm text-center font-medium transition-all ${
-                        formData.companySize === size
-                          ? 'border-[#1658F5] bg-[#1658F5]/10 text-white ring-1 ring-[#1658F5]/50'
-                          : 'border-white/[0.08] bg-[#121D33]/60 text-slate-300 hover:bg-[#1A2742]'
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
           )}
 
-          {/* PASO 2 */}
-          {currentStep === 2 && (
+          {/* PASO 3 */}
+          {currentStep === 3 && (
             <div className="space-y-6">
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-slate-100 block">ERP Principal</label>
@@ -594,8 +628,8 @@ export default function Cuestionario({
             </div>
           )}
 
-          {/* PASO 3 */}
-          {currentStep === 3 && (
+          {/* PASO 4 */}
+          {currentStep === 4 && (
             <div className="space-y-6">
               {/* Volumen */}
               <div className="space-y-3">
@@ -656,8 +690,8 @@ export default function Cuestionario({
             </div>
           )}
 
-          {/* PASO 4: CONTACTO AL FINAL (Máxima conversión) */}
-          {currentStep === 4 && (
+          {/* PASO 5: CONTACTO AL FINAL (Máxima conversión) */}
+          {currentStep === 5 && (
             <div className="space-y-6">
               <div className="p-5 rounded-2xl bg-[#121D33]/90 border border-[#1658F5]/30 space-y-4 shadow-xl">
                 <div className="flex items-center gap-2">

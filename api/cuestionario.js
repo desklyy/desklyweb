@@ -23,6 +23,7 @@ export default async function handler(req, res) {
       companySize,
       companyDepartments,
       companyDepartmentsFormatted,
+      companyProceduresFormatted,
       erp,
       erpHotspot,
       crm,
@@ -62,6 +63,17 @@ export default async function handler(req, res) {
     const companyDeptsFormatted = companyDepartmentsFormatted || (
       Array.isArray(companyDepartments) && companyDepartments.length > 0
         ? companyDepartments.map(d => typeof d === 'object' && d.name ? `${d.name} (${d.workers || 0} personas)` : d).join(', ')
+        : 'No especificados'
+    );
+
+    const companyProceduresSummary = companyProceduresFormatted || (
+      Array.isArray(companyDepartments) && companyDepartments.some(d => typeof d === 'object' && d?.procedures && String(d.procedures).trim())
+        ? companyDepartments.map(d => {
+            if (typeof d !== 'object' || !d?.name) return String(d || '');
+            const workersLabel = d.workers ? ` (${d.workers} trab.)` : '';
+            const proc = d.procedures && String(d.procedures).trim() ? String(d.procedures).trim() : 'Sin procedimientos especificados';
+            return `• ${d.name}${workersLabel}: ${proc}`;
+          }).filter(Boolean).join('\n')
         : 'No especificados'
     );
 
@@ -157,6 +169,13 @@ export default async function handler(req, res) {
                     <td style="padding: 7px 0; color: ${onPremise ? '#34D399' : '#CBD5E1'}; font-weight: 600;">${onPremise ? 'SÍ (Disponen de red y espacio)' : 'Dudoso / Requiere IT'}</td>
                   </tr>
                 </table>
+
+                <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94A3B8; margin-bottom: 8px;">
+                  Procedimientos por departamento:
+                </div>
+                <div style="background: #0D1627; border: 1px solid rgba(255,255,255,0.08); border-left: 3px solid #5E8DFF; padding: 14px 16px; border-radius: 8px; font-size: 13.5px; color: #E2E8F0; white-space: pre-wrap; line-height: 1.6; margin-bottom: 20px;">
+${companyProceduresSummary}
+                </div>
 
                 <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #94A3B8; margin-bottom: 8px;">
                   Tareas manuales descritas:
@@ -275,10 +294,76 @@ ${manualTasks ? manualTasks : 'No se especificaron detalles.'}
       return data;
     };
 
-    // Envío en paralelo
-    const [adminResult, userResult] = await Promise.allSettled([
+    const syncToCrm = async () => {
+      const crmWebhookUrl =
+        process.env.CRM_WEBHOOK_URL || 'https://crm.desklyy.com/api/webhooks/leads';
+      const crmWebhookSecret = process.env.CRM_WEBHOOK_SECRET;
+      if (!crmWebhookSecret) {
+        console.warn('CRM_WEBHOOK_SECRET no configurado. Se omite sincronización con Deskly CRM.');
+        return { synced: false, skipped: true };
+      }
+
+      const isSpecified = (val) =>
+        typeof val === 'string' &&
+        val.trim() !== '' &&
+        !['No especificado', 'No especificados', 'No especificadas', 'ERP no especificado'].includes(val.trim());
+
+      const companyCustomFields = {};
+      if (isSpecified(companyDeptsFormatted)) {
+        companyCustomFields.departamentos_empresa = companyDeptsFormatted;
+      }
+      if (isSpecified(companyProceduresSummary)) {
+        companyCustomFields.procedimientos_por_departamento = companyProceduresSummary;
+      }
+      if (isSpecified(erp)) companyCustomFields.erp_principal = erp.trim();
+      if (isSpecified(erpHotspot)) companyCustomFields.alojamiento_erp = erpHotspot.trim();
+      if (isSpecified(crm)) companyCustomFields.crm_actual = crm.trim();
+      if (isSpecified(productivity)) companyCustomFields.correo_ofimatica = productivity.trim();
+      if (isSpecified(storage)) companyCustomFields.almacen_archivos = storage.trim();
+      if (typeof strictPrivacy === 'boolean') companyCustomFields.privacidad_estricta = strictPrivacy;
+      if (typeof onPremise === 'boolean') companyCustomFields.red_local_minipc = onPremise;
+
+      const dealCustomFields = {
+        cuestionario_completado: true,
+      };
+      if (isSpecified(monthlyVolume)) dealCustomFields.volumen_mensual = monthlyVolume.trim();
+      if (isSpecified(manualTasks)) dealCustomFields.tareas_manuales = manualTasks.trim();
+
+      const crmPayload = {
+        mode: 'questionnaire',
+        lead_source: 'cuestionario',
+        email: String(contactEmail).trim(),
+        full_name: String(contactName).trim(),
+        phone: isSpecified(contactPhone) ? contactPhone.trim() : undefined,
+        company_name: String(companyName).trim(),
+        industry: isSpecified(industry) ? industry.trim() : undefined,
+        company_size: isSpecified(companySize) ? companySize.trim() : undefined,
+        company_custom_fields: companyCustomFields,
+        deal_custom_fields: dealCustomFields,
+      };
+
+      const crmRes = await fetch(crmWebhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-webhook-secret': crmWebhookSecret,
+        },
+        body: JSON.stringify(crmPayload),
+      });
+
+      const crmData = await crmRes.json().catch(() => ({}));
+      if (!crmRes.ok) {
+        throw new Error(crmData.error || `HTTP ${crmRes.status} en CRM`);
+      }
+
+      return { synced: true, data: crmData.result || crmData };
+    };
+
+    // Envío en paralelo (emails + sincronización CRM)
+    const [adminResult, userResult, crmResult] = await Promise.allSettled([
       sendMail(adminEmailPayload),
-      sendMail(userEmailPayload)
+      sendMail(userEmailPayload),
+      syncToCrm()
     ]);
 
     if (adminResult.status === 'rejected') {
@@ -290,10 +375,15 @@ ${manualTasks ? manualTasks : 'No se especificaron detalles.'}
       console.warn('Aviso: Falló envío de confirmación al cliente:', userResult.reason);
     }
 
+    if (crmResult.status === 'rejected') {
+      console.error('Aviso: Falló sincronización del cuestionario con el CRM:', crmResult.reason);
+    }
+
     return res.status(200).json({
       success: true,
       adminEmailId: adminResult.value?.id,
-      userEmailId: userResult.status === 'fulfilled' ? userResult.value?.id : null
+      userEmailId: userResult.status === 'fulfilled' ? userResult.value?.id : null,
+      crmSynced: crmResult.status === 'fulfilled' && crmResult.value?.synced === true
     });
 
   } catch (error) {

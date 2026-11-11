@@ -257,7 +257,10 @@ export default function Cuestionario({
                   .map((d) => {
                     const prefix = d.workers > 0 ? `${d.name} (${d.workers} trab.)` : d.name;
                     const proc = (d.procedures || '').trim();
-                    return `• ${prefix}: ${proc || 'Sin procedimientos detallados'}`;
+                    const formattedProc = proc
+                      ? proc.split(/\r?\n/).map((line, idx) => (idx === 0 ? line : `  ${line}`)).join('\n')
+                      : 'Sin procedimientos detallados';
+                    return `• ${prefix}: ${formattedProc}`;
                   })
                   .join('\n')
               : 'No especificados',

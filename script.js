@@ -5,6 +5,57 @@
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
   /* ========================================================================
+     TITULAR: PALABRA CON VOLTEO (ejecuta → responde → automatiza → resuelve)
+     ======================================================================== */
+  const flip = document.getElementById('word-flip');
+  if (flip && !reduceMotion) {
+    const inner = flip.querySelector('.word-flip-inner');
+    const title = document.getElementById('hero-title');
+    const tail = document.getElementById('flip-tail');
+    const words = ['ejecuta', 'responde', 'automatiza', 'resuelve'];
+    let idx = 0;
+
+    // Medidor oculto para conocer el ancho de la palabra más larga
+    const measure = document.createElement('span');
+    measure.className = 'word-flip-inner h1-accent word-flip-measure';
+    measure.setAttribute('aria-hidden', 'true');
+    flip.appendChild(measure);
+    const maxWordWidth = () => Math.max(...words.map((w) => { measure.textContent = w; return measure.offsetWidth; }));
+
+    const fitWidth = () => { flip.style.width = inner.offsetWidth + 'px'; };
+
+    // Decide UNA vez (según la palabra más larga) si "al instante." va en su propia línea,
+    // así el titular no se descuadra al cambiar de palabra.
+    const layout = () => {
+      title.classList.remove('flip-break');
+      flip.style.transition = 'none';
+      flip.style.width = maxWordWidth() + 'px';
+      const wraps = tail.getBoundingClientRect().top > flip.getBoundingClientRect().top + 4;
+      title.classList.toggle('flip-break', wraps);
+      fitWidth();
+      void flip.offsetWidth;
+      flip.style.transition = '';
+    };
+
+    layout();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    window.addEventListener('resize', layout);
+
+    setInterval(async () => {
+      if (document.hidden) return;
+      inner.classList.add('is-out');
+      await wait(380);
+      idx = (idx + 1) % words.length;
+      inner.textContent = words[idx];
+      inner.classList.remove('is-out');
+      inner.classList.add('is-in-start');
+      fitWidth();
+      void inner.offsetWidth; // fuerza reflow para que arranque la transición de entrada
+      inner.classList.remove('is-in-start');
+    }, 1800);
+  }
+
+  /* ========================================================================
      REVELADO AL HACER SCROLL
      ======================================================================== */
   const revealEls = document.querySelectorAll('.reveal');

@@ -154,12 +154,45 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.022em; line-height: 1.12; }
   gap: 64px;
   align-items: center;
 }
+/* Tarjeta de consulta alineada con el titular (no centrada verticalmente) */
+.hero-grid > .qf { align-self: start; margin-top: 34px; }
 
 .hero h1 {
   font-size: clamp(40px, 5.4vw, 66px);
   color: #fff;
   margin-bottom: 24px;
 }
+
+/* Palabras destacadas en azul de marca (color sólido) */
+.h1-accent {
+  color: var(--blue);
+}
+
+/* Palabra con volteo vertical (animada por script.js) */
+.word-flip {
+  display: inline-block;
+  perspective: 700px;
+  white-space: nowrap;
+  vertical-align: bottom;
+  transition: width .4s cubic-bezier(.2, .7, .2, 1);
+}
+.word-flip-inner {
+  display: inline-block;
+  transform-origin: 50% 60%;
+  transition: transform .38s cubic-bezier(.4, 0, .2, 1), opacity .38s ease;
+  backface-visibility: hidden;
+}
+.word-flip-inner.is-out { transform: rotateX(90deg); opacity: 0; }
+.word-flip-inner.is-in-start { transform: rotateX(-90deg); opacity: 0; transition: none; }
+
+/* Saltos de línea estables: "al instante." nunca salta entre líneas al cambiar la palabra */
+.flip-head, .flip-tail { white-space: nowrap; }
+#hero-title.flip-break .flip-tail { display: block; }
+.word-flip-measure {
+  position: absolute; visibility: hidden; pointer-events: none;
+  white-space: nowrap; left: -9999px; top: 0;
+}
+.mobile-br { display: none; }
 
 .lead {
   font-size: 19px;
@@ -1156,6 +1189,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.022em; line-height: 1.12; }
    ========================================================================== */
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+  .hero-grid > .qf { margin-top: 0; }
   .lead { max-width: 620px; }
   .demo { grid-template-columns: 1fr; }
   .demo-tabs { flex-direction: row; overflow-x: auto; gap: 8px; padding-bottom: 4px; }
@@ -1204,6 +1238,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.022em; line-height: 1.12; }
 }
 
 @media (max-width: 560px) {
+  .mobile-br { display: inline; }
   .container { padding: 0 16px; }
   .hero { padding-top: 110px; }
   .hero-stats { flex-direction: column; gap: 16px; }

@@ -27,8 +27,8 @@
   <meta property="og:site_name" content="Deskly">
   <meta property="og:image" content="https://desklyy.com/assets/logo.jpg">
   <meta property="og:image:alt" content="Deskly - Plataforma de IA operativa privada para empresas">
-  <meta property="og:image:width" content="800">
-  <meta property="og:image:height" content="800">
+  <meta property="og:image:width" content="1024">
+  <meta property="og:image:height" content="1024">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
@@ -38,7 +38,11 @@
   <meta name="twitter:image" content="https://desklyy.com/assets/logo.jpg">
   <meta name="twitter:image:alt" content="Deskly - IA operativa instalada en tu empresa">
 
-  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,8 +72,11 @@
           "@type": "ImageObject",
           "@id": "https://desklyy.com/#logo",
           "url": "https://desklyy.com/assets/logo.jpg",
+          "width": 1024,
+          "height": 1024,
           "caption": "Deskly Logo"
         },
+        "image": { "@id": "https://desklyy.com/#logo" },
         "email": "contacto@desklyy.com",
         "foundingDate": "2026",
         "address": {
@@ -109,6 +116,14 @@
             "sameAs": "https://www.linkedin.com/in/no%C3%A9-hidalgo-fern%C3%A1ndez-67bb43231"
           }
         ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://desklyy.com/#webpage",
+        "url": "https://desklyy.com/",
+        "name": "Deskly — IA operativa que se instala en tu empresa",
+        "isPartOf": { "@id": "https://desklyy.com/#website" },
+        "primaryImageOfPage": { "@id": "https://desklyy.com/#logo" }
       },
       {
         "@type": "SoftwareApplication",
